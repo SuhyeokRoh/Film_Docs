@@ -35,7 +35,7 @@ for i in range(1, 6):
                 'vote_average' : x.get('vote_average'),
                 'overview' : x.get('overview'),
                 'poster_path' : x.get('poster_path'),
-                'genres' : x.get('genre_ids'),
+                # 'genres' : x.get('genre_ids'),
                 'backdrop_path' : x.get('backdrop_path'),
             }
         }
