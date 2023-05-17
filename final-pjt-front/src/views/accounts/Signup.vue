@@ -2,8 +2,20 @@
   <div>
     <h1>SignUp</h1>
     <div>
-      <label for="username">사용자 이름:</label>
+      <label for="username">사용자 계정:</label>
       <input type="text" id="username" v-model="userdata.username" />
+    </div>
+    <div>
+      <label for="last_name">성:</label>
+      <input type="text" id="last_name" v-model="userdata.last_name" />
+    </div>
+    <div>
+      <label for="first_name">이름:</label>
+      <input type="text" id="first_name" v-model="userdata.first_name" />
+    </div>
+    <div>
+      <label for="email">e-mail:</label>
+      <input type="text" id="email" v-model="userdata.email" />
     </div>
     <div>
       <label for="password">비밀번호:</label>
