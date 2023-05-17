@@ -2,11 +2,11 @@
   <div>
     <h1>로그인</h1>
     <div>
-      <label for="username">ID:</label>
-      <input type="text" id="username" v-model="userdata.username"/>
+      <label for="username">ID: </label>
+      <input type="text" id="username" v-model="userdata.username" />
     </div>
     <div>
-      <label for="password">비밀번호:</label>
+      <label for="password">비밀번호: </label>
       <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" />
     </div>
     <button @click="login">로그인</button>
@@ -23,7 +23,6 @@ export default {
       userdata: {
         username: null,
         password: null,
-
       }
     }
   },
@@ -38,7 +37,7 @@ export default {
       .then((res) => {
         localStorage.setItem("jwt", res.data.access)
         this.$emit('login')
-        this.$router.push({name:'TodoList'})
+        this.$router.push({name:'Home'})
       })
       .catch((err) => {
         console.log(err)
