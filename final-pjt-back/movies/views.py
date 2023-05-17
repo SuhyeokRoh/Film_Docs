@@ -10,7 +10,11 @@ from rest_framework.decorators import api_view
 
 
 @api_view(['GET'])
-def Movie_list(request):
+def movie_list(request):
     movies = Movie.objects.all()
     serializer = MovieSerializer(movies, many=True)
     return Response(serializer.data)
+
+
+def movie_detail(request, movie_pk):
+    pass
