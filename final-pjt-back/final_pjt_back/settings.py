@@ -31,7 +31,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # local Apps
     'movies',
+    
+    #drf
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    
+    # CORS policy
+    "corsheaders",
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
