@@ -7,7 +7,7 @@
     </div>
     <div>
       <label for="password">비밀번호:</label>
-      <input type="password" id="password" keyup.enter="login" v-model="userdata.password"/>
+      <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" />
     </div>
     <button @click="login">로그인</button>
   </div>
@@ -17,7 +17,7 @@
 import axios from 'axios'
 
 export default {
-  name: 'LogIn',
+  name: 'LoginView',
   data: function () {
     return {
       userdata: {
