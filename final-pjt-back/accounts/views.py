@@ -3,8 +3,9 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 
-
+# 회원 가입
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
@@ -24,3 +25,10 @@ def signup(request):
         user.set_password(request.data.get('password'))
         user.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# 회원 탈퇴
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def account_delete(request):
+    request.user.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
