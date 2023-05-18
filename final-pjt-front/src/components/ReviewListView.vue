@@ -1,6 +1,8 @@
 <template>
-  <div>
-
+  <div id="review">
+    <ReviewItemView 
+    v-for="review in reviews" :key="review.id"
+    :review="review" />
   </div>
 </template>
 
@@ -13,7 +15,7 @@ export default {
     ReviewItemView,
   },
   props: {
-
+    reviews: Array,
   },
 }
 </script>

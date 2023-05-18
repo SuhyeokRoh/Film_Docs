@@ -1,6 +1,7 @@
 <template>
   <div>
-
+    <p>{{review.content}}</p>
+    <p>{{review.user_id}}</p>
   </div>
 </template>
 
@@ -8,7 +9,7 @@
 export default {
   name: "ReviewItemView",
   props: {
-
+    review: Object,
   },
 }
 </script>

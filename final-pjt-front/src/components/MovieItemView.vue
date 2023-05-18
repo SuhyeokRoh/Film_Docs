@@ -5,7 +5,8 @@
     <p>{{ movie.vote_average }}</p>
     <p>{{ movie.release_date }}</p>
     <p>{{ movie.overview }}</p>
-    <ReviewListView />
+    <ReviewListView 
+    :reviews="reviews" />
   </div>
 </template>
 
@@ -21,6 +22,11 @@ export default {
   },
   props: {
     movie: Object,
+  },
+  data() {
+    return {
+      reviews: null,
+    }
   },
   computed: {
     getPoster() {
@@ -39,17 +45,18 @@ export default {
       }
       return config
     },
-    getReview(movie_pk) {
+    getReview() {
       axios({
         method: 'get',
-        url: `${URL}/reviews/${movie_pk}/`,
+        url: `${URL}/movies/${this.movie.id}/reviews/`,
         headers: this.setToken()
       })
       .then(res => {
         console.log(res.data)
+        this.reviews = res.data
       })
       .catch(err => console.log(err))
-    }
+    },
   }
 }
 </script>
