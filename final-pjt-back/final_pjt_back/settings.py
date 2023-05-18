@@ -34,7 +34,6 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # local Apps
     'movies',
-    'reviews',
     'accounts',
     
     #drf
