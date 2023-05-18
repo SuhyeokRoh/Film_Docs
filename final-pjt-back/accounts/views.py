@@ -18,13 +18,19 @@ User = get_user_model()
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
+    # print(request)
     username = request.data.get('username')
-    if User.objects.filter(username=username).exists():
-        return Response({'error':'중복된 ID입니다.'}, status=status.HTTP_400_BAD_REQUEST)
-    
     password = request.data.get('password')
     password_confirm = request.data.get('passwordConfirm')
+    nick_name = request.data.get('nick_name')
+    email = request.data.get('email')
     res_data = {}
+
+    if User.objects.filter(username=username).exists():
+        res_data['error'] = '중복된 ID입니다'
+        return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+    
+
     if password != password_confirm:
         res_data['error'] = '비밀번호가 다릅니다.'
         # print(res_data)
