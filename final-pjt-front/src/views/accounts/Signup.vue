@@ -41,11 +41,17 @@ export default {
         username: null,
         password: null,
         passwordConfirm: null,
+        error: null,
       }
     }
   },
   methods: {
     signup: function () {
+      if (this.password !== this.passwordConfirm) {
+        this.error = '비밀번호가 일치하지 않습니다.';
+        return;
+      }
+
       axios({
         method: "post",
         // reqest 500 url: "http://127.0.0.1:8000/accounts/signup /가 빠져서..
@@ -60,6 +66,7 @@ export default {
         this.userdata.password = ''
         this.userdata.passwordConfirm = ''
         console.log(err)
+        // console.log(this.error) 비밀번호가 일치하지 않는데 저장이 안됨
       })
     }
   }
