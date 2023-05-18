@@ -60,8 +60,7 @@ export default {
         url: `${URL}/accounts/signup/`,
         data: this.userdata,
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
         this.$router.push({ name: 'Login' })
       })
       .catch((error) => {
