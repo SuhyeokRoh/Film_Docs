@@ -1,25 +1,16 @@
 <template>
-  <div>
-    <h2>{{ movie.title }}</h2>
+  <div @click="gotoDetail">
     <img :src=getPoster >
-    <p>{{ movie.vote_average }}</p>
-    <p>{{ movie.release_date }}</p>
-    <p>{{ movie.overview }}</p>
-    <ReviewListView 
-    :reviews="reviews" :movie="movie" />
+    <h2>{{ movie.title }}</h2>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import ReviewListView from './ReviewListView.vue'
 
 const URL = "http://127.0.0.1:8000"
 export default {
   name: 'MovieItemView',
-  components: {
-    ReviewListView,
-  },
   props: {
     movie: Object,
   },
@@ -52,11 +43,16 @@ export default {
         headers: this.setToken()
       })
       .then(res => {
-        // console.log(res.data)
         this.reviews = res.data
       })
       .catch(err => console.log(err))
     },
+    gotoDetail() {
+      const movie = this.movie
+      const reviews = this.reviews
+
+      this.$router.push({name: 'moviedetail', params: {movie, reviews}})
+    }
   }
 }
 </script>
