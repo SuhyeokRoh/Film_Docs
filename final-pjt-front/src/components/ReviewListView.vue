@@ -40,12 +40,13 @@ export default {
       // console.log(this.movie.id)
       // const movie = 
       // const token = this.setToken()
-      console.log(this.reviews)
+      const user = this.$store.state.username
+      console.log(this.Review)
 
       axios({
         method: "post",
         url: `${URL}/movies/${this.movie.id}/reviews/`,
-        data: { 'content' :this.Review},
+        data: { 'content' :this.Review, 'user': user},
         headers: this.setToken()
       })
       .then((res) => {
