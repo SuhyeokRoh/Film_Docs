@@ -39,8 +39,10 @@ export default {
         this.$emit('login')
         this.$router.push({name:'movie'})
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
+        alert("회원 정보가 일치하지 않습니다.")
+        this.userdata.username = ''
+        this.userdata.password = ''
       })
     }
   }
