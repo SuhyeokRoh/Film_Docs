@@ -4,7 +4,7 @@
 
       <span v-if="isLogin">
         <router-link :to="{ name: 'movie' }">Movie</router-link> | 
-        <router-link :to="{ name: 'Signup' }">SignUp</router-link> |
+        <router-link :to="{ name: 'Profile' }">Profile</router-link> |
         <router-link to="#" @click.native="logout">Logout</router-link>
       </span>
 
@@ -29,6 +29,7 @@ export default {
   methods: {
     logout() {
       this.isLogin = false
+      this.$store.dispatch('Logout_delete_username')
       localStorage.removeItem('jwt')
       this.$router.push({name:'Login'})
     }
