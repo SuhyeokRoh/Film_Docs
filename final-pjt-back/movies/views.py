@@ -1,7 +1,7 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http.response import JsonResponse, HttpResponse
 from django.core import serializers
-from .serializers import MovieSerializer
+from .serializers import MovieSerializer, MovieListSerializer
 
 from .models import Movie, Genre
 from rest_framework import status
@@ -11,10 +11,13 @@ from rest_framework.decorators import api_view
 
 @api_view(['GET'])
 def movie_list(request):
-    movies = Movie.objects.all()
-    serializer = MovieSerializer(movies, many=True)
+    movies = get_list_or_404(Movie)
+    serializer = MovieListSerializer(movies, many=True)
     return Response(serializer.data)
 
 
+@api_view(['GET'])
 def movie_detail(request, movie_pk):
-    pass
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    serializer = MovieSerializer(movie)
+    return Response(serializer.data)
