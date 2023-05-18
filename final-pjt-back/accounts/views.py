@@ -4,11 +4,11 @@ from rest_framework.response import Response
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
+from django.shortcuts import get_object_or_404
 
 # id 중복검사를 위한 모듈 import
 
 # from .serializers import UsernameUniqueCheckSerializer
-
 
 
 from django.contrib.auth import get_user_model
@@ -24,7 +24,7 @@ def signup(request):
     password_confirm = request.data.get('passwordConfirm')
     nick_name = request.data.get('nick_name')
     email = request.data.get('email')
-    
+
     res_data = {}
 
     if User.objects.filter(username=username).exists():
@@ -60,3 +60,10 @@ def signup(request):
 def account_delete(request):
     request.user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET'])
+def profile(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
