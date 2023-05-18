@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/movie',
     name: 'movie',
     component: MovieListView
   },
@@ -18,7 +18,7 @@ const routes = [
     component: SignupView,
   },
   {
-    path: '/accounts/login',
+    path: '/',
     name: 'Login',
     component: LoginView,
   },
