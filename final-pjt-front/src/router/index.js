@@ -4,14 +4,15 @@ import SignupView from '@/views/accounts/Signup'
 import LoginView from '@/views/accounts/Login'
 import MovieListView from '@/views/movie/MovieListView'
 import ProfileView from '@/views/accounts/ProfileView'
+import MovieDetailView from '@/components/MovieDetailView'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/movie',
-    name: 'movie',
-    component: MovieListView
+    path: '/',
+    name: 'Login',
+    component: LoginView,
   },
   {
     path: '/accounts/signup',
@@ -19,14 +20,20 @@ const routes = [
     component: SignupView,
   },
   {
-    path: '/',
-    name: 'Login',
-    component: LoginView,
-  },
-  {
     path: '/profile',
     name: 'Profile',
     component: ProfileView,
+  },
+  {
+    path: '/movie',
+    name: 'movie',
+    component: MovieListView
+  },
+  {
+    path: '/movie/detail',
+    name: 'moviedetail',
+    component: MovieDetailView,
+    props: true,
   },
 ]
 
