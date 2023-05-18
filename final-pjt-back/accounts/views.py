@@ -24,16 +24,23 @@ def signup(request):
     password_confirm = request.data.get('passwordConfirm')
     nick_name = request.data.get('nick_name')
     email = request.data.get('email')
+    
     res_data = {}
 
     if User.objects.filter(username=username).exists():
         res_data['error'] = '중복된 ID입니다'
         return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
     
-
+    if User.objects.filter(nick_name=nick_name).exists():
+        res_data['error'] = '이미 존재하는 닉네임입니다.'
+        return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+    
+    if User.objects.filter(email=email).exists():
+        res_data['error'] = '이미 가입한 이력이 있는 이메일입니다.'
+        return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+    
     if password != password_confirm:
         res_data['error'] = '비밀번호가 다릅니다.'
-        # print(res_data)
         return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
     serializer = UserSerializer(data=request.data)
