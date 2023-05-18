@@ -34,11 +34,7 @@ def review_create(request, movie_pk):
         serializer = ReviewSerializer(data=request.data)
         print(serializer)
         if serializer.is_valid(raise_exception=True):
-            print('yes')
             serializer.save(user=request.user)
-
-        else:
-            print('no')
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 
