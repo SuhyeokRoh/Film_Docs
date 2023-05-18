@@ -38,13 +38,21 @@ export default {
     this.getReview()
   },
   methods: {
+    setToken: function() {
+      const token = localStorage.getItem("jwt")
+      const config = {
+        Authorization: `Bearer ${token}`
+      }
+      return config
+    },
     getReview() {
       axios({
         method: 'get',
         url: `${URL}/movies/${this.movie.id}/reviews/`,
+        headers: this.setToken()
       })
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.reviews = res.data
       })
       .catch(err => console.log(err))
