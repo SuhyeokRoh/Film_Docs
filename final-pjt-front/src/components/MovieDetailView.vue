@@ -58,23 +58,32 @@ export default {
       }
       return config
     },
-    createReview: function() {
-      const user = this.$store.state.username
-      console.log(this.Review)
+    getReview: function() {
+      this.$store.dispatch('getReviews')
+    },
 
+    createReview: function() {
+      const movieid = this.movie.id
+      console.log(this.Review)
+      console.log(movieid)
       axios({
         method: "post",
         url: `${URL}/movies/${this.movie.id}/reviews/`,
-        data: { 'content' :this.Review, 'user': user},
+        data: { 'content' :this.Review, 'movie':movieid},
         headers: this.setToken()
       })
       .then((res) => {
         console.log(res)
+        this.Review = ''
+        
       }).catch((err) => {
         console.log(err)
       })
     },
-  }
+  },
+  create() {
+    this.createReview()
+  },
 }
 </script>
 
