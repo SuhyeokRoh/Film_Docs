@@ -4,13 +4,18 @@ from rest_framework.response import Response
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 # 회원 가입
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
-    # Id, pw, pw확인 request.data를 통해 전달
-
+    username = request.data.get('username')
+    if User.objects.filter(username=username).exists():
+        return Response({'error':'중복된 ID입니다.'}, status=status.HTTP_400_BAD_REQUEST)
+    print(username)
+    
     password = request.data.get('password')
     password_confirm = request.data.get('passwordConfirm')
     if password != password_confirm:
