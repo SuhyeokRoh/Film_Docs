@@ -5,6 +5,7 @@
     <ReviewItemView 
     v-for="review in reviews" :key="review.id"
     :review="review" />
+    
   </div>
 </template>
 
@@ -35,34 +36,34 @@ export default {
       }
       return config
     },
+    getReview: function() {
+      this.$store.dispatch('getReviews')
+    },
 
     createReview: function() {
-      // console.log(this.movie.id)
-      // const movie = 
-      // const token = this.setToken()
-      const user = this.$store.state.username
+      const movie = this.movie.id
       console.log(this.Review)
-
+      console.log(movie)
       axios({
         method: "post",
         url: `${URL}/movies/${this.movie.id}/reviews/`,
-        data: { 'content' :this.Review, 'user': user},
+        data: { 'content' :this.Review, 'movie':movie},
         headers: this.setToken()
       })
       .then((res) => {
         console.log(res)
-        // console.log(this.Review)
-        // this.reviews.push(this.Review)
+        this.Review = ''
+        
       }).catch((err) => {
         console.log(err)
       })
     },
   },
-  created() {
-  const token = localStorage.getItem("jwt");
-  this.saveTokenToLocalStorage(token);
-  this.setAuthHeader();
-},
+  // created() {
+  // const token = localStorage.getItem("jwt");
+  // this.saveTokenToLocalStorage(token);
+  // this.setAuthHeader();
+// },
   
 }
 </script>
