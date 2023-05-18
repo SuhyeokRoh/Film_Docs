@@ -1,16 +1,18 @@
 <template>
   <div id="app">
     <div id="nav">
+
       <span v-if="isLogin">
-        <router-link :to="{ name: 'movie' }">Home</router-link> | 
-        <router-link :to="{ name: 'Signup' }">SignUp</router-link> |
+        <router-link :to="{ name: 'movie' }">Movie</router-link> | 
+        <router-link :to="{ name: 'Profile' }">Profile</router-link> |
         <router-link to="#" @click.native="logout">Logout</router-link>
       </span>
+
       <span v-else>
-        <router-link :to="{ name: 'movie' }">Home</router-link> | 
         <router-link :to="{ name: 'Signup' }">Signup</router-link> |
         <router-link :to="{ name: 'Login' }">Login</router-link> 
       </span>
+
     </div>
     <router-view @login="isLogin=true"/>
   </div>
@@ -27,6 +29,7 @@ export default {
   methods: {
     logout() {
       this.isLogin = false
+      this.$store.dispatch('Logout_delete_username')
       localStorage.removeItem('jwt')
       this.$router.push({name:'Login'})
     }

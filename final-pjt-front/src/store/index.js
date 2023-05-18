@@ -12,12 +12,25 @@ export default new Vuex.Store({
     createPersistedState(),
   ],
   state: {
+    username : null,
   },
   getters: {
   },
   mutations: {
+    LOGIN_USER(state, username) {
+      state.username = username
+    },
+    LOGOUT_USER(state) {
+      state.username = null
+    }
   },
   actions: {
+    Login_create_username(context, username) {
+      context.commit('LOGIN_USER', username)
+    },
+    Logout_delete_username(context) {
+      context.commit('LOGOUT_USER')
+    }
   },
   modules: {
   }

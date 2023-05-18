@@ -32,9 +32,9 @@ export default {
         method: "post",
         url: "http://127.0.0.1:8000/api/token/",
         data: this.userdata,
-
       })
       .then((res) => {
+        this.$store.dispatch('Login_create_username', this.userdata.username)
         localStorage.setItem("jwt", res.data.access)
         this.$emit('login')
         this.$router.push({name:'movie'})

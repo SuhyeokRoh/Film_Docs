@@ -1,5 +1,4 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
-from django.http.response import JsonResponse, HttpResponse
 from .serializers import MovieSerializer, MovieListSerializer, ReviewSerializer, ReviewListSerializer
 
 from .models import Movie, Genre, Review
