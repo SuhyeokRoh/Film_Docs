@@ -14,8 +14,8 @@
       <input type="text" id="first_name" v-model="userdata.first_name" />
     </div>
     <div>
-      <label for="nick_name">닉네임 : </label>
-      <input type="text" id="nick_name" v-model="userdata.nick_name" />
+      <label for="nickname">닉네임 : </label>
+      <input type="text" id="nickname" v-model="userdata.nickname" />
     </div>
     <div>
       <label for="email">e-mail : </label>
@@ -45,7 +45,7 @@ export default {
         username: null,
         last_name: null,
         first_name: null,
-        nick_name: null,
+        nickname: null,
         email: null,
         password: null,
         passwordConfirm: null,
@@ -71,7 +71,7 @@ export default {
         this.userdata.password = ''
         this.userdata.passwordConfirm = ''
         this.userdata.email = ''
-        this.userdata.nick_name = ''
+        this.userdata.nickname = ''
         this.userdata.last_name = ''
         this.userdata.first_name = ''
       })

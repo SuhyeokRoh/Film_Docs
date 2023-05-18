@@ -22,7 +22,7 @@ def signup(request):
     username = request.data.get('username')
     password = request.data.get('password')
     password_confirm = request.data.get('passwordConfirm')
-    nick_name = request.data.get('nick_name')
+    nickname = request.data.get('nickname')
     email = request.data.get('email')
 
     res_data = {}
@@ -31,7 +31,7 @@ def signup(request):
         res_data['error'] = '중복된 ID입니다'
         return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
     
-    if User.objects.filter(nick_name=nick_name).exists():
+    if User.objects.filter(nickname=nickname).exists():
         res_data['error'] = '이미 존재하는 닉네임입니다.'
         return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
     
