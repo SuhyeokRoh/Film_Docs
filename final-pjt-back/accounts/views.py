@@ -4,6 +4,13 @@ from rest_framework.response import Response
 from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
+
+# id 중복검사를 위한 모듈 import
+
+# from .serializers import UsernameUniqueCheckSerializer
+
+
+
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
@@ -14,12 +21,14 @@ def signup(request):
     username = request.data.get('username')
     if User.objects.filter(username=username).exists():
         return Response({'error':'중복된 ID입니다.'}, status=status.HTTP_400_BAD_REQUEST)
-    print(username)
     
     password = request.data.get('password')
     password_confirm = request.data.get('passwordConfirm')
+    res_data = {}
     if password != password_confirm:
-        return Response({'error':'비밀번호가 일치하지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
+        res_data['error'] = '비밀번호가 다릅니다.'
+        # print(res_data)
+        return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
     serializer = UserSerializer(data=request.data)
     # print(serializer)
@@ -30,6 +39,7 @@ def signup(request):
         user.set_password(request.data.get('password'))
         user.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 # 회원 탈퇴
 @api_view(['DELETE'])
