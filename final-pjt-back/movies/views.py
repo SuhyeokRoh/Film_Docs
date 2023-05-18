@@ -31,8 +31,10 @@ def review_create(request, movie_pk):
         return Response(serializer.data)
     else:
         serializer = ReviewSerializer(data=request.data)
+        print(serializer) #여기 까지는 받아옴
         if serializer.is_valid(raise_exception=True):
-            serializer.save(username=request.user)
+            serializer.save(user=request.user)
+            print(serializer) # 여기서 유효성 검사 통과를 못함
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 
