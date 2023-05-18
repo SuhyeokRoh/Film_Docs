@@ -5,6 +5,7 @@ from .models import Movie, Genre, Review
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.contrib.auth import get_user_model
 
 
 @api_view(['GET'])
@@ -29,10 +30,17 @@ def review_create(request, movie_pk):
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
     else:
-        serializer = ReviewSerializer(data=request.data)
+        print(request.data)
+        user = get_object_or_404(get_user_model(), username=request.data['user'])
+        print(user)
+        data = {
+            'content': request.data['content'],
+            'user': user
+        }
+        serializer = ReviewSerializer(data=data)
         print(serializer) #여기 까지는 받아옴
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save(user=user)
             print(serializer) # 여기서 유효성 검사 통과를 못함
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
