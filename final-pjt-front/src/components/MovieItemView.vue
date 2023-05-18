@@ -6,7 +6,7 @@
     <p>{{ movie.release_date }}</p>
     <p>{{ movie.overview }}</p>
     <ReviewListView 
-    :reviews="reviews" />
+    :reviews="reviews" :movie="movie" />
   </div>
 </template>
 
