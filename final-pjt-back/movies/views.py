@@ -19,7 +19,6 @@ def movie_list(request):
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = MovieSerializer(movie)
-    print(serializer)
     return Response(serializer.data)
 
 
