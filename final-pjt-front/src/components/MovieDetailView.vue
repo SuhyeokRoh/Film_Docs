@@ -8,7 +8,10 @@
     <p>투표수 : {{ queryData.movie.vote_count }}</p>
     <p>투표 평점 : {{ queryData.movie.vote_average }}</p>
     <p>줄거리 : {{ queryData.movie.overview }}</p>
-    <p>장르 : {{ queryData.movie.genres }}</p>
+    <!-- <p>장르 : {{ queryData.movie.genres }}</p> -->
+    <div>
+      장르 : <p v-for="(genre,index) in getGenreData" :key="index">{{ genre.name }}</p>
+    </div>
 
     <div>
       <label for="review">리뷰 작성 : </label>
@@ -31,11 +34,15 @@ export default {
   data() {
     return {
       queryData: null,
-      NewReview: null,
+      NewReview: '',
+      Genre: null,
     }
   },
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
+    this.getGenre()
+    // this.getReview()
+  
   },
   components: {
     ReviewItemView,
@@ -43,6 +50,9 @@ export default {
   computed: {
     getPoster() {
       return `https://image.tmdb.org/t/p/w500/${this.queryData.movie.poster_path}`
+    },
+    getGenreData() {
+      return this.Genre
     }
   },
   methods: {
@@ -53,13 +63,25 @@ export default {
       }
       return config
     },
-  
+    getReview() {
+      const movieid = this.queryData.movie.id
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/`,
+        headers: this.setToken()
+      })  
+      .then(res => {
+        this.queryData.reviews = res.data
+      })
+      .catch(err => console.log(err))
+    },
 
     createReview: function() {
       const movieid = this.queryData.movie.id 
-      console.log(this.NewReview)
-      console.log(movieid)
-      console.log(this.queryData)
+      // console.log(this.NewReview)
+      // console.log(movieid)
+      console.log(this.queryData.reviews)
+
       axios({
         method: "post",
         url: `${URL}/movies/${movieid}/reviews/`,
@@ -68,16 +90,38 @@ export default {
       })
       .then((res) => {
         console.log(res)
+        this.queryData.reviews = res.data
+        console.log(this.queryData.reviews)
         this.NewReview = ''
         
       }).catch((err) => {
         console.log(err)
       })
     },
+    getGenre: function() {
+      const movieid = this.queryData.movie.id 
+      axios({
+        method: "get",
+        url: `${URL}/movies/${movieid}/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        // console.log(res)
+        this.Genre = res.data.genres
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      
+    },
+
   },
-  create() {
-    this.createtReview()
-  },
+  // created() {
+  //   console.log('실행되냐?');
+  //   // this.createReview()
+  //   this.getReview()
+   
+  // },
 }
 </script>
 
