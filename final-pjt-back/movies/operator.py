@@ -74,7 +74,7 @@ def start():
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), 'djangojobstore')
     register_events(scheduler)
-    @scheduler.scheduled_job('cron', hour=23, name = 'saveDb')
+    @scheduler.scheduled_job('cron', hour=12,minute=6, name = 'saveDb')
     def auto_check():
         saveDb()
     scheduler.start()
