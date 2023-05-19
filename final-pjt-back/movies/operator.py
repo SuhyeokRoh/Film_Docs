@@ -31,7 +31,7 @@ def saveDb():
 
     # MovieList json으로 저장하기
 
-    for i in range(1, 2):
+    for i in range(1, 11):
         params = {
             "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
             "language" : "ko-KR",
@@ -54,5 +54,5 @@ def saveDb():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(saveDb, 'cron', hour=15, mivute=25, id="saveDataBase")
+    scheduler.add_job(saveDb, 'cron', hour=15, minute=24, id="saveDataBase")
     scheduler.start()
