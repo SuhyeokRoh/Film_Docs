@@ -53,27 +53,13 @@ export default {
       }
       return config
     },
-    getReview: function() {
-      // this.$store.dispatch('getReviews')
-       
-       axios({
-        method: 'get',
-        url: `${URL}/movies/${this.movie.id}/reviews`,
-        headers: this.setToken()
-      })
-        .then(res => {
-          // console.log(res)
-          this.review = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
+  
 
     createReview: function() {
       const movieid = this.queryData.movie.id 
       console.log(this.NewReview)
       console.log(movieid)
+      console.log(this.queryData)
       axios({
         method: "post",
         url: `${URL}/movies/${movieid}/reviews/`,
@@ -90,7 +76,6 @@ export default {
     },
   },
   create() {
-    this.getReview()
     this.createtReview()
   },
 }
