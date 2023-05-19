@@ -5,7 +5,7 @@
     <p>User Email : {{User.email}}</p>
     <p>User First Name : {{User.first_name}}</p>
     <p>User Last Name : {{User.last_name}}</p>
-    <p>User Nick Name : {{User.nick_name}}</p>
+    <p>User Nick Name : {{User.nickname}}</p>
   </div>
 </template>
 
