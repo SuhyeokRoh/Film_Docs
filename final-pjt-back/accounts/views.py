@@ -63,7 +63,7 @@ def account_delete(request):
 
 
 @api_view(['GET'])
-def profile(request, username):
-    user = get_object_or_404(get_user_model(), username=username)
+def profile(request, user_pk):
+    user = get_object_or_404(get_user_model(), id=user_pk)
     serializer = UserSerializer(user)
     return Response(serializer.data)
