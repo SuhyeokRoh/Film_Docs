@@ -56,11 +56,6 @@ def saveDb():
 
 def start():
     scheduler = BackgroundScheduler()
-<<<<<<< HEAD
     # scheduler.add_job(saveDb, 'cron', hour=16, minute=0, id="saveDataBase")
     scheduler.add_job(saveDb, 'interval', seconds=10, id="saveDataBase")
-=======
-    scheduler.add_job(saveDb, 'cron', hour=15, minute=24, id="saveDataBase")
-    # scheduler.add_job(saveDb, 'interval', seconds=10, id="saveDataBase")
->>>>>>> 5569c4d52b2a8c1d68b4dfa9b0ece18b4bdc5a51
     scheduler.start()
