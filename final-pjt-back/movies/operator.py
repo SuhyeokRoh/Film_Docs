@@ -42,16 +42,18 @@ def saveDb():
         data = r.json()['results']
 
         for x in data:
-            if Movie.objects.filter(movie_id=x['id']).exists():
-                continue
-            else:
+            try:
                 movie = Movie(movie_id = x.get('id'), title = x.get('title'), release_date = x.get('release_date'), 
                             popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
                             vote_average = x.get('vote_average'), overview = x.get('overview'),
                             poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'))
+                movie.validate_unique()
                 movie.save()
                 for g in x.get('genre_ids'):
                     movie.genres.add(g)
+            except:
+                continue
+            
 
 
 def start():

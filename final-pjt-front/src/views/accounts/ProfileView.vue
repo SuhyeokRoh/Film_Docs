@@ -54,7 +54,6 @@ export default {
       })
       .then(res => {
         this.movieTitle = res.data.title
-        console.log(this.movieTitle)
         return res.data.title
       })
       .catch(err => console.log(err))
