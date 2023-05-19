@@ -1,9 +1,10 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-from django_apscheduler.jobstores import register_events, DjangoJobStore
+# from django_apscheduler.jobstores import register_events, DjangoJobStore
 from django.conf import settings
 import requests
 import sys
 import io
+from .models import Movie, Genre
 
 
 def saveDb():
@@ -11,34 +12,26 @@ def saveDb():
     sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
 
 
-    MovieList_URL = "https://api.themoviedb.org/3/movie/popular"
+    MovieList_URL = "https://api.themoviedb.org/3/discover/movie"
     Genre_URL = "https://api.themoviedb.org/3/genre/movie/list"
 
-
     # Genre json으로 저장하기
-    genreData = []
     para = {
-        "api_key" : settings.SECRET_KEY,
+        "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
     }
 
     res = requests.get(Genre_URL, params=para)
+
     d = res.json()["genres"]
 
-    pk_g = 1
     for y in d:
-        dic = {
-            "model": "movies.genre",
-            "pk" : pk_g,
-            'fields' : y,
-        }
-        genreData.append(dic)
-
-    genreData.save()
+        genre = Genre(id = y['id'], name = y['name'])
+        genre.save()
+    # print(genreData)
 
     # MovieList json으로 저장하기
-    pk = 1
-    SaveData = []
-    for i in range(1, 6):
+
+    for i in range(1, 11):
         params = {
             "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
             "language" : "ko-KR",
@@ -47,34 +40,19 @@ def saveDb():
 
         r = requests.get(MovieList_URL, params=params)
         data = r.json()['results']
-        # print(data)
+
         for x in data:
-            dic = {
-                'model': 'movies.movie',
-                'pk': pk,
-                'fields': {
-                    'title': x.get('title'),
-                    'release_date' : x.get('release_date'),
-                    'popularity' : x.get('popularity'),
-                    'vote_count' : x.get('vote_count'),
-                    'vote_average' : x.get('vote_average'),
-                    'overview' : x.get('overview'),
-                    'poster_path' : x.get('poster_path'),
-                    'genres' : x.get('genre_ids'),
-                    'backdrop_path' : x.get('backdrop_path'),
-                }
-            }
-            SaveData.append(dic)
-            pk += 1
-    
-    SaveData.save()
+            movie = Movie(title = x['title'], release_date = x['release_date'], 
+                          popularity = x['popularity'], vote_count = x['vote_count'], 
+                          vote_average = x['vote_average'], overview = x['overview'],
+                          poster_path = x['poster_path'], 
+                          backdrop_path = x['backdrop_path'])
+            movie.save()
+            for g in x['genre_ids']:
+                movie.genres.add(g)
 
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_jobstore(DjangoJobStore(), 'djangojobstore')
-    register_events(scheduler)
-    @scheduler.scheduled_job('cron', hour=12,minute=6, name = 'saveDb')
-    def auto_check():
-        saveDb()
+    scheduler.add_job(saveDb, 'cron', hour=15, minute=24, id="saveDataBase")
     scheduler.start()
