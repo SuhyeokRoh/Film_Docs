@@ -31,7 +31,7 @@ def saveDb():
 
     # MovieList json으로 저장하기
 
-    for i in range(1, 11):
+    for i in range(1, 6):
         params = {
             "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
             "language" : "ko-KR",
@@ -42,17 +42,20 @@ def saveDb():
         data = r.json()['results']
 
         for x in data:
-            movie = Movie(title = x['title'], release_date = x['release_date'], 
-                          popularity = x['popularity'], vote_count = x['vote_count'], 
-                          vote_average = x['vote_average'], overview = x['overview'],
-                          poster_path = x['poster_path'], 
-                          backdrop_path = x['backdrop_path'])
-            movie.save()
-            for g in x['genre_ids']:
-                movie.genres.add(g)
+            if Movie.objects.filter(movie_id=x['id']).exists():
+                continue
+            else:
+                movie = Movie(movie_id = x.get('id'), title = x.get('title'), release_date = x.get('release_date'), 
+                            popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
+                            vote_average = x.get('vote_average'), overview = x.get('overview'),
+                            poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'))
+                movie.save()
+                for g in x.get('genre_ids'):
+                    movie.genres.add(g)
 
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(saveDb, 'cron', hour=15, minute=24, id="saveDataBase")
+    # scheduler.add_job(saveDb, 'cron', hour=15, minute=24, id="saveDataBase")
+    scheduler.add_job(saveDb, 'interval', seconds=10, id="saveDataBase")
     scheduler.start()
