@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>{{review.content}}</p>
-    <p>{{review.user_id}}</p>
+    <p>content : {{review.content}}</p>
+    <p>작성자 : {{review.user}}</p>
   </div>
 </template>
 

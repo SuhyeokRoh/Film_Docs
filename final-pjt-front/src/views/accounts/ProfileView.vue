@@ -1,11 +1,16 @@
 <template>
-  <div>
+  <div v-if="User">
     <h1>Profile</h1>
     <p>User Id : {{User.username}}</p>
     <p>User Email : {{User.email}}</p>
     <p>User First Name : {{User.first_name}}</p>
     <p>User Last Name : {{User.last_name}}</p>
-    <p>User Nick Name : {{User.nick_name}}</p>
+    <p>User Nick Name : {{User.nickname}}</p>
+    <h3>내가 남긴 리뷰</h3>
+    <div v-for="review in User.review_set" :key="review.id">
+      <p>title : {{ getMovie(review.movie) }}</p>
+      <p>content : {{ review.content }}</p>
+    </div>
   </div>
 </template>
 
@@ -18,6 +23,7 @@ export default {
   data() {
     return {
         User: null,
+        movieTitle: null,
     }
   },
   methods: {
@@ -37,10 +43,23 @@ export default {
         })
         .then((res) => {
             this.User = res.data
-            console.log(this.User)
         })
         .catch((err) => console.log(err))
+    },
+    getMovie(movie_pk) {
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movie_pk}/`,
+        headers: this.setToken()
+      })
+      .then(res => {
+        this.movieTitle = res.data.title
+        console.log(this.movieTitle)
+        return res.data.title
+      })
+      .catch(err => console.log(err))
     }
+    
   },
   created() {
     this.getUser()

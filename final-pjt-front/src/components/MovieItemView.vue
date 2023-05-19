@@ -21,7 +21,6 @@ export default {
   },
   computed: {
     getPoster() {
-      // console.log(`https://image.tmdb.org/t/p/original/${this.movie.poster_path}`)
       return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
     }
   },
@@ -41,7 +40,7 @@ export default {
         method: 'get',
         url: `${URL}/movies/${this.movie.id}/reviews/`,
         headers: this.setToken()
-      })
+      })  
       .then(res => {
         this.reviews = res.data
       })
@@ -51,7 +50,7 @@ export default {
       const movie = this.movie
       const reviews = this.reviews
 
-      this.$router.push({name: 'moviedetail', params: {movie, reviews}})
+      this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, reviews: reviews })}})
     }
   }
 }

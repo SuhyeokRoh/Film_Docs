@@ -33,7 +33,6 @@ const routes = [
     path: '/movie/detail',
     name: 'moviedetail',
     component: MovieDetailView,
-    props: true,
   },
 ]
 

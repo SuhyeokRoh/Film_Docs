@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-import axios from 'axios'
+// import axios from 'axios'
 
 Vue.use(Vuex)
 
-const API_URL = "http://127.0.0.1:8000"
+// const API_URL = "http://127.0.0.1:8000"
 
 export default new Vuex.Store({
   plugins: [
@@ -34,20 +34,18 @@ export default new Vuex.Store({
     Logout_delete_username(context) {
       context.commit('LOGOUT_USER')
     },
-    getReviews(movie_id) {
-      axios({
-        method: 'get',
-        url: `${API_URL}/movies/${movie_id}/reviews/`,
-      })
-        .then((res) => {
-          // context.commit('GET_REVIEWS', res.data)
-          console.log(res.data)
-          return res.data
-        })
-        .catch((err) => {
-        console.log(err)
-      })
-    },
+    // getReviews(context) {
+    //   axios({
+    //     method: 'get',
+    //     url: `${API_URL}/movies/${this.movie.id}/reviews/`,
+    //   })
+    //     .then((res) => {
+    //       context.commit('GET_REVIEWS', res.data)
+    //     })
+    //     .catch((err) => {
+    //     console.log(err)
+    //   })
+    // },
   },
   modules: {
   }

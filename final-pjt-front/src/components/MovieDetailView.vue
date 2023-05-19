@@ -1,21 +1,23 @@
 <template>
-  <div>
+  <div v-if="queryData">
     <h1>Movie Detail Page</h1>
-    <h3>제목 : {{ $route.params.movie.title }}</h3>
+    <h3>제목 : {{ queryData.movie.title }}</h3>
     <img :src=getPoster >
-    <p>개봉일 : {{ $route.params.movie.release_date }}</p>
-    <p>인기도 : {{ $route.params.movie.popularity }}</p>
-    <p>투표수 : {{ $route.params.movie.vote_count }}</p>
-    <p>투표 평점 : {{ $route.params.movie.vote_average }}</p>
-    <p>줄거리 : {{ $route.params.movie.overview }}</p>
-    <p>장르 : {{ $route.params.movie.genres }}</p>
+    <p>개봉일 : {{ queryData.movie.release_date }}</p>
+    <p>인기도 : {{ queryData.movie.popularity }}</p>
+    <p>투표수 : {{ queryData.movie.vote_count }}</p>
+    <p>투표 평점 : {{ queryData.movie.vote_average }}</p>
+    <p>줄거리 : {{ queryData.movie.overview }}</p>
+    <div>
+      장르 : <p v-for="(genre,index) in getGenreData" :key="index">{{ genre.name }}</p>
+    </div>
 
     <div>
       <label for="review">리뷰 작성 : </label>
-      <input type="text" id="review" v-model="Review" @keyup.enter="createReview">
+      <input type="text" id="review" v-model="NewReview" @keyup.enter="createReview">
       <button @click="createReview">리뷰 작성</button>
       <ReviewItemView 
-      v-for="review in $route.params.reviews" :key="review.id"
+      v-for="review in this.Reviews" :key="review.id"
       :review="review" />
     </div>
   </div>
@@ -30,24 +32,27 @@ export default {
   name: "MovieDetailView",
   data() {
     return {
-      Review: null,
+      queryData: null,
+      NewReview: '',
+      Genre: null,
+      Reviews: [],
     }
   },
-  props: {
-    movie: {
-      type: Object,
-    },
-    reviews: {
-      type: Array,
-    }
+  mounted() {
+    this.queryData = JSON.parse(this.$route.query.data)
+    this.getGenre()
+    this.Reviews = this.queryData.reviews
+  
   },
   components: {
     ReviewItemView,
   },
   computed: {
     getPoster() {
-      // console.log(`https://image.tmdb.org/t/p/original/${this.movie.poster_path}`)
-      return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
+      return `https://image.tmdb.org/t/p/w500/${this.queryData.movie.poster_path}`
+    },
+    getGenreData() {
+      return this.Genre
     }
   },
   methods: {
@@ -58,33 +63,59 @@ export default {
       }
       return config
     },
-    getReview: function() {
-      console.log(this.movie.id)
-      console.log(this.reviews)
-      this.reviews = this.$store.dispatch('getReviews', this.movie.id)
+
+    getReview() {
+      const movieid = this.queryData.movie.id
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/`,
+        headers: this.setToken()
+      })  
+      .then(res => {
+        this.queryData.reviews = res.data
+      })
+      .catch(err => console.log(err))
     },
 
     createReview: function() {
-      const movieid = this.movie.id
+      const movieid = this.queryData.movie.id 
+
       axios({
         method: "post",
-        url: `${URL}/movies/${this.movie.id}/reviews/`,
-        data: { 'content' :this.Review, 'movie':movieid},
+        url: `${URL}/movies/${movieid}/reviews/`,
+        data: { 'content' :this.NewReview, 'movie':movieid},
         headers: this.setToken()
       })
-      .then(() => {
-        // console.log(res)
-        this.Review = ''
-        this.getReview() 
+      .then((res) => {
+        this.queryData.reviews = res.data
+        this.Reviews.push(this.queryData.reviews)
+        this.NewReview = ''
         
       }).catch((err) => {
         console.log(err)
       })
     },
+    getGenre: function() {
+      const movieid = this.queryData.movie.id 
+      axios({
+        method: "get",
+        url: `${URL}/movies/${movieid}/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.Genre = res.data.genres
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      
+    },
+
   },
-  create() {
-    this.getReview()
-  },
+  // created() {
+  //   // this.createReview()
+  //   this.getReview()
+  // },
 }
 </script>
 

@@ -24,17 +24,15 @@ def movie_detail(request, movie_pk):
 
 @api_view(['GET', 'POST'])
 def review_create(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
     if request.method == 'GET':
-        movie = get_object_or_404(Movie, pk=movie_pk)
         reviews = movie.review_set.all()
         serializer = ReviewListSerializer(reviews, many=True)
         return Response(serializer.data)
     else:
-        movie = get_object_or_404(Movie, pk=movie_pk)
         serializer = ReviewSerializer(data=request.data)
-        print(serializer)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)
+            serializer.save(user=request.user)  
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 

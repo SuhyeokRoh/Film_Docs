@@ -1,3 +1,4 @@
+APScheduler==3.10.1
 asgiref==3.4.1
 certifi==2023.5.7
 cffi==1.15.1
@@ -7,7 +8,9 @@ defusedxml==0.7.1
 dj-rest-auth==4.0.0
 Django==3.2.6
 django-allauth==0.52.0
+django-apscheduler==0.6.2
 django-cors-headers==3.14.0
+django-environ==0.10.0
 django-seed==0.3.1
 djangorestframework==3.12.4
 djangorestframework-jwt==1.11.0
@@ -28,4 +31,6 @@ six==1.16.0
 sqlparse==0.4.1
 toposort==1.10
 typing==3.7.4.3
+tzdata==2023.3
+tzlocal==5.0.1
 urllib3==2.0.2
