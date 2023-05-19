@@ -42,7 +42,6 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
     this.Reviews = this.queryData.reviews
-
   
   },
   components: {
@@ -64,6 +63,7 @@ export default {
       }
       return config
     },
+
     getReview() {
       const movieid = this.queryData.movie.id
       axios({
@@ -79,7 +79,6 @@ export default {
 
     createReview: function() {
       const movieid = this.queryData.movie.id 
-
 
       axios({
         method: "post",
