@@ -17,7 +17,7 @@
       <label for="review">리뷰 작성 : </label>
       <input type="text" id="review" v-model="NewReview" @keyup.enter="createReview">
       <ReviewItemView 
-      v-for="review in queryData.reviews" :key="review.id"
+      v-for="review in this.Reviews" :key="review.id"
       :review="review" />
       <button @click="createReview">리뷰 작성</button>
     </div>
@@ -36,6 +36,7 @@ export default {
       queryData: null,
       NewReview: '',
       Genre: null,
+      Reviews: [],
     }
   },
   mounted() {
@@ -92,6 +93,7 @@ export default {
         console.log(res)
         this.queryData.reviews = res.data
         console.log(this.queryData.reviews)
+        this.Reviews.push(this.queryData.reviews)
         this.NewReview = ''
         
       }).catch((err) => {
