@@ -7,12 +7,13 @@ class Genre(models.Model):
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=100)
+    movie_id = models.IntegerField()
+    title = models.CharField(max_length=100, unique=True)
     release_date = models.DateField(null=True)
-    popularity = models.FloatField()
-    vote_count = models.IntegerField()
-    vote_average = models.FloatField()
-    overview = models.TextField()
+    popularity = models.FloatField(null=True)
+    vote_count = models.IntegerField(null=True)
+    vote_average = models.FloatField(null=True)
+    overview = models.TextField(null=True)
     backdrop_path = models.CharField(max_length=200, null=True)
     poster_path = models.CharField(max_length=200)
     genres = models.ManyToManyField(Genre)
