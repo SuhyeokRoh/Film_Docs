@@ -12,16 +12,25 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+import environ
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env(DEBUG=(bool, True))
+environ.Env.read_env(
+    env_file=os.path.join(BASE_DIR, '.env')
+)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure--8jvnq+*)(guwj4-p+%5+f*8h15a-wwsaavmj=%7+d@twic4u3'
+
+API_KEY = env('API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -59,6 +68,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_seed',
+    'django_apscheduler',
 ]
 
 REST_AUTH = {
@@ -149,7 +159,7 @@ SIMPLE_JWT = {
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-KR'
 
 TIME_ZONE = 'UTC'
 
@@ -159,6 +169,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Apscheduler에 관한 설정
+APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
+
+APSCHEDULER_RUN_NOW_TIMEOUT = 25
+
+SCHEDULER_DEFAULT = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
