@@ -13,10 +13,10 @@
     <div>
       <label for="review">리뷰 작성 : </label>
       <input type="text" id="review" v-model="Review" @keyup.enter="createReview">
+      <button @click="createReview">리뷰 작성</button>
       <ReviewItemView 
       v-for="review in $route.params.reviews" :key="review.id"
       :review="review" />
-      <button @click="createReview">리뷰 작성</button>
     </div>
   </div>
 </template>
@@ -59,22 +59,23 @@ export default {
       return config
     },
     getReview: function() {
-      this.$store.dispatch('getReviews')
+      console.log(this.movie.id)
+      console.log(this.reviews)
+      this.reviews = this.$store.dispatch('getReviews', this.movie.id)
     },
 
     createReview: function() {
       const movieid = this.movie.id
-      console.log(this.Review)
-      console.log(movieid)
       axios({
         method: "post",
         url: `${URL}/movies/${this.movie.id}/reviews/`,
         data: { 'content' :this.Review, 'movie':movieid},
         headers: this.setToken()
       })
-      .then((res) => {
-        console.log(res)
+      .then(() => {
+        // console.log(res)
         this.Review = ''
+        this.getReview() 
         
       }).catch((err) => {
         console.log(err)
@@ -82,7 +83,7 @@ export default {
     },
   },
   create() {
-    this.createReview()
+    this.getReview()
   },
 }
 </script>
