@@ -37,7 +37,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -172,9 +171,9 @@ USE_TZ = True
 # Apscheduler에 관한 설정
 APSCHEDULER_DATETIME_FORMAT = "N j, Y, f:s a"
 
-APSCHEDULER_RUN_NOW_TIMEOUT = 25
+APSCHEDULER_RUN_NOW_TIMEOUT = 100
 
-SCHEDULER_DEFAULT = True
+# SCHEDULER_DEFAULT = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

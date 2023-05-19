@@ -7,6 +7,6 @@ class MoviesConfig(AppConfig):
     name = 'movies'
 
     def ready(self):
-        if settings.SCHEDULER_DEFAULT:
-            from . import operator
-            operator.start()
+        # if settings.SCHEDULER_DEFAULT:
+        from . import operator
+        operator.start()
