@@ -6,9 +6,9 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from 'axios'
 
-// const URL = "http://127.0.0.1:8000"
+const URL = "http://127.0.0.1:8000"
 export default {
   name: 'MovieItemView',
   props: {
@@ -21,13 +21,12 @@ export default {
   },
   computed: {
     getPoster() {
-      // console.log(`https://image.tmdb.org/t/p/original/${this.movie.poster_path}`)
       return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
     }
   },
-  // created() {
-  //   this.getReview()
-  // },
+  created() {
+    this.getReview()
+  },
   methods: {
     setToken: function() {
       const token = localStorage.getItem("jwt")
@@ -36,17 +35,17 @@ export default {
       }
       return config
     },
-    // getReview() {
-    //   axios({
-    //     method: 'get',
-    //     url: `${URL}/movies/${this.movie.id}/reviews/`,
-    //     headers: this.setToken()
-    //   })  
-    //   .then(res => {
-    //     this.reviews = res.data
-    //   })
-    //   .catch(err => console.log(err))
-    // },
+    getReview() {
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${this.movie.id}/reviews/`,
+        headers: this.setToken()
+      })  
+      .then(res => {
+        this.reviews = res.data
+      })
+      .catch(err => console.log(err))
+    },
     gotoDetail() {
       const movie = this.movie
       const reviews = this.reviews

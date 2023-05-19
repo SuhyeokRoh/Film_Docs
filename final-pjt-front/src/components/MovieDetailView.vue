@@ -8,7 +8,6 @@
     <p>투표수 : {{ queryData.movie.vote_count }}</p>
     <p>투표 평점 : {{ queryData.movie.vote_average }}</p>
     <p>줄거리 : {{ queryData.movie.overview }}</p>
-    <!-- <p>장르 : {{ queryData.movie.genres }}</p> -->
     <div>
       장르 : <p v-for="(genre,index) in getGenreData" :key="index">{{ genre.name }}</p>
     </div>
@@ -16,10 +15,10 @@
     <div>
       <label for="review">리뷰 작성 : </label>
       <input type="text" id="review" v-model="NewReview" @keyup.enter="createReview">
+      <button @click="createReview">리뷰 작성</button>
       <ReviewItemView 
       v-for="review in this.Reviews" :key="review.id"
       :review="review" />
-      <button @click="createReview">리뷰 작성</button>
     </div>
   </div>
 </template>
@@ -42,7 +41,8 @@ export default {
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
-    // this.getReview()
+    this.Reviews = this.queryData.reviews
+
   
   },
   components: {
@@ -79,9 +79,7 @@ export default {
 
     createReview: function() {
       const movieid = this.queryData.movie.id 
-      // console.log(this.NewReview)
-      // console.log(movieid)
-      console.log(this.queryData.reviews)
+
 
       axios({
         method: "post",
@@ -90,9 +88,7 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
-        console.log(res)
         this.queryData.reviews = res.data
-        console.log(this.queryData.reviews)
         this.Reviews.push(this.queryData.reviews)
         this.NewReview = ''
         
@@ -108,7 +104,6 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
-        // console.log(res)
         this.Genre = res.data.genres
       })
       .catch((err) => {
@@ -119,10 +114,8 @@ export default {
 
   },
   // created() {
-  //   console.log('실행되냐?');
   //   // this.createReview()
   //   this.getReview()
-   
   // },
 }
 </script>
