@@ -24,6 +24,7 @@ export default {
     return {
         User: null,
         movieTitle: null,
+        inputUser: null, 
     }
   },
   methods: {
@@ -35,7 +36,8 @@ export default {
       return config
     },
     getUser() {
-        const username = this.$store.state.username
+        const username = this.$route.query.user
+        console.log(username)
         axios({
             method: 'get',
             url: `${URL}/accounts/${username}/profile/`,
@@ -58,11 +60,18 @@ export default {
       })
       .catch(err => console.log(err))
     }
-    
+  
   },
   created() {
+    // this.inputUser = this.$route.params.user;
     this.getUser()
-  }
+  },
+  // mounted() {
+  //   // this.User = JSON.parse(this.$route.data.user)
+  //   // this.inputUser = this.$route.params.user;
+  //   // this.query = JSON.parse(this.$route.data.user)
+  //   const User = this.$route.query.user
+  // },
 }
 </script>
 

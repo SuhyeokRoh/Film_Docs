@@ -11,12 +11,19 @@ export default {
   props: {
     review: Object,
   },
+  data() {
+    return {
+      query: null,
+    }
+  },
   methods: {
     gotoProfile() {
       const user = this.review.user
       // const content = this.review.content
-
-      this.$router.push({name: 'Profile', query : {data: JSON.stringify({user: user, })}})
+      console.log(user)
+      console.log(this.review)
+      this.$router.push({name: 'Profile', query : {user: user,}})
+      // this.$router.push({name: 'Profile', params: { user: user }})
     },
   },
 }
