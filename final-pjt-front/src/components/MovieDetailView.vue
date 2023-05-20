@@ -13,6 +13,11 @@
     </div>
 
     <div>
+      <button @click="likeMovie">좋아요 / 취소</button>
+      <p>{{like_user}}</p>
+    </div>
+
+    <div>
       <label for="review">리뷰 작성 : </label>
       <input type="text" id="review" v-model="NewReview" @keyup.enter="createReview">
       <button @click="createReview">리뷰 작성</button>
@@ -36,12 +41,14 @@ export default {
       NewReview: '',
       Genre: null,
       Reviews: [],
+      like_user: 0,
     }
   },
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
     this.Reviews = this.queryData.reviews
+    this.like_user = this.queryData.movie.movie_like_users.length
   },
   components: {
     ReviewItemView,
@@ -95,6 +102,7 @@ export default {
         console.log(err)
       })
     },
+
     getGenre: function() {
       const movieid = this.queryData.movie.id 
       axios({
@@ -108,9 +116,22 @@ export default {
       .catch((err) => {
         console.log(err)
       })
-      
     },
 
+    likeMovie() {
+      const movieid = this.queryData.movie.id 
+
+      axios({
+        method: "post",
+        url: `${URL}/movies/${movieid}/like/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.like_user = res.data.movie_like_users.length
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
   },
   // created() {
   //   // this.createReview()
