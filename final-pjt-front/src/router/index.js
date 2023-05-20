@@ -11,6 +11,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'movie',
+    component: MovieListView
+  },
+  {
+    path: '/login',
     name: 'Login',
     component: LoginView,
   },
@@ -23,11 +28,6 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: ProfileView,
-  },
-  {
-    path: '/movie',
-    name: 'movie',
-    component: MovieListView
   },
   {
     path: '/movie/detail',

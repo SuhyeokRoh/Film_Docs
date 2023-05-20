@@ -9,6 +9,7 @@
       </span>
 
       <span v-else>
+        <router-link :to="{ name: 'movie' }">Movie</router-link> | 
         <router-link :to="{ name: 'Signup' }">Signup</router-link> |
         <router-link :to="{ name: 'Login' }">Login</router-link> 
       </span>

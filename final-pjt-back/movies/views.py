@@ -4,11 +4,13 @@ from .serializers import MovieSerializer, MovieListSerializer, ReviewSerializer,
 from .models import Movie, Genre, Review
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
+from rest_framework.permissions import AllowAny
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def movie_list(request):
     movies = get_list_or_404(Movie)
     serializer = MovieListSerializer(movies, many=True)
@@ -16,6 +18,7 @@ def movie_list(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     serializer = MovieSerializer(movie)
@@ -34,30 +37,39 @@ def movie_like(request, movie_pk):
     return Response(serialzer.data)
     
 
-@api_view(['GET', 'POST'])
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def reviewList(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    reviews = movie.review_set.all()
+    serializer = ReviewListSerializer(reviews, many=True)
+    return Response(serializer.data)
+    
+    
+@api_view(['POST'])
 def review_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    if request.method == 'GET':
-        reviews = movie.review_set.all()
-        serializer = ReviewListSerializer(reviews, many=True)
-        return Response(serializer.data)
-    else:
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=request.user)  
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    serializer = ReviewSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        serializer.save(user=request.user)      
+    return Response(serializer.data, status=status.HTTP_201_CREATED)
         
 
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET'])
+@permission_classes([AllowAny])
 def review_detail(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.objects(pk=review_pk)
-
-    if request.method == 'GET':
-        serializer = ReviewSerializer(review)
-        return Response(serializer.data)
+    serializer = ReviewSerializer(review)
+    return Response(serializer.data)
     
-    elif request.method == 'PUT':
+
+@api_view(['PUT', 'DELETE'])
+def review_update(request, movie_pk, review_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    review = movie.review_set.objects(pk=review_pk)
+
+    if request.method == 'PUT':
         if not request.user.review_set.filter(pk=review_pk).exists():
             return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     

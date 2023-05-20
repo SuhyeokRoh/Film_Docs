@@ -39,7 +39,7 @@ export default {
       axios({
         method: 'get',
         url: `${URL}/movies/${this.movie.id}/reviews/`,
-        headers: this.setToken()
+        // headers: this.setToken()
       })  
       .then(res => {
         this.reviews = res.data
