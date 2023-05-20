@@ -7,6 +7,7 @@ class GenreSerializer(serializers.ModelSerializer):
         model = Genre
         fields = ('name',)
 
+
 class MovieListSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -15,14 +16,15 @@ class MovieListSerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
-    
     genres = GenreSerializer(many=True)
+    
     class Meta:
         model = Movie
         fields = "__all__"
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
+    movie = MovieSerializer(read_only=True)
     
     class Meta:
         model = Review

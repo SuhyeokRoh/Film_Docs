@@ -25,10 +25,13 @@ def movie_detail(request, movie_pk):
 @api_view(['POST'])
 def movie_like(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    if movie.like_users.filter(pk=request.user.pk).exists():
-        movie.like_users.remove(request.user)
+    if movie.movie_like_users.filter(pk=request.user.pk).exists():
+        movie.movie_like_users.remove(request.user)
     else:
-        movie.like_users.add(request.user)
+        movie.movie_like_users.add(request.user)
+    # movie.save()
+    serialzer = MovieSerializer(movie)
+    return Response(serialzer.data)
     
 
 @api_view(['GET', 'POST'])
