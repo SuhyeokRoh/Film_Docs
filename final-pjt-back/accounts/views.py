@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserSignupSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
@@ -18,7 +18,8 @@ User = get_user_model()
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
-    # print(request)
+    print(1)
+    print(request.data)
     username = request.data.get('username')
     password = request.data.get('password')
     password_confirm = request.data.get('passwordConfirm')
@@ -43,7 +44,8 @@ def signup(request):
         res_data['error'] = '비밀번호가 다릅니다.'
         return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
 
-    serializer = UserSerializer(data=request.data)
+    serializer = UserSignupSerializer(data=request.data)
+    print(2)
     # print(serializer)
     # 유효성 검사
     if serializer.is_valid(raise_exception=True):
