@@ -15,13 +15,15 @@
     <div v-for="movie in User.movielike" :key="movie.id">
       <p>{{movie.title}}</p>
     </div>
-    <h3>팔로워</h3>
-    <div>
 
-    </div>
-    <h3>팔로잉</h3>
+    
     <div>
-      
+      <p> 팔로워 : {{ follower }} </p>
+      <button @click="followPerson">follow / 취소</button>
+    </div>
+
+    <div>
+      <p>팔로잉 : {{ following }} </p>
     </div>
 
   </div>
@@ -35,10 +37,16 @@ export default {
   name: 'ProfileView',
   data() {
     return {
+        queryData: null,
         User: null,
         movieTitle: null,
-        inputUser: null, 
+        following: null,
+        follower: null,
+        isfollowed: false,
     }
+  },
+  mounted() {
+    this.followPerson()
   },
   methods: {
     setToken: function() {
@@ -58,37 +66,29 @@ export default {
       })
       .then((res) => {
         this.User = res.data
+        this.following = res.data.followings.length
         console.log(this.User)
       })
       .catch((err) => console.log(err))
     },
 
-    // getMovie(movie_pk) {
-    //   axios({
-    //     method: 'get',
-    //     url: `${URL}/movies/${movie_pk}/`,
-    //     headers: this.setToken()
-    //   })
-    //   .then(res => {
-    //     this.movieTitle = res.data.title
-    //     return res.data.title
-    //   })
-    //   .catch(err => console.log(err))
-    // }
     followPerson() {
       const username = this.$route.query.user
-
+      
       axios({
         method: 'post',
-        url: `${URL}/accounts/${username}/profile/`,
+        url: `${URL}/accounts/${username}/profile/follow/`,
         headers: this.setToken()
       })
       .then((res) => {
-        this.User = res.data
-        console.log(this.User)
+        console.log(res)
+        this.follower = res.data.followers.length
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        alert(err.response.data.err)
+        })
     },
+
 
   },
   created() {
