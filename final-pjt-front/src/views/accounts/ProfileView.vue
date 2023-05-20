@@ -37,6 +37,8 @@ export default {
     },
     getUser() {
         const username = this.$route.query.user
+        console.log(this.$store.state.username)
+        console.log(this.$route.query.user)
         console.log(username)
         axios({
             method: 'get',

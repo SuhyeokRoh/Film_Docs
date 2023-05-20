@@ -17,7 +17,7 @@
       <input type="text" id="review" v-model="NewReview" @keyup.enter="createReview">
       <button @click="createReview">리뷰 작성</button>
       <ReviewItemView 
-      v-for="review in this.Reviews" :key="review.id"
+      v-for="review in Reviews" :key="review.id"
       :review="review" />
     </div>
   </div>
@@ -42,7 +42,6 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
     this.Reviews = this.queryData.reviews
-  
   },
   components: {
     ReviewItemView,
@@ -51,6 +50,7 @@ export default {
     getPoster() {
       return `https://image.tmdb.org/t/p/w500/${this.queryData.movie.poster_path}`
     },
+
     getGenreData() {
       return this.Genre
     }
@@ -83,7 +83,7 @@ export default {
       axios({
         method: "post",
         url: `${URL}/movies/${movieid}/reviews/`,
-        data: { 'content' :this.NewReview, 'movie':movieid},
+        data: { 'content':this.NewReview, 'movie':movieid},
         headers: this.setToken()
       })
       .then((res) => {
