@@ -26,3 +26,16 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = "__all__"
         
+# 팔로우
+class FollowSerializer(serializers.ModelSerializer):
+
+    class UserfollowSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = get_user_model()
+            fields = ('id', 'username','followings')
+
+    followers = UserfollowSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'username', 'followings', 'followers')
