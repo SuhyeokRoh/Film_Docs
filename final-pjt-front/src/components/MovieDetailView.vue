@@ -76,7 +76,7 @@ export default {
       axios({
         method: 'get',
         url: `${URL}/movies/${movieid}/`,
-        headers: this.setToken()
+        // headers: this.setToken()
       })  
       .then(res => {
         this.queryData.reviews = res.data
@@ -89,7 +89,7 @@ export default {
 
       axios({
         method: "post",
-        url: `${URL}/movies/${movieid}/reviews/`,
+        url: `${URL}/movies/${movieid}/reviews/create/`,
         data: { 'content':this.NewReview, 'movie':movieid},
         headers: this.setToken()
       })
@@ -108,7 +108,7 @@ export default {
       axios({
         method: "get",
         url: `${URL}/movies/${movieid}/`,
-        headers: this.setToken()
+        // headers: this.setToken()
       })
       .then((res) => {
         this.Genre = res.data.genres

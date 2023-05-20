@@ -27,18 +27,18 @@ export default {
     this.getMovies()
   },
   methods: {
-    setToken: function() {
-      const token = localStorage.getItem("jwt")
-      const config = {
-        Authorization: `Bearer ${token}`
-      }
-      return config
-    },
+    // setToken: function() {
+    //   const token = localStorage.getItem("jwt")
+    //   const config = {
+    //     Authorization: `Bearer ${token}`
+    //   }
+    //   return config
+    // },
     getMovies() {
       axios({
         method: 'get',
         url: `${URL}/movies/`,
-        headers: this.setToken()
+        // headers: this.setToken()
       })
       .then(res => {
         this.movies = res.data
