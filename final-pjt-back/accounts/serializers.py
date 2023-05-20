@@ -4,6 +4,13 @@ from movies.serializers import ReviewListSerializer
 from movies.models import Movie
 
 
+class UserSignupSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = get_user_model()
+        fields = ("username", "first_name", "last_name", "email", "nickname",)
+
+
 class UserSerializer(serializers.ModelSerializer):
     
     class MovieTitleSerailizer(serializers.ModelSerializer):
