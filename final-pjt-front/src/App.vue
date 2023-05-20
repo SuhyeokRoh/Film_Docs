@@ -24,7 +24,7 @@ export default {
   data: function () {
     return {
       isLogin: false,
-      isMySessionActive: false
+      // isMySessionActive: false
     }
   },
   methods: {
