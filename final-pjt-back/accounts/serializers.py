@@ -20,6 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             fields = ("title",)
     
     review_set = ReviewListSerializer(many=True, read_only=True)
+    like_reviews = ReviewListSerializer(many=True, read_only=True)
     movielike = MovieTitleSerailizer(many=True, read_only=True)
 
     class Meta:

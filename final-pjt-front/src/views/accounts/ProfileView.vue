@@ -15,6 +15,10 @@
     <div v-for="movie in User.movielike" :key="movie.id">
       <p>{{movie.title}}</p>
     </div>
+    <h3>좋아요 누른 리뷰</h3>
+    <div v-for="likereview in User.like_reviews" :key="likereview.id">
+      <p>{{likereview.movie.title}} - {{likereview.content}}</p>
+    </div>
     <h3>팔로워</h3>
     <div>
 
@@ -63,18 +67,6 @@ export default {
       .catch((err) => console.log(err))
     },
 
-    // getMovie(movie_pk) {
-    //   axios({
-    //     method: 'get',
-    //     url: `${URL}/movies/${movie_pk}/`,
-    //     headers: this.setToken()
-    //   })
-    //   .then(res => {
-    //     this.movieTitle = res.data.title
-    //     return res.data.title
-    //   })
-    //   .catch(err => console.log(err))
-    // }
     followPerson() {
       const username = this.$route.query.user
 
