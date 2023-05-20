@@ -15,6 +15,7 @@ export default new Vuex.Store({
     username : null,
   },
   getters: {
+    
   },
   mutations: {
     LOGIN_USER(state, username) {
@@ -23,9 +24,7 @@ export default new Vuex.Store({
     LOGOUT_USER(state) {
       state.username = null
     },
-    // GET_REVIEWS(state, reviews) {
-    //   state.reviews = reviews
-    // },
+    
   },
   actions: {
     Login_create_username(context, username) {
@@ -34,18 +33,6 @@ export default new Vuex.Store({
     Logout_delete_username(context) {
       context.commit('LOGOUT_USER')
     },
-    // getReviews(context) {
-    //   axios({
-    //     method: 'get',
-    //     url: `${API_URL}/movies/${this.movie.id}/reviews/`,
-    //   })
-    //     .then((res) => {
-    //       context.commit('GET_REVIEWS', res.data)
-    //     })
-    //     .catch((err) => {
-    //     console.log(err)
-    //   })
-    // },
   },
   modules: {
   }
