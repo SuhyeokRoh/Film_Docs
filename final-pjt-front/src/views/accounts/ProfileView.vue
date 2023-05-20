@@ -15,6 +15,15 @@
     <div v-for="movie in User.movielike" :key="movie.id">
       <p>{{movie.title}}</p>
     </div>
+    <h3>팔로워</h3>
+    <div>
+
+    </div>
+    <h3>팔로잉</h3>
+    <div>
+      
+    </div>
+
   </div>
 </template>
 
@@ -66,6 +75,21 @@ export default {
     //   })
     //   .catch(err => console.log(err))
     // }
+    followPerson() {
+      const username = this.$route.query.user
+
+      axios({
+        method: 'post',
+        url: `${URL}/accounts/${username}/profile/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.User = res.data
+        console.log(this.User)
+      })
+      .catch((err) => console.log(err))
+    },
+
   },
   created() {
     this.getUser()
