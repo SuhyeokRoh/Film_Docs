@@ -24,6 +24,7 @@ export default {
   data: function () {
     return {
       isLogin: false,
+      isMySessionActive: false
     }
   },
   methods: {
@@ -32,7 +33,16 @@ export default {
       this.$store.dispatch('Logout_delete_username')
       localStorage.removeItem('jwt')
       this.$router.push({name:'Login'})
-    }
+    },
+    // onLoad() {
+    //   window.localStorage.setItem("isMySessionActive", true);
+    // },
+    // onUnload(event) {
+    //   window.localStorage.setItem("isMySessionActive", false);
+    //   // this.$store.dispatch('Logout_delete_username');
+    //   localStorage.removeItem('jwt');
+    //   event.returnValue = "";
+    // }
     
   },
   created() {
@@ -40,7 +50,15 @@ export default {
     if (token) {
       this.isLogin = true
     }
-  }
+  },
+  // beforeMount() {
+  //   window.addEventListener("load", this.onLoad);
+  //   window.addEventListener("beforeunload", this.onUnload);
+  // },
+  // beforeDestroy() {
+  //   window.removeEventListener("load", this.onLoad);
+  //   window.removeEventListener("beforeunload", this.onUnload);
+  // },
 }
 </script>
 
