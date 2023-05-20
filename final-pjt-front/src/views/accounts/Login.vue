@@ -23,7 +23,7 @@ export default {
       userdata: {
         username: null,
         password: null,
-      }
+      },
     }
   },
   methods: {
@@ -44,7 +44,8 @@ export default {
         this.userdata.username = ''
         this.userdata.password = ''
       })
-    }
-  }
+     },
+    //  
+  },
 }
 </script>
