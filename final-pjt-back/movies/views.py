@@ -31,8 +31,6 @@ def movie_like(request, movie_pk):
         movie.like_users.add(request.user)
     
 
-
-
 @api_view(['GET', 'POST'])
 def review_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
