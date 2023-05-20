@@ -67,3 +67,15 @@ def profile(request, user_pk):
     user = get_object_or_404(get_user_model(), id=user_pk)
     serializer = UserSerializer(user)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def follow(request, username):
+    if request.user.is_authenticated:
+        # 장고에 내장되어 user class를 만들어서 기능을 구현을 위해 사용 
+        person = get_object_or_404(get_user_model(), pk=username)
+        if person != request.user:
+            if person.followers.filter(pk=request.user.pk).exists():
+            # if request.user in person.followers.all():
+                person.followers.remove(request.user)
+            else:
+                person.followers.add(request.user)
