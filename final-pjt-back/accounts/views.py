@@ -89,3 +89,7 @@ def follow(request, username):
                 person.followers.remove(request.user)
             else:
                 person.followers.add(request.user)
+        serializer = UserSerializer(person)
+        return Response(serializer.data)
+    else:
+        return Response(status=401)
