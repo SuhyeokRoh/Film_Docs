@@ -1,10 +1,11 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from .serializers import UserSerializer, UserSignupSerializer
+from .serializers import UserSerializer, UserSignupSerializer, FollowSerializer
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 # id 중복검사를 위한 모듈 import
 
@@ -78,18 +79,29 @@ def profile(request, username):
     serializer = UserSerializer(user)
     return Response(serializer.data)
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
+@permission_classes([IsAuthenticated])
 def follow(request, username):
-    if request.user.is_authenticated:
-        # 장고에 내장되어 user class를 만들어서 기능을 구현을 위해 사용 
-        person = get_object_or_404(get_user_model(), pk=username)
-        if person != request.user:
-            if person.followers.filter(pk=request.user.pk).exists():
-            # if request.user in person.followers.all():
-                person.followers.remove(request.user)
-            else:
-                person.followers.add(request.user)
-        serializer = UserSerializer(person)
-        return Response(serializer.data)
+    # 장고에 내장되어 user class를 만들어서 기능을 구현을 위해 사용
+    res_data = {} 
+    person = get_object_or_404(get_user_model(), username=username)
+    if person != request.user:
+        if person.followers.filter(pk=request.user.pk).exists():
+            person.followers.remove(request.user)
+        else:
+            person.followers.add(request.user)
     else:
-        return Response(status=401)
+        res_data['err'] = '본인은 팔로우 불가능합니다.'
+        return Response(res_data, status=status.HTTP_400_BAD_REQUEST)
+    serializer = FollowSerializer(person)
+    # follow_status = {
+    #         'follow' : follow,
+    #         # 팔로워 숫자
+    #         'count' : person.followings.count(), 
+    #         # 팔로워 목록
+    #         'follow_list' : serializer.data.get('followings'),
+    #         # 팔로잉 수
+    #         'following_count' : person.followers.count(),
+    #     }
+    # return JsonResponse(follow_status)
+    return Response(serializer.data)
