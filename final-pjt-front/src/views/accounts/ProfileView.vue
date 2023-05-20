@@ -8,8 +8,12 @@
     <p>User Nick Name : {{User.nickname}}</p>
     <h3>내가 남긴 리뷰</h3>
     <div v-for="review in User.review_set" :key="review.id">
-      <p>title : {{ getMovie(review.movie) }}</p>
+      <p>title : {{ review.movie.title }}</p>
       <p>content : {{ review.content }}</p>
+    </div>
+    <h3>좋아요 누른 영화</h3>
+    <div v-for="movie in User.movielike" :key="movie.id">
+      <p>{{movie.title}}</p>
     </div>
   </div>
 </template>
@@ -35,43 +39,37 @@ export default {
       }
       return config
     },
+
     getUser() {
-        const username = this.$route.query.user
-        console.log(username)
-        axios({
-            method: 'get',
-            url: `${URL}/accounts/${username}/profile/`,
-            headers: this.setToken()
-        })
-        .then((res) => {
-            this.User = res.data
-        })
-        .catch((err) => console.log(err))
-    },
-    getMovie(movie_pk) {
+      const username = this.$route.query.user
       axios({
         method: 'get',
-        url: `${URL}/movies/${movie_pk}/`,
+        url: `${URL}/accounts/${username}/profile/`,
         headers: this.setToken()
       })
-      .then(res => {
-        this.movieTitle = res.data.title
-        return res.data.title
+      .then((res) => {
+        this.User = res.data
+        console.log(this.User)
       })
-      .catch(err => console.log(err))
-    }
-  
+      .catch((err) => console.log(err))
+    },
+
+    // getMovie(movie_pk) {
+    //   axios({
+    //     method: 'get',
+    //     url: `${URL}/movies/${movie_pk}/`,
+    //     headers: this.setToken()
+    //   })
+    //   .then(res => {
+    //     this.movieTitle = res.data.title
+    //     return res.data.title
+    //   })
+    //   .catch(err => console.log(err))
+    // }
   },
   created() {
-    // this.inputUser = this.$route.params.user;
     this.getUser()
   },
-  // mounted() {
-  //   // this.User = JSON.parse(this.$route.data.user)
-  //   // this.inputUser = this.$route.params.user;
-  //   // this.query = JSON.parse(this.$route.data.user)
-  //   const User = this.$route.query.user
-  // },
 }
 </script>
 

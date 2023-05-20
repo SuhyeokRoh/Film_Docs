@@ -22,6 +22,18 @@ def movie_detail(request, movie_pk):
     return Response(serializer.data)
 
 
+@api_view(['POST'])
+def movie_like(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    if movie.movie_like_users.filter(pk=request.user.pk).exists():
+        movie.movie_like_users.remove(request.user)
+    else:
+        movie.movie_like_users.add(request.user)
+    # movie.save()
+    serialzer = MovieSerializer(movie)
+    return Response(serialzer.data)
+    
+
 @api_view(['GET', 'POST'])
 def review_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
@@ -56,3 +68,4 @@ def review_detail(request, movie_pk, review_pk):
     else:
         review.delete()
         return Response({ 'id': review_pk }, status=status.HTTP_204_NO_CONTENT)
+    
