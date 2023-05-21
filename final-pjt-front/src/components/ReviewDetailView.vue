@@ -19,7 +19,7 @@
         <button @click="saveComment">입력</button>
       </div>
       <div v-for="comment in comments" :key="comment.id">
-        <p>{{comment.content}}</p>
+        <p>{{comment.content}} - <span class="ableToClick">작성자 : {{comment.user.username}}</span></p>
       </div>
     </div>
   </div>
@@ -45,7 +45,6 @@ export default {
     this.like_reviews = this.queryData.reviews.like_users.length
     this.dislike_reviews = this.queryData.reviews.dislike_users.length
     this.comments = this.queryData.reviews.comment_set
-    console.log(this.queryData.reviews.comment_set)
   },
   methods: {
     setToken: function() {
@@ -87,6 +86,21 @@ export default {
       .catch((err) => console.log(err))
     },
 
+    getComment() {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
+        headers: this.setToken(),
+      })
+      .then((res) => {
+        this.comments = res.data
+      })
+      .catch(err => console.log(err))
+    },
+
     saveComment() {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
@@ -102,8 +116,8 @@ export default {
         },
         headers: this.setToken(),
       })
-      .then((res) => {
-        this.comments.push(res.data)
+      .then(() => {
+        this.getComment()
         this.commentContent = ''
       })
       .catch(err => console.log(err))

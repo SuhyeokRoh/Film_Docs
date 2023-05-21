@@ -107,6 +107,16 @@ def review_dislike(request, movie_pk, review_pk):
     return Response(serialzer.data)
 
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def commentList(request, movie_pk, review_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    review = movie.review_set.filter(pk=review_pk)[0]
+    comments = review.comment_set.all()
+    serializer = CommentListSerializer(comments, many=True)
+    return Response(serializer.data)
+
+
 @api_view(['POST'])
 def comment_create(request, movie_pk, review_pk):
     serializer = CommentCreateSerializer(data=request.data)
