@@ -18,6 +18,7 @@ class Movie(models.Model):
     poster_path = models.CharField(max_length=200)
     genres = models.ManyToManyField(Genre)
     movie_like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movielike")
+    movie_dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movieDislike")
 
 
 class Review(models.Model):

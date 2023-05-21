@@ -109,14 +109,9 @@ def review_dislike(request, movie_pk, review_pk):
 
 @api_view(['POST'])
 def comment_create(request, movie_pk, review_pk):
-    # movie = get_object_or_404(Movie, pk=movie_pk)
-    # review = movie.review_set.filter(pk=review_pk)[0]
-    serializer = CommentSerializer(data=request.data)
-    print("여기까진 된다.")
+    serializer = CommentCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        print('여기도 되니?')
-        serializer.save(user=request.user)
-        print("여기까지 왔다니 대단하군")      
+        serializer.save(user=request.user)     
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
