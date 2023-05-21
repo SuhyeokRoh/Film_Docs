@@ -32,7 +32,6 @@ def movie_like(request, movie_pk):
         movie.movie_like_users.remove(request.user)
     else:
         movie.movie_like_users.add(request.user)
-    # movie.save()
     serialzer = MovieSerializer(movie)
     return Response(serialzer.data)
     
@@ -60,6 +59,7 @@ def review_create(request, movie_pk):
 def review_detail(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.objects(pk=review_pk)
+    print(review)
     serializer = ReviewSerializer(review)
     return Response(serializer.data)
     
@@ -80,4 +80,16 @@ def review_update(request, movie_pk, review_pk):
     else:
         review.delete()
         return Response({ 'id': review_pk }, status=status.HTTP_204_NO_CONTENT)
+    
+
+@api_view(['POST'])
+def review_like(request, movie_pk, review_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    review = movie.review_set.filter(pk=review_pk)[0]
+    if review.like_users.filter(pk=request.user.pk).exists():
+        review.like_users.remove(request.user)
+    else:
+        review.like_users.add(request.user)
+    serialzer = ReviewSerializer(review)
+    return Response(serialzer.data)
     

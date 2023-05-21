@@ -15,6 +15,10 @@
     <div v-for="movie in User.movielike" :key="movie.id">
       <p>{{movie.title}}</p>
     </div>
+    <h3>좋아요 누른 리뷰</h3>
+    <div v-for="likereview in User.like_reviews" :key="likereview.id">
+      <p>{{likereview.movie.title}} - {{likereview.content}}</p>
+    </div>
 
     
     <div>

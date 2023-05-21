@@ -41,7 +41,7 @@ export default {
       NewReview: '',
       Genre: null,
       Reviews: [],
-      like_user: 0,
+      like_user: null,
     }
   },
   mounted() {
