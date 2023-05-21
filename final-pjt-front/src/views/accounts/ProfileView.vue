@@ -50,7 +50,7 @@ export default {
     }
   },
   mounted() {
-    this.followPerson()
+    // this.followPerson()
   },
   methods: {
     setToken: function() {
