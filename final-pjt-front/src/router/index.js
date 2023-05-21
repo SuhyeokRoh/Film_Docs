@@ -6,6 +6,7 @@ import MovieListView from '@/views/movie/MovieListView'
 import ProfileView from '@/views/accounts/ProfileView'
 import MovieDetailView from '@/components/MovieDetailView'
 import ReviewDetailView from '@/components/ReviewDetailView'
+import MovieRecommendView from '@/views/movie/MovieRecommendView'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/movie/review/detail',
     name: 'reviewdetail',
     component: ReviewDetailView,
+  },
+  {
+    path: '/movie/recommend/',
+    name: 'recommend',
+    component: MovieRecommendView,
   },
 ]
 
