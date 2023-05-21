@@ -1,5 +1,5 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
-from .serializers import MovieSerializer, MovieListSerializer, ReviewSerializer, ReviewListSerializer, CommentListSerializer, CommentSerializer, ReviewLikeSerializer
+from .serializers import *
 
 from .models import Movie, Genre, Review
 from rest_framework import status
@@ -58,7 +58,7 @@ def review_detail(request, movie_pk, review_pk):
 @api_view(['POST'])
 def review_create(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    serializer = ReviewSerializer(data=request.data)
+    serializer = ReviewCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user)      
     return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -73,7 +73,7 @@ def review_update(request, movie_pk, review_pk):
         if not request.user.review_set.filter(pk=review_pk).exists():
             return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     
-        serializer = ReviewSerializer(review, data=request.data)
+        serializer = ReviewCreateSerializer(review, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
@@ -86,11 +86,12 @@ def review_update(request, movie_pk, review_pk):
 def review_like(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.filter(pk=review_pk)[0]
+    print(review)
     if review.like_users.filter(pk=request.user.pk).exists():
         review.like_users.remove(request.user)
     else:
         review.like_users.add(request.user)
-    serialzer = ReviewLikeSerializer(review)
+    serialzer = ReviewSerializer(review)
     return Response(serialzer.data)
 
 
@@ -102,17 +103,15 @@ def review_dislike(request, movie_pk, review_pk):
         review.dislike_users.remove(request.user)
     else:
         review.dislike_users.add(request.user)
-    serialzer = ReviewLikeSerializer(review)
+    serialzer = ReviewSerializer(review)
     return Response(serialzer.data)
 
 
 @api_view(['POST'])
 def comment_create(request, movie_pk, review_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    review = movie.review_set.filter(pk=review_pk)[0]
-    serializer = CommentSerializer(data=request.data)
+    serializer = CommentCreateSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(user=request.user)      
+        serializer.save(user=request.user)     
     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

@@ -1,16 +1,26 @@
 <template>
   <div>
     <h1>리뷰 상세 페이지</h1>
-    <h2>{{queryData.reviews.title}}</h2>
-    <p @click="gotoProfile">작성자 : {{queryData.username}}</p>
-    <p>{{queryData.reviews.content}}</p>
-    <div>
-      <button @click="likeReview">리뷰 좋아요 / 취소</button>
-      <p>좋아요 : {{like_reviews}}</p>
-    </div>
-    <div>
-      <button @click="dislikeReview">리뷰 싫어요 / 취소</button>
-      <p>싫어요 : {{dislike_reviews}}</p>
+    <div v-if="queryData">
+      <h2>{{queryData.reviews.title}}</h2>
+      <p @click="gotoProfile">작성자 : {{queryData.username}}</p>
+      <p>{{queryData.reviews.content}}</p>
+      <div>
+        <button @click="likeReview">리뷰 좋아요 / 취소</button>
+        <p>좋아요 : {{like_reviews}}</p>
+      </div>
+      <div>
+        <button @click="dislikeReview">리뷰 싫어요 / 취소</button>
+        <p>싫어요 : {{dislike_reviews}}</p>
+      </div>
+      <div>
+        <label for="comment">댓글 남기기 : </label>
+        <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
+        <button @click="saveComment">입력</button>
+      </div>
+      <div v-for="comment in comments" :key="comment.id">
+        <p>{{comment.content}}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -26,12 +36,16 @@ export default {
       queryData: null,
       like_reviews: null,
       dislike_reviews: null,
+      commentContent: null,
+      comments: [],
     }
   },
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.like_reviews = this.queryData.reviews.like_users.length
     this.dislike_reviews = this.queryData.reviews.dislike_users.length
+    this.comments = this.queryData.reviews.comment_set
+    console.log(this.queryData.reviews.comment_set)
   },
   methods: {
     setToken: function() {
@@ -45,7 +59,7 @@ export default {
     likeReview() {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
-
+      console.log(this.queryData.reviews)
       axios({
         method: 'post',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/like/`,
@@ -71,6 +85,28 @@ export default {
         this.dislike_reviews = res.data.dislike_users.length
       })
       .catch((err) => console.log(err))
+    },
+
+    saveComment() {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+      const content = this.commentContent
+
+      axios({
+        method: 'post',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/create/`,
+        data: { 
+          'movie': movieid,
+          'review': reviewid,
+          'content': content,
+        },
+        headers: this.setToken(),
+      })
+      .then((res) => {
+        this.comments.push(res.data)
+        this.commentContent = ''
+      })
+      .catch(err => console.log(err))
     },
 
     gotoProfile() {

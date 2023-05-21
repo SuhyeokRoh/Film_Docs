@@ -53,7 +53,6 @@ export default {
     },
 
     gotoDetailReview() {
-      console.log(this.review)
       const reviews = this.review
       const username = this.username
       this.$router.push({name: 'reviewdetail', query : {data: JSON.stringify({reviews: reviews, username: username, })}})

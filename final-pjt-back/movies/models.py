@@ -18,6 +18,7 @@ class Movie(models.Model):
     poster_path = models.CharField(max_length=200)
     genres = models.ManyToManyField(Genre)
     movie_like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movielike")
+    movie_dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movieDislike")
 
 
 class Review(models.Model):
@@ -32,6 +33,7 @@ class Review(models.Model):
 
 
 class Comment(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
