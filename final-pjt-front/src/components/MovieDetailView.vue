@@ -59,7 +59,6 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
     this.Reviews = this.queryData.reviews
-    console.log(this.queryData)
     this.like_user = this.queryData.movie.movie_like_users.length
     this.getTrailer()
   },
@@ -89,7 +88,6 @@ export default {
       axios({
         method: 'get',
         url: `${URL}/movies/${movieid}/`,
-        // headers: this.setToken()
       })  
       .then(res => {
         this.queryData.reviews = res.data
@@ -152,8 +150,6 @@ export default {
 
     getTrailer() {
       const movieid = this.queryData.movie.movie_id
-      
-      console.log(movieid)
       axios({
         method: "get",
         url: `https://api.themoviedb.org/3/movie/${movieid}/videos?api_key=${key}`
