@@ -1,5 +1,5 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
-from .serializers import MovieSerializer, MovieListSerializer, ReviewSerializer, ReviewListSerializer, CommentListSerializer, CommentSerializer
+from .serializers import MovieSerializer, MovieListSerializer, ReviewSerializer, ReviewListSerializer, CommentListSerializer, CommentSerializer, ReviewLikeSerializer
 
 from .models import Movie, Genre, Review
 from rest_framework import status
@@ -90,7 +90,7 @@ def review_like(request, movie_pk, review_pk):
         review.like_users.remove(request.user)
     else:
         review.like_users.add(request.user)
-    serialzer = ReviewSerializer(review)
+    serialzer = ReviewLikeSerializer(review)
     return Response(serialzer.data)
 
 
@@ -102,7 +102,7 @@ def review_dislike(request, movie_pk, review_pk):
         review.dislike_users.remove(request.user)
     else:
         review.dislike_users.add(request.user)
-    serialzer = ReviewSerializer(review)
+    serialzer = ReviewLikeSerializer(review)
     return Response(serialzer.data)
 
 
