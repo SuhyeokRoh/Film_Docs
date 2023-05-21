@@ -92,4 +92,19 @@ def review_like(request, movie_pk, review_pk):
         review.like_users.add(request.user)
     serialzer = ReviewSerializer(review)
     return Response(serialzer.data)
+
+
+@api_view(['POST'])
+def review_dislike(request, movie_pk, review_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    review = movie.review_set.filter(pk=review_pk)[0]
+    if review.dislike_users.filter(pk=request.user.pk).exists():
+        review.dislike_users.remove(request.user)
+    else:
+        review.dislike_users.add(request.user)
+    serialzer = ReviewSerializer(review)
+    return Response(serialzer.data)
+
+
+
     
