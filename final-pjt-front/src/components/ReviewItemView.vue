@@ -1,7 +1,13 @@
-<template>
-  <div @click="gotoProfile()">
-    <p>content : {{review.content}}</p>
-    <p>작성자 : {{username}}</p>
+template>
+  <div id="reviewbox">
+    <div @click="gotoProfile()">
+      <p>content : {{review.content}}</p>
+      <p>작성자 : {{username}}</p>
+    </div>
+    <div>
+      <button @click="likeReview">리뷰 좋아요 / 취소</button>
+      <p>좋아요 : {{like_reviews}}</p>
+    </div>
   </div>
 </template>
 
@@ -18,10 +24,14 @@ export default {
     return {
       query: null,
       username: null,
+      like_reviews: null,
     }
   },
   created() {
     this.getUsername()
+  },
+  mounted() {
+    this.like_reviews = this.review.like_users.length
   },
   methods: {
     setToken: function() {
@@ -49,10 +59,27 @@ export default {
       const username = this.username
       this.$router.push({name: 'Profile', query : {user: username}})
     },
-  },
+
+    likeReview() {
+      const movieid = this.review.movie.id
+      const reviewid = this.review.id
+
+      axios({
+        method: 'post',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/like/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.like_reviews = res.data.like_users.length
+      })
+      .catch((err) => console.log(err))
+    },
+  }
 }
 </script>
 
 <style>
-
+#reviewbox {
+  border: solid 1px black;
+}
 </style>
