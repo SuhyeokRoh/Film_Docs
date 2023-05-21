@@ -11,22 +11,6 @@ class UserSignupSerializer(serializers.ModelSerializer):
         fields = ("username", "first_name", "last_name", "email", "nickname",)
 
 
-class UserSerializer(serializers.ModelSerializer):
-    
-    class MovieTitleSerailizer(serializers.ModelSerializer):
-        
-        class Meta:
-            model = Movie
-            fields = ("title",)
-    
-    review_set = ReviewListSerializer(many=True, read_only=True)
-    like_reviews = ReviewListSerializer(many=True, read_only=True)
-    movielike = MovieTitleSerailizer(many=True, read_only=True)
-
-    class Meta:
-        model = get_user_model()
-        fields = "__all__"
-        
 # 팔로우
 class FollowSerializer(serializers.ModelSerializer):
 
@@ -40,3 +24,22 @@ class FollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('id', 'username', 'followings', 'followers')
+
+
+class UserSerializer(serializers.ModelSerializer):
+    
+    class MovieTitleSerailizer(serializers.ModelSerializer):
+        
+        class Meta:
+            model = Movie
+            fields = ("title",)
+    
+    review_set = ReviewListSerializer(many=True, read_only=True)
+    like_reviews = ReviewListSerializer(many=True, read_only=True)
+    movielike = MovieTitleSerailizer(many=True, read_only=True)
+    followers = FollowSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = "__all__"
+        
