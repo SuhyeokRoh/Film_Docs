@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
-
+# import random
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -158,3 +158,14 @@ def comment_dislike(request, movie_pk, review_pk, comment_pk):
         review.dislike_comment_users.add(request.user)
     serialzer = CommentSerializer(review)
     return Response(serialzer.data)
+
+@api_view(['GET'])
+def movie_recommend(request):
+    movies = get_list_or_404(Movie)
+    # high_vote_rate_movies = sorted(movies, key=lambda x: x['vote_average'])
+    high_vote_rate_movies = sorted(movies, key=lambda x: x.vote_average, reverse=True)
+    # serializers = MovieListSerializer(movies, many=True)
+    # print(movies[0].vote_average)
+    serializers = MovieListSerializer(high_vote_rate_movies, many=True)
+    # serializers = MovieSerializer(high_vote_rate_movies)
+    return Response(serializers.data)
