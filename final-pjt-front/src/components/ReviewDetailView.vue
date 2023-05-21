@@ -3,7 +3,7 @@
     <h1>리뷰 상세 페이지</h1>
     <div v-if="queryData">
       <h2>{{queryData.reviews.title}}</h2>
-      <p @click="gotoProfile">작성자 : {{queryData.username}}</p>
+      <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.username}}</p>
       <p>{{queryData.reviews.content}}</p>
       <div>
         <button @click="likeReview">리뷰 좋아요 / 취소</button>
