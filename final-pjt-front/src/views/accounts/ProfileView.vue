@@ -71,7 +71,8 @@ export default {
       .then((res) => {
         this.User = res.data
         this.following = res.data.followings.length
-        console.log(this.User)
+        this.follower = res.data.followers.length
+        // console.log(this.User)
       })
       .catch((err) => console.log(err))
     },
@@ -86,13 +87,13 @@ export default {
       })
       .then((res) => {
         console.log(res)
+        // 여기서 키중복 경고가 발생함 그러나 follow 실시간 반영을 위해 일단 남겨두었음
         this.follower = res.data.followers.length
       })
       .catch((err) => {
         alert(err.response.data.err)
         })
     },
-
 
   },
   created() {
