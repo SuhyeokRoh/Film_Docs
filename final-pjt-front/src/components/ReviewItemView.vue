@@ -1,5 +1,5 @@
 <template>
-  <div id="reviewbox" @click="gotoDetailReview">
+  <div class="ableToClick" id="reviewbox" @click="gotoDetailReview">
     <div>
       <h3>{{review.title}}</h3>
       <p>작성자 : {{username}}</p>

@@ -1,5 +1,5 @@
 <template>
-  <div @click="gotoDetail">
+  <div class="ableToClick" @click="gotoDetail">
     <img :src=getPoster >
     <h2>{{ movie.title }}</h2>
   </div>
