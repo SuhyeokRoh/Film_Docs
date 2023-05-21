@@ -31,19 +31,20 @@ class ReviewListSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ReviewSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Review
-        # fields = "__all__"
-        fields = ('content','movie','user_id',)
-        
-        
 class CommentListSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Comment
         fields = '__all__'
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    comment = CommentListSerializer(many=True)
+
+    class Meta:
+        model = Review
+        # fields = "__all__"
+        fields = ('content','movie','user_id', 'comment',)
         
 
 class CommentSerializer(serializers.ModelSerializer):
