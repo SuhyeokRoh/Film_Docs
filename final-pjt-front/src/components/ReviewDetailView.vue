@@ -18,8 +18,8 @@
         <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
         <button @click="saveComment">입력</button>
       </div>
-      <div>
-        <p>{{queryData.reviews}}</p>
+      <div v-for="comment in comments" :key="comment.id">
+        <p>{{comment.content}}</p>
       </div>
     </div>
   </div>
@@ -37,14 +37,15 @@ export default {
       like_reviews: null,
       dislike_reviews: null,
       commentContent: null,
-      comment: [],
+      comments: [],
     }
   },
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.like_reviews = this.queryData.reviews.like_users.length
     this.dislike_reviews = this.queryData.reviews.dislike_users.length
-    this.comment = this.queryData.reviews.comment_set
+    this.comments = this.queryData.reviews.comment_set
+    console.log(this.queryData.reviews.comment_set)
   },
   methods: {
     setToken: function() {
@@ -95,14 +96,14 @@ export default {
         method: 'post',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/create/`,
         data: { 
-          'content': content,
           'movie': movieid,
           'review': reviewid,
+          'content': content,
         },
         headers: this.setToken(),
       })
       .then((res) => {
-        console.log(res)
+        this.comments.push(res.data)
         this.commentContent = ''
       })
       .catch(err => console.log(err))
