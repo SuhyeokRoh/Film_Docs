@@ -13,6 +13,12 @@
     </div>
 
     <div>
+      <p>예고편 : </p>
+      <!-- <iframe :src="" width="500" height="255" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        allowfullscreen></iframe> -->
+    </div>
+
+    <div>
       <button @click="likeMovie">좋아요 / 취소</button>
       <p>{{like_user}}</p>
     </div>
@@ -31,6 +37,7 @@
 <script>
 import ReviewItemView from './ReviewItemView.vue'
 import axios from 'axios'
+// const YT_API_KEY = process.env.YOUTUBE_API_KEY
 
 const URL = "http://127.0.0.1:8000"
 export default {
