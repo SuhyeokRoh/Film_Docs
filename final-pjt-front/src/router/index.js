@@ -42,7 +42,7 @@ const routes = [
     component: ReviewDetailView,
   },
   {
-    path: '/movie/recommend/',
+    path: '/movie/recommend',
     name: 'recommend',
     component: MovieRecommendView,
   },
