@@ -24,9 +24,11 @@
     </div>
 
     <div>
-      <label for="review">리뷰 작성 : </label>
-      <input type="text" id="review" v-model="NewReview" @keyup.enter="createReview">
-      <button @click="createReview">리뷰 작성</button>
+      <label for="review_title">제목 작성: </label>
+      <input type="text" id="review_title" v-model="NewReviewTitle"><br>
+      <label for="review_content">리뷰 작성 : </label>
+      <textarea id="review_content" cols="30" rows="10" v-model="NewReviewContent" @keyup.enter="createReview"></textarea>
+      <button @click="createReview">리뷰 등록</button>
       <ReviewItemView 
       v-for="review in Reviews" :key="review.id"
       :review="review" />
@@ -45,7 +47,8 @@ export default {
   data() {
     return {
       queryData: null,
-      NewReview: '',
+      NewReviewTitle: '',
+      NewReviewContent: '',
       Genre: null,
       Reviews: [],
       like_user: null,
@@ -55,6 +58,7 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
     this.Reviews = this.queryData.reviews
+    console.log(this.queryData)
     this.like_user = this.queryData.movie.movie_like_users.length
   },
   components: {
@@ -97,13 +101,17 @@ export default {
       axios({
         method: "post",
         url: `${URL}/movies/${movieid}/reviews/create/`,
-        data: { 'content':this.NewReview, 'movie':movieid},
+        data: { 
+          'title':this.NewReviewTitle,
+          'content':this.NewReviewContent,
+          'movie':movieid},
         headers: this.setToken()
       })
       .then((res) => {
         this.queryData.reviews = res.data
         this.Reviews.push(this.queryData.reviews)
-        this.NewReview = ''
+        this.NewReviewContent = ''
+        this.NewReviewTitle = ''
         
       }).catch((err) => {
         console.log(err)

@@ -1,11 +1,8 @@
-template>
-  <div id="reviewbox">
-    <div @click="gotoProfile()">
-      <p>content : {{review.content}}</p>
-      <p>작성자 : {{username}}</p>
-    </div>
+<template>
+  <div id="reviewbox" @click="gotoDetailReview">
     <div>
-      <button @click="likeReview">리뷰 좋아요 / 취소</button>
+      <h3>{{review.title}}</h3>
+      <p>작성자 : {{username}}</p>
       <p>좋아요 : {{like_reviews}}</p>
     </div>
   </div>
@@ -55,24 +52,11 @@ export default {
       .catch((err) => console.log(err))
     },
 
-    gotoProfile() {
+    gotoDetailReview() {
+      console.log(this.review)
+      const reviews = this.review
       const username = this.username
-      this.$router.push({name: 'Profile', query : {user: username}})
-    },
-
-    likeReview() {
-      const movieid = this.review.movie.id
-      const reviewid = this.review.id
-
-      axios({
-        method: 'post',
-        url: `${URL}/movies/${movieid}/reviews/${reviewid}/like/`,
-        headers: this.setToken()
-      })
-      .then((res) => {
-        this.like_reviews = res.data.like_users.length
-      })
-      .catch((err) => console.log(err))
+      this.$router.push({name: 'reviewdetail', query : {data: JSON.stringify({reviews: reviews, username: username, })}})
     },
   }
 }
