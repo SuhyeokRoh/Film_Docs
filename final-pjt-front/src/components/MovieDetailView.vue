@@ -87,17 +87,17 @@ export default {
       const movieid = this.queryData.movie.id
       axios({
         method: 'get',
-        url: `${URL}/movies/${movieid}/`,
+        url: `${URL}/movies/${movieid}/reviews/`,
       })  
       .then(res => {
-        this.queryData.reviews = res.data
+        this.Reviews = res.data
       })
       .catch(err => console.log(err))
     },
 
     createReview: function() {
       const movieid = this.queryData.movie.id 
-
+      
       axios({
         method: "post",
         url: `${URL}/movies/${movieid}/reviews/create/`,
@@ -107,9 +107,8 @@ export default {
           'movie':movieid},
         headers: this.setToken()
       })
-      .then((res) => {
-        this.queryData.reviews = res.data
-        this.Reviews.push(this.queryData.reviews)
+      .then(() => {
+        this.getReview()
         this.NewReviewContent = ''
         this.NewReviewTitle = ''
         
@@ -153,10 +152,8 @@ export default {
       axios({
         method: "get",
         url: `https://api.themoviedb.org/3/movie/${movieid}/videos?api_key=${key}`
-        // headers: this.setToken()
       })
       .then((res) => {
-
         this.trailerSrc = `https://www.youtube.com/embed/${res.data.results[0].key}?autoplay=1`
       })
       .catch((err) => {
@@ -164,10 +161,6 @@ export default {
       })
     },
   },
-  // created() {
-  //   // this.createReview()
-  //   // this.getReview()
-  // },
 }
 </script>
 
