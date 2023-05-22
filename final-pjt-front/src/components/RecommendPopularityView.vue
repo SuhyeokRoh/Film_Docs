@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="gotoDetail">
     <img :src=getPoster >
     <h2>{{ movie.title }}</h2>
   </div>
@@ -30,6 +30,10 @@ export default {
       }
       return config
     },
+    gotoDetail() {
+        const movie = this.movie
+        this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})  
+    }
   }
 }
 </script>
