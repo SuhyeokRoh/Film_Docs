@@ -6,12 +6,18 @@
       <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
       <p>{{queryData.reviews.content}}</p>
       <div>
-        <button @click="likeReview">리뷰 좋아요 / 취소</button>
-        <p>좋아요 : {{like_reviews}}</p>
+        <button v-if="like_state" @click="likeReview">
+          <p v-if="dislike_state">좋아요</p>
+          <p v-else>좋아요 취소</p>
+        </button>
+        <p>좋아요 : {{like_reviews.length}}</p>
       </div>
       <div>
-        <button @click="dislikeReview">리뷰 싫어요 / 취소</button>
-        <p>싫어요 : {{dislike_reviews}}</p>
+        <button v-if="dislike_state" @click="dislikeReview">
+          <p v-if="like_state">싫어요</p>
+          <p v-else>싫어요 취소</p>
+        </button>
+        <p>싫어요 : {{dislike_reviews.length}}</p>
       </div>
       <div>
         <label for="comment">댓글 남기기 : </label>
@@ -19,7 +25,7 @@
         <button @click="saveComment">입력</button>
       </div>
       <div v-for="comment in comments" :key="comment.id">
-        <p>{{comment.content}} - <span class="ableToClick">작성자 : {{comment.user.nickname}}</span></p>
+        <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
       </div>
     </div>
   </div>
@@ -34,16 +40,18 @@ export default {
   data() {
     return {
       queryData: null,
-      like_reviews: null,
-      dislike_reviews: null,
+      like_reviews: [],
+      dislike_reviews: [],
+      like_state: true,
+      dislike_state: true,
+
       commentContent: null,
       comments: [],
     }
   },
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
-    this.like_reviews = this.queryData.reviews.like_users.length
-    this.dislike_reviews = this.queryData.reviews.dislike_users.length
+    this.getReviewLike()
     this.comments = this.getComment()
   },
   methods: {
@@ -53,6 +61,44 @@ export default {
         Authorization: `Bearer ${token}`
       }
       return config
+    },
+
+    getReviewLike() {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+      const user_name = this.queryData.user.username
+
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.like_reviews = res.data.like_users
+        this.dislike_reviews = res.data.dislike_users
+        const like_reviews = this.like_reviews
+        const dislike_reviews = this.dislike_reviews
+
+        const like = like_reviews.find(element => {
+          if (element.username === user_name) {
+            return true;
+          }
+        })
+
+        const dislike = dislike_reviews.find(element => {
+          if (element.username === user_name) {
+            return true;
+          }
+        })
+
+        if (like) {
+          this.dislike_state = false
+        }
+        if (dislike) {
+          this.like_state = false
+        }
+      })
+      .catch((err) => console.log(err))
     },
 
     likeReview() {
@@ -65,7 +111,8 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
-        this.like_reviews = res.data.like_users.length
+        this.like_reviews = res.data.like_users
+        this.dislike_state = !this.dislike_state
       })
       .catch((err) => console.log(err))
     },
@@ -80,8 +127,8 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
-        console.log(res)
-        this.dislike_reviews = res.data.dislike_users.length
+        this.dislike_reviews = res.data.dislike_users
+        this.like_state = !this.like_state
       })
       .catch((err) => console.log(err))
     },
@@ -96,7 +143,6 @@ export default {
         headers: this.setToken(),
       })
       .then((res) => {
-        console.log(res.data)
         this.comments = res.data
       })
       .catch(err => console.log(err))

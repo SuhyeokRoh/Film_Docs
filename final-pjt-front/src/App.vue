@@ -1,23 +1,47 @@
 <template>
   <div id="app">
-    <div id="nav">
-      
-      <span v-if="isLogin">
-        <router-link :to="{ name: 'home' }">Home</router-link> | 
-        <router-link :to="{ name: 'movie' }">Movie</router-link> | 
-        <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">Profile</router-link> |
-        <router-link to="#" @click.native="logout">Logout</router-link> |
-        <router-link :to="{ name: 'recommend' }">Recommend</router-link> | 
-      </span>
+    <div id="nav" v-if="isLogin">
+      <div id=AboutMovie>
+        <span>
+          <router-link :to="{ name: 'home' }">Home</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'movie' }">Movie</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'recommend' }">Recommend</router-link>
+        </span>
+      </div>
+      <div id="AboutAccount">
+        <span>
+          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">Profile</router-link>
+        </span>
+        <span>
+          <router-link to="#" @click.native="logout">Logout</router-link>
+        </span>
+      </div>
+    </div>
 
-      <span v-else>
-        <router-link :to="{ name: 'home' }">Home</router-link> | 
-        <router-link :to="{ name: 'movie' }">Movie</router-link> | 
-        <router-link :to="{ name: 'Signup' }">Signup</router-link> |
-        <router-link :to="{ name: 'Login' }">Login</router-link> |
-        <router-link :to="{ name: 'recommend' }">Recommend</router-link> | 
-      </span>
-
+    <div id="nav" v-else>
+      <div id=AboutMovie>
+        <span>
+          <router-link :to="{ name: 'home' }">Home</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'movie' }">Movie</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'recommend' }">Recommend</router-link>
+        </span>
+      </div>
+      <div id="AboutAccount">
+        <span>
+          <router-link :to="{ name: 'Signup' }">Signup</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'Login' }">Login</router-link> 
+        </span>
+      </div>
     </div>
     <router-view @login="isLogin=true"/>
   </div>
@@ -68,25 +92,82 @@ export default {
 </script>
 
 <style>
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  margin: 0 auto;
+  padding: 0 auto;
 }
 
-nav {
-  padding: 30px;
+#nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  /* width: 100%; */
+  /* height: 50px; */
+  background-color: black;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 20px;
 }
 
-nav a {
+#nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white; 
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+#nav a.router-link-exact-active {
+  color: yellow;
+}
+
+#AboutAccount {
+  display: flex;
+  width: 150px;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
+#AboutMovie {
+  display: flex;
+  width: 300px;
+  justify-content: space-between;
+  margin-left: 20px;
 }
 
 .ableToClick {

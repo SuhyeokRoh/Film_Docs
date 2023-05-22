@@ -19,8 +19,18 @@
     </div>
 
     <div>
-      <button @click="likeMovie">좋아요 / 취소</button>
-      <p>{{like_user}}</p>
+      <button v-if="like_state" @click="likeMovie">
+        <p v-if="dislike_state">좋아요</p>
+        <p v-else>좋아요 취소</p>
+        </button>
+      <p>좋아요 수 : {{like_user.length}}</p>
+    </div>
+    <div>
+      <button v-if="dislike_state" @click="dislikeMovie">
+        <p v-if="like_state">싫어요</p>
+        <p v-else>싫어요 취소</p>
+        </button>
+      <p>싫어요 수 : {{dislike_user.length}}</p>
     </div>
 
     <div>
@@ -51,15 +61,20 @@ export default {
       NewReviewContent: '',
       Genre: null,
       Reviews: [],
-      like_user: null,
+
+      like_state: true,
+      dislike_state: true,
+      like_user: [],
+      dislike_user: [],
+
       trailerSrc: null,
     }
   },
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
-    this.Reviews = this.getReview()
-    this.like_user = this.queryData.movie.movie_like_users.length
+    this.getReview()
+    this.getMovieLike()
     this.getTrailer()
   },
   components: {
@@ -81,6 +96,41 @@ export default {
         Authorization: `Bearer ${token}`
       }
       return config
+    },
+
+    getMovieLike() {
+      const movieid = this.queryData.movie.id
+      const user_name = this.$store.state.username
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/`,
+      })  
+      .then(res => {
+        this.like_user = res.data.movie_like_users
+        this.dislike_user = res.data.movie_dislike_users
+        const like_user = this.like_user
+        const dislike_user = this.dislike_user
+
+        const like = like_user.find(element => {
+          if (element.username === user_name) {
+            return true;
+          }
+        })
+
+        const dislike = dislike_user.find(element => {
+          if (element.username === user_name) {
+            return true;
+          }
+        })
+
+        if (like) {
+          this.dislike_state = false
+        }
+        if (dislike) {
+          this.like_state = false
+        }
+      })
+      .catch(err => console.log(err))
     },
 
     getReview() {
@@ -141,7 +191,24 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
-        this.like_user = res.data.movie_like_users.length
+        this.like_user = res.data.movie_like_users
+        this.dislike_state = !this.dislike_state
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+
+    dislikeMovie() {
+      const movieid = this.queryData.movie.id 
+
+      axios({
+        method: "post",
+        url: `${URL}/movies/${movieid}/dislike/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.dislike_user = res.data.movie_dislike_users
+        this.like_state = !this.like_state
       }).catch((err) => {
         console.log(err)
       })

@@ -10,7 +10,7 @@
     </div>
 
     <div>
-      <p>평점순</p>
+      <h1>평점순</h1>
       <div>
         <RecommendVoterateView v-for="v_movie in vote_rate_movies" :key="v_movie.id" 
       :movie="v_movie" />
@@ -18,7 +18,7 @@
     </div>
 
     <div>
-      <p>인기순</p>
+      <h1>인기순</h1>
       <div>
         <RecommendPopularityView v-for="p_movie in popularity_movies" :key="p_movie.id" 
       :movie="p_movie" />
@@ -26,7 +26,7 @@
     </div>
 
     <div>
-      <p>좋아요순</p>
+      <h1>좋아요순</h1>
       <div>
         <RecommendLikeView v-for="l_movie in like_movies" :key="l_movie.id" 
       :movie="l_movie" />
@@ -34,7 +34,7 @@
     </div>
 
     <div>
-      <p>싫어요순</p>
+      <h1>싫어요순</h1>
       <div>
         <RecommendDislikeView v-for="d_movie in dislike_movies" :key="d_movie.id" 
       :movie="d_movie" />

@@ -34,6 +34,17 @@ def movie_like(request, movie_pk):
         movie.movie_like_users.add(request.user)
     serialzer = MovieSerializer(movie)
     return Response(serialzer.data)
+
+
+@api_view(['POST'])
+def movie_dislike(request, movie_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    if movie.movie_dislike_users.filter(pk=request.user.pk).exists():
+        movie.movie_dislike_users.remove(request.user)
+    else:
+        movie.movie_dislike_users.add(request.user)
+    serialzer = MovieSerializer(movie)
+    return Response(serialzer.data)
     
 
 @api_view(['GET'])
@@ -49,7 +60,7 @@ def reviewList(request, movie_pk):
 @permission_classes([AllowAny])
 def review_detail(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    review = movie.review_set.objects(pk=review_pk)
+    review = movie.review_set.filter(pk=review_pk)[0]
     serializer = ReviewSerializer(review)
     return Response(serializer.data)
     
@@ -67,7 +78,7 @@ def review_create(request, movie_pk):
 @api_view(['PUT', 'DELETE'])
 def review_update(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    review = movie.review_set.objects(pk=review_pk)
+    review = movie.review_set.filter(pk=review_pk)[0]
 
     if request.method == 'PUT':
         if not request.user.review_set.filter(pk=review_pk).exists():
