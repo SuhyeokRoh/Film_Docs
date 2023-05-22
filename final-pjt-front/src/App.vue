@@ -105,6 +105,9 @@ html, body {
 	font: inherit;
 	vertical-align: baseline;
 }
+a {
+  text-decoration-line: none;
+}
 body {
 	line-height: 1;
 }
