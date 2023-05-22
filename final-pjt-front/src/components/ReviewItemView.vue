@@ -2,7 +2,7 @@
   <div class="ableToClick" id="reviewbox" @click="gotoDetailReview">
     <div>
       <h3>{{review.title}}</h3>
-      <p>작성자 : {{username}}</p>
+      <p>작성자 : {{nickname}}</p>
       <p>좋아요 : {{like_reviews}}</p>
     </div>
   </div>
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       query: null,
+      nickname: null,
       username: null,
       like_reviews: null,
     }
@@ -47,6 +48,7 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
+        this.nickname = res.data.nickname
         this.username = res.data.username
       })
       .catch((err) => console.log(err))
@@ -54,8 +56,11 @@ export default {
 
     gotoDetailReview() {
       const reviews = this.review
-      const username = this.username
-      this.$router.push({name: 'reviewdetail', query : {data: JSON.stringify({reviews: reviews, username: username, })}})
+      const user = {
+        'username' : this.username,
+        'nickname' : this.nickname,
+      }
+      this.$router.push({name: 'reviewdetail', query : {data: JSON.stringify({reviews: reviews, user: user, })}})
     },
   }
 }

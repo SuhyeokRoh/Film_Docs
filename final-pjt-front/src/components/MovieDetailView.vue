@@ -58,7 +58,7 @@ export default {
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
-    this.Reviews = this.queryData.reviews
+    this.Reviews = this.getReview()
     this.like_user = this.queryData.movie.movie_like_users.length
     this.getTrailer()
   },
