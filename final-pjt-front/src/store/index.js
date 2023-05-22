@@ -13,24 +13,27 @@ export default new Vuex.Store({
   ],
   state: {
     username : null,
+    access_token : null,
   },
   getters: {
     
   },
   mutations: {
-    LOGIN_USER(state, username) {
-      state.username = username
+    LOGIN_USER(state, payload) {
+      state.username = payload.username
+      state.access_token = payload.access_token
     },
     LOGOUT_USER(state) {
       state.username = null
+      state.access_token = null
     },
     
   },
   actions: {
-    Login_create_username(context, username) {
-      context.commit('LOGIN_USER', username)
+    Login_create(context, payload) {
+      context.commit('LOGIN_USER', payload)
     },
-    Logout_delete_username(context) {
+    Logout_delete(context) {
       context.commit('LOGOUT_USER')
     },
   },

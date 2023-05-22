@@ -3,7 +3,7 @@
     <h1>리뷰 상세 페이지</h1>
     <div v-if="queryData">
       <h2>{{queryData.reviews.title}}</h2>
-      <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.username}}</p>
+      <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
       <p>{{queryData.reviews.content}}</p>
       <div>
         <button @click="likeReview">리뷰 좋아요 / 취소</button>
@@ -19,7 +19,7 @@
         <button @click="saveComment">입력</button>
       </div>
       <div v-for="comment in comments" :key="comment.id">
-        <p>{{comment.content}} - <span class="ableToClick">작성자 : {{comment.user.username}}</span></p>
+        <p>{{comment.content}} - <span class="ableToClick">작성자 : {{comment.user.nickname}}</span></p>
       </div>
     </div>
   </div>
@@ -44,11 +44,11 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.like_reviews = this.queryData.reviews.like_users.length
     this.dislike_reviews = this.queryData.reviews.dislike_users.length
-    this.comments = this.queryData.reviews.comment_set
+    this.comments = this.getComment()
   },
   methods: {
     setToken: function() {
-      const token = localStorage.getItem("jwt")
+      const token = this.$store.state.access_token
       const config = {
         Authorization: `Bearer ${token}`
       }
@@ -58,7 +58,7 @@ export default {
     likeReview() {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
-      console.log(this.queryData.reviews)
+
       axios({
         method: 'post',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/like/`,
@@ -96,6 +96,7 @@ export default {
         headers: this.setToken(),
       })
       .then((res) => {
+        console.log(res.data)
         this.comments = res.data
       })
       .catch(err => console.log(err))
@@ -105,6 +106,7 @@ export default {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       const content = this.commentContent
+
 
       axios({
         method: 'post',
@@ -124,7 +126,7 @@ export default {
     },
 
     gotoProfile() {
-      const username = this.queryData.username
+      const username = this.queryData.user.username
       this.$router.push({name: 'Profile', query : {user: username}})
     },
   }

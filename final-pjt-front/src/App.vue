@@ -35,8 +35,8 @@ export default {
   methods: {
     logout() {
       this.isLogin = false
-      this.$store.dispatch('Logout_delete_username')
-      localStorage.removeItem('jwt')
+      this.$store.dispatch('Logout_delete')
+      // localStorage.removeItem('jwt')
       this.$router.push({name:'Login'})
     },
     // onLoad() {
@@ -51,7 +51,7 @@ export default {
     
   },
   created() {
-    const token = localStorage.getItem('jwt')
+    const token = this.$store.state.access_token
     if (token) {
       this.isLogin = true
     }
