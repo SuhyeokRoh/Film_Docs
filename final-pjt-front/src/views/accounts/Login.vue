@@ -37,7 +37,7 @@ export default {
         this.$store.dispatch('Login_create_username', this.userdata.username)
         localStorage.setItem("jwt", res.data.access)
         this.$emit('login')
-        this.$router.push({name:'movie'})
+        this.$router.push({name:'home'})
       })
       .catch(() => {
         alert("회원 정보가 일치하지 않습니다.")
