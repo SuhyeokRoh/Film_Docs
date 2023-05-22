@@ -34,8 +34,11 @@ export default {
         data: this.userdata,
       })
       .then((res) => {
-        this.$store.dispatch('Login_create_username', this.userdata.username)
-        localStorage.setItem("jwt", res.data.access)
+        const payload = {
+          'username' : this.userdata.username,
+          'access_token' :  res.data.access
+        }
+        this.$store.dispatch('Login_create', payload)
         this.$emit('login')
         this.$router.push({name:'home'})
       })

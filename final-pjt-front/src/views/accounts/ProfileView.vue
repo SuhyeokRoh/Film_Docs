@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     setToken: function() {
-      const token = localStorage.getItem("jwt")
+      const token = this.$store.state.access_token
       const config = {
         Authorization: `Bearer ${token}`
       }

@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     setToken: function() {
-      const token = localStorage.getItem("jwt")
+      const token = this.$store.state.access_token
       const config = {
         Authorization: `Bearer ${token}`
       }
@@ -54,7 +54,7 @@ export default {
     },
 
     gotoDetailReview() {
-      const key = localStorage.getItem('jwt')
+      const key = this.$store.state.access_token
       if(key) {
         const reviews = this.review
         const user = {
