@@ -59,7 +59,8 @@ class ReviewListSerializer(serializers.ModelSerializer):
 
 class MovieListSerializer(serializers.ModelSerializer):
     review_set = ReviewListSerializer(many=True)
-
+    # 실험을 위한 장르 코드 삽입
+    genres = GenreSerializer(many=True)
     class Meta:
         model = Movie
         fields = "__all__"
@@ -100,4 +101,11 @@ class CommentSerializer(serializers.ModelSerializer):
         
     class Meta:
         model = Comment
+        fields = "__all__"
+
+class MoviechoiceSerializer(serializers.ModelSerializer):
+   
+    genres = GenreSerializer(many=True)
+    class Meta:
+        model = Movie
         fields = "__all__"

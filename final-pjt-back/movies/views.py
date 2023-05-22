@@ -209,3 +209,10 @@ def movie_release_list(request):
     latest_release_date_movies = sorted(movies, key=lambda x: x.release_date, reverse=True)[:10]
     serializer = MovieListSerializer(latest_release_date_movies, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def movie_choice(request):
+    movies = get_list_or_404(Movie)
+    serializers = MoviechoiceSerializer(movies, many=True)
+    return Response(serializers.data)
