@@ -3,7 +3,7 @@
     <h1>영화 추천입니다.</h1>
     <div>
       <p>무작위</p>
-      <div v-for="r_movie in random_movies" :key="r_movie.id">
+      <div @click="gotoDetail(r_movie)" v-for="r_movie in random_movies" :key="r_movie.id">
         <img :src="getMoviePoster(r_movie)" >
         <h2>{{ r_movie.title }}</h2>
       </div>
@@ -108,7 +108,11 @@ export default {
     },
     getMoviePoster(movie) {
       return `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
-    }
+    },
+    gotoDetail(r_movie) {
+        const movie = r_movie
+        this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})
+    },
   },
   created() {
     this.getRecommendMovie()
