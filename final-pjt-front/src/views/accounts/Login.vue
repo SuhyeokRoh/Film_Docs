@@ -1,16 +1,18 @@
 <template>
-  <div>
+<div>
+  <div id="Login">
     <h1>로그인</h1>
-    <div>
+    <div class="form-group">
       <label for="username">ID: </label>
-      <input type="text" id="username" v-model="userdata.username" />
+      <input type="text" id="username" v-model="userdata.username" class="input-field" />
     </div>
-    <div>
-      <label for="password">비밀번호: </label>
-      <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" />
+    <div class="form-group">
+      <label for="password">PW: </label>
+      <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" class="input-field" />
     </div>
     <button @click="login">로그인</button>
   </div>
+</div>
 </template>
 
 <script>
@@ -54,5 +56,30 @@ export default {
 </script>
 
 <style>
+ #Login {
+  border: 5px solid white;
+  width: 500px;
+  height: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+ }
+
+.form-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.label-left {
+  width: 100px;
+}
+
+.input-field {
+  width: 200px;
+}
 
 </style>
