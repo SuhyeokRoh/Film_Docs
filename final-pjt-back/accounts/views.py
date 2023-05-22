@@ -66,9 +66,9 @@ def account_delete(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def userContent(request, user_id):
     user = get_object_or_404(get_user_model(), pk=user_id)
-    print(user)
     serializer = UserSerializer(user)
     return Response(serializer.data)
 
@@ -78,6 +78,7 @@ def profile(request, username):
     user = get_object_or_404(get_user_model(), username=username)
     serializer = UserSerializer(user)
     return Response(serializer.data)
+
 
 @api_view(['GET','POST'])
 @permission_classes([IsAuthenticated])
