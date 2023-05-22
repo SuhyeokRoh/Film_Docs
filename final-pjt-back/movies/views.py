@@ -172,19 +172,19 @@ def comment_dislike(request, movie_pk, review_pk, comment_pk):
 @api_view(['GET'])
 def movie_recommend(request):
     movies = get_list_or_404(Movie)
-    # high_vote_rate_movies = sorted(movies, key=lambda x: x['vote_average'])
+
+    random_movies = movies
     high_vote_rate_movies = sorted(movies, key=lambda x: x.vote_average, reverse=True)[:5]
     high_popularity_movies = sorted(movies, key=lambda x: x.popularity, reverse=True)[:5]
-    # serializers = MovieListSerializer(movies, many=True)
-    # print(movies[0].vote_average)
-    # serializers = MovieListSerializer(high_vote_rate_movies, many=True)
-    # serializers = MovieListSerializer(high_popularity_movies, many=True)
+    high_like_movies = sorted(movies, key=lambda x: (x.movie_like_users.count(), x.vote_average, x.popularity), reverse=True)[:5]
+    high_dislike_movies = sorted(movies, key=lambda x: (x.movie_dislike_users.count(), -x.vote_average, -x.popularity), reverse=True)[:5]
+
     data = {
+    'random_movies': MovieListSerializer(random_movies, many=True).data,
     'high_vote_rate_movies': MovieListSerializer(high_vote_rate_movies, many=True).data,
     'high_popularity_movies': MovieListSerializer(high_popularity_movies, many=True).data,
+    'high_like_movies': MovieListSerializer(high_like_movies, many=True).data,
+    'high_dislike_movies': MovieListSerializer(high_dislike_movies, many=True).data,
     }
 
-    # serializers = MovieListSerializer(data)
-    # print(serializers)
-    # serializers = MovieSerializer(high_vote_rate_movies)
     return Response(data)
