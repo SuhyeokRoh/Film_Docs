@@ -43,10 +43,16 @@ def saveDb():
 
         for x in data:
             try:
-                movie = Movie(movie_id = x.get('id'), title = x.get('title'), release_date = x.get('release_date'), 
-                            popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
-                            vote_average = x.get('vote_average'), overview = x.get('overview'),
-                            poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'))
+                if x.get('release_date'):
+                    movie = Movie(movie_id = x.get('id'), title = x.get('title'), release_date = x.get('release_date'), 
+                                popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
+                                vote_average = x.get('vote_average'), overview = x.get('overview'),
+                                poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'))
+                else:
+                    movie = Movie(movie_id = x.get('id'), title = x.get('title'), release_date = '1999-12-31', 
+                                popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
+                                vote_average = x.get('vote_average'), overview = x.get('overview'),
+                                poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'))
                 movie.validate_unique()
                 movie.save()
                 for g in x.get('genre_ids'):

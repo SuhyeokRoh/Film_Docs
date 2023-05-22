@@ -180,6 +180,7 @@ def comment_dislike(request, movie_pk, review_pk, comment_pk):
     serialzer = CommentSerializer(review)
     return Response(serialzer.data)
 
+
 @api_view(['GET'])
 def movie_recommend(request):
     movies = get_list_or_404(Movie)
@@ -199,3 +200,12 @@ def movie_recommend(request):
     }
 
     return Response(data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def movie_release_list(request):
+    movies = get_list_or_404(Movie)
+    latest_release_date_movies = sorted(movies, key=lambda x: x.release_date, reverse=True)[:10]
+    serializer = MovieListSerializer(latest_release_date_movies, many=True)
+    return Response(serializer.data)
