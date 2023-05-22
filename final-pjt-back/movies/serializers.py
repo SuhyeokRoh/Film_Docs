@@ -10,6 +10,14 @@ class GenreSerializer(serializers.ModelSerializer):
         
         
 class MovieSerializer(serializers.ModelSerializer):
+
+    class UserNameSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = get_user_model()
+            fields = 'username',
+
+    movie_like_users = UserNameSerializer(many=True)
     genres = GenreSerializer(many=True)
     
     class Meta:
@@ -33,7 +41,14 @@ class CommentListSerializer(serializers.ModelSerializer):
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer(read_only=True)
+
+    class MovieAllSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Movie
+            fields = '__all__'
+
+    movie = MovieAllSerializer(read_only=True)
     comment_set = CommentListSerializer(many=True)
     
     class Meta:

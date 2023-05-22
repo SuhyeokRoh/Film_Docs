@@ -58,8 +58,8 @@ export default {
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getGenre()
-    this.Reviews = this.getReview()
-    this.like_user = this.queryData.movie.movie_like_users.length
+    this.getReview()
+    this.getMovieLike()
     this.getTrailer()
   },
   components: {
@@ -81,6 +81,18 @@ export default {
         Authorization: `Bearer ${token}`
       }
       return config
+    },
+
+    getMovieLike() {
+      const movieid = this.queryData.movie.id
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/`,
+      })  
+      .then(res => {
+        this.like_user = res.data.movie_like_users.length
+      })
+      .catch(err => console.log(err))
     },
 
     getReview() {
