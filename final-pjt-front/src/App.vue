@@ -3,7 +3,7 @@
     <div id="nav" v-if="isLogin">
       <div id=AboutMovie>
         <span>
-          <router-link :to="{ name: 'home' }"><img src="./assets/Logo.png"></router-link>
+          <router-link :to="{ name: 'home' }"><img src="./assets/Logo_new.png"></router-link>
         </span>
         <span>
           <router-link :to="{ name: 'movie' }">Movie</router-link>
@@ -25,7 +25,7 @@
     <div id="nav" v-else>
       <div id=AboutMovie>
         <span>
-          <router-link :to="{ name: 'home' }"><img id="logo" src="./assets/Logo.png"></router-link>
+          <router-link :to="{ name: 'home' }"><img id="logo" src="./assets/Logo_new.png"></router-link>
         </span>
         <span>
           <router-link :to="{ name: 'movie' }">Movie</router-link>
@@ -141,7 +141,7 @@ span {
 }
 
 #logo {
-  width: 120px;
+  width: 140px;
   /* height: 30px; */
 }
 
@@ -152,18 +152,18 @@ span {
   align-content: center;
   /* width: 100%; */
   /* height: 50px; */
-  background-color: black;
+  /* background-color: black; */
   padding: 20px;
   font-size: 20px;
 }
 
 #nav a {
   font-weight: bold;
-  color: white; 
+  color: black; 
 }
 
 #nav a.router-link-exact-active {
-  color: yellow;
+  color: #FFDF00;
 }
 
 #AboutAccount {
