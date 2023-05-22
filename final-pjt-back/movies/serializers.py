@@ -18,6 +18,7 @@ class MovieSerializer(serializers.ModelSerializer):
             fields = 'username',
 
     movie_like_users = UserNameSerializer(many=True)
+    movie_dislike_users = UserNameSerializer(many=True)
     genres = GenreSerializer(many=True)
     
     class Meta:
@@ -72,7 +73,16 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
         
 
 class ReviewSerializer(serializers.ModelSerializer):
+    
+    class UserSerializer(serializers.ModelSerializer):
+        
+        class Meta:
+            model = get_user_model()
+            fields = ('username',)
+    
     comment_set = CommentListSerializer(many=True)
+    like_users = UserSerializer(many=True)
+    dislike_users = UserSerializer(many=True)
 
     class Meta:
         model = Review
