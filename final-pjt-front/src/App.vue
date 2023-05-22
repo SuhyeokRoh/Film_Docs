@@ -3,7 +3,7 @@
     <div id="nav" v-if="isLogin">
       <div id=AboutMovie>
         <span>
-          <router-link :to="{ name: 'home' }">Home</router-link>
+          <router-link :to="{ name: 'home' }"><img src="./assets/Logo.png"></router-link>
         </span>
         <span>
           <router-link :to="{ name: 'movie' }">Movie</router-link>
@@ -14,7 +14,7 @@
       </div>
       <div id="AboutAccount">
         <span>
-          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">Profile</router-link>
+          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">안녕하세요, {{$store.state.username}}</router-link>
         </span>
         <span>
           <router-link to="#" @click.native="logout">Logout</router-link>
@@ -25,7 +25,7 @@
     <div id="nav" v-else>
       <div id=AboutMovie>
         <span>
-          <router-link :to="{ name: 'home' }">Home</router-link>
+          <router-link :to="{ name: 'home' }"><img id="logo" src="./assets/Logo.png"></router-link>
         </span>
         <span>
           <router-link :to="{ name: 'movie' }">Movie</router-link>
@@ -126,6 +126,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+span {
+  margin: auto;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -137,6 +140,11 @@ table {
   padding: 0 auto;
 }
 
+#logo {
+  width: 120px;
+  /* height: 30px; */
+}
+
 #nav {
   display: flex;
   flex-direction: row;
@@ -145,7 +153,6 @@ table {
   /* width: 100%; */
   /* height: 50px; */
   background-color: black;
-  margin: 0 auto;
   padding: 20px;
   font-size: 20px;
 }
@@ -161,16 +168,16 @@ table {
 
 #AboutAccount {
   display: flex;
-  width: 150px;
+  width: 180px;
   justify-content: space-between;
+  align-content: center;
   margin-right: 20px;
 }
 
 #AboutMovie {
   display: flex;
-  width: 300px;
+  width: 380px;
   justify-content: space-between;
-  margin-left: 20px;
 }
 
 .ableToClick {
