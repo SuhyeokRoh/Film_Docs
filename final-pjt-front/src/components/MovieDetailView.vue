@@ -154,7 +154,8 @@ export default {
         url: `https://api.themoviedb.org/3/movie/${movieid}/videos?api_key=${key}`
       })
       .then((res) => {
-        this.trailerSrc = `https://www.youtube.com/embed/${res.data.results[0].key}?autoplay=1`
+        // console.log(res)
+        this.trailerSrc = `https://www.youtube.com/embed/${res.data.results[0].key}?autoplay=1&loop=1&playlist=${res.data.results[0].key}`
       })
       .catch((err) => {
         console.log(err)
