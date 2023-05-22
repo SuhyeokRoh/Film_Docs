@@ -1,5 +1,5 @@
 <template>
-  <div @click="gotoDetail">
+  <div>
     <img :src=getPoster >
     <h2>{{ movie.title }}</h2>
   </div>
@@ -22,9 +22,7 @@ export default {
       return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
     }
   },
-  created() {
-    this.getReview()
-  },
+  
   methods: {
     setToken: function() {
       const token = localStorage.getItem("jwt")
