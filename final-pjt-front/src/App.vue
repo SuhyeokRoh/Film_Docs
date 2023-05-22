@@ -1,8 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-
+      
       <span v-if="isLogin">
+        <router-link :to="{ name: 'home' }">Home</router-link> | 
         <router-link :to="{ name: 'movie' }">Movie</router-link> | 
         <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">Profile</router-link> |
         <router-link to="#" @click.native="logout">Logout</router-link> |
@@ -10,6 +11,7 @@
       </span>
 
       <span v-else>
+        <router-link :to="{ name: 'home' }">Home</router-link> | 
         <router-link :to="{ name: 'movie' }">Movie</router-link> | 
         <router-link :to="{ name: 'Signup' }">Signup</router-link> |
         <router-link :to="{ name: 'Login' }">Login</router-link> |
