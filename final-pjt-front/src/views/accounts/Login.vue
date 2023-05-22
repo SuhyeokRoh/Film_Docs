@@ -1,5 +1,5 @@
 <template>
-<div>
+<div id="LoginBox">
   <div id="Login">
     <h1>로그인</h1>
     <div class="form-group">
@@ -56,11 +56,17 @@ export default {
 </script>
 
 <style>
- #Login {
-  border: 5px solid white;
-  width: 500px;
+ #LoginBox {
   height: 720px;
-  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
+
+ #Login {
+  border: 5px solid black;
+  width: 500px;
+  height: 60%;
   display: flex;
   flex-direction: column;
   justify-content: center;

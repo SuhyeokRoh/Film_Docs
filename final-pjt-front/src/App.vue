@@ -3,7 +3,7 @@
     <div id="nav" v-if="isLogin">
       <div id=AboutMovie>
         <span>
-          <router-link :to="{ name: 'home' }"><img src="./assets/Logo_new.png"></router-link>
+          <router-link :to="{ name: 'home' }"><img id="logo" src="./assets/Logo_new.png"></router-link>
         </span>
         <span>
           <router-link :to="{ name: 'movie' }">Movie</router-link>
