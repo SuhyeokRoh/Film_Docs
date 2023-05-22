@@ -1,16 +1,20 @@
 <template>
   <div v-if="movieList">
     <h1>HomePage</h1>
-    <div @click="gotoDetail(movie)" v-for="movie in movieList" :key="movie.id">
+    <!-- <div @click="gotoDetail(movie)" v-for="movie in movieList" :key="movie.id">
       <h3>{{movie.title}}</h3>
       <img :src=getPoster(movie)>
-      <!-- <img :src=getBackDropPath(movie)> -->
-    </div>
+    </div> -->
+    <vueper-slides>
+      <vueper-slide v-for="i in 5" :key="i" :title="i.toString()" />
+    </vueper-slides>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 
 const URL = "http://127.0.0.1:8000"
 export default {
@@ -19,6 +23,9 @@ export default {
     return {
       movieList: [],
     }
+  },
+  components: { 
+    VueperSlides, VueperSlide 
   },
   methods: {
     getMovie(){
