@@ -8,7 +8,7 @@
 <script>
 
 export default {
-  name: 'RecommendVoterateView',
+  name: 'RecommendPopularityView',
   props: {
     movie: Object,
   },
@@ -22,7 +22,6 @@ export default {
       return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
     }
   },
-  
   methods: {
     setToken: function() {
       const token = localStorage.getItem("jwt")
