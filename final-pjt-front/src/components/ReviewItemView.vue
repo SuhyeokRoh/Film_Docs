@@ -45,7 +45,6 @@ export default {
       axios({
         method: 'get',
         url: `${URL}/accounts/${userid}/`,
-        headers: this.setToken()
       })
       .then((res) => {
         this.nickname = res.data.nickname
@@ -55,12 +54,18 @@ export default {
     },
 
     gotoDetailReview() {
-      const reviews = this.review
-      const user = {
-        'username' : this.username,
-        'nickname' : this.nickname,
+      const key = localStorage.getItem('jwt')
+      if(key) {
+        const reviews = this.review
+        const user = {
+          'username' : this.username,
+          'nickname' : this.nickname,
+        }
+        this.$router.push({name: 'reviewdetail', query : {data: JSON.stringify({reviews: reviews, user: user, })}})
+      } else {
+        alert('로그인이 필요합니다!')
+        this.$router.push({name: 'Login'})
       }
-      this.$router.push({name: 'reviewdetail', query : {data: JSON.stringify({reviews: reviews, user: user, })}})
     },
   }
 }
