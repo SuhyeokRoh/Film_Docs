@@ -6,7 +6,9 @@
       <img :src=getPoster(movie)>
     </div> -->
     <vueper-slides>
-      <vueper-slide v-for="i in 5" :key="i" :title="i.toString()" />
+      <vueper-slide v-for="movie in movieList" :key="movie.id" 
+      :title="movie.title"
+      :image="getPoster(movie)" />
     </vueper-slides>
   </div>
 </template>
