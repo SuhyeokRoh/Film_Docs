@@ -58,11 +58,14 @@ def saveDb():
                     release_date = '1999-12-31'
                 else:
                     release_date = x.get('release_date')
+                
+                poster_path = f"https://image.tmdb.org/t/p/w500/{x.get('poster_path')}"
+                backdrop_path = f"https://image.tmdb.org/t/p/original/{x.get('backdrop_path')}"
 
                 movie = Movie(movie_id = id, title = x.get('title'), release_date = release_date, 
                             popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
                             vote_average = x.get('vote_average'), overview = x.get('overview'),
-                            poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'),
+                            poster_path = poster_path, backdrop_path = backdrop_path,
                             trailerUrl = trailerUrl,)
                     
                 movie.validate_unique()
