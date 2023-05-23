@@ -38,7 +38,7 @@
           @click="$refs.vueperslides2 && $refs.vueperslides2.goToSlide(i + 1)">
           <template #content>
             <div>
-              <img @click="gotoDetail(movie)" class="vueperslide__content-wrapper" :src="movie.backdrop_path">
+              <img @click="gotoDetail(movie)" class="vueperslide__content-wrapper" :src="movie.backdrop_path_300">
             </div>
           </template>
         </vueper-slide>
