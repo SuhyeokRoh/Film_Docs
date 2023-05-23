@@ -85,7 +85,7 @@
         <button @click="getchoiceMovies">옵션 적용</button>
       </div>
       <div class="col" id="movielists">
-        <div>
+        <div class="wrap">
           <MovieItemView v-for="movie in movies" :key="movie.id" 
           :movie="movie" />
         </div>
@@ -172,6 +172,16 @@ export default {
 #movielists {
   width: 75%;
   margin-left: 10px;
+  border: solid 1px lightgray;
+  border-radius: 7px;
+  background-color: lightgray;
+}
+
+.wrap {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 30px;
 }
 
 .box {
