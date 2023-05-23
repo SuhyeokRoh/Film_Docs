@@ -14,7 +14,7 @@
 
     <div>
       <p>예고편 : </p>
-      <iframe :src="trailerSrc" width="500" height="255" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+      <iframe :src="queryData.movie.trailerUrl" width="500" height="255" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen></iframe>
     </div>
 
@@ -50,7 +50,7 @@
 import ReviewItemView from './ReviewItemView.vue'
 import axios from 'axios'
 
-const key = 'e66fa81c4a87396b24dd94a15cc7a8b1'
+// const key = 'e66fa81c4a87396b24dd94a15cc7a8b1'
 const URL = "http://127.0.0.1:8000"
 export default {
   name: "MovieDetailView",
@@ -66,8 +66,6 @@ export default {
       dislike_state: true,
       like_user: [],
       dislike_user: [],
-
-      trailerSrc: null,
     }
   },
   mounted() {
@@ -75,7 +73,6 @@ export default {
     this.getGenre()
     this.getReview()
     this.getMovieLike()
-    this.getTrailer()
   },
   components: {
     ReviewItemView,
@@ -210,21 +207,6 @@ export default {
         this.dislike_user = res.data.movie_dislike_users
         this.like_state = !this.like_state
       }).catch((err) => {
-        console.log(err)
-      })
-    },
-
-    getTrailer() {
-      const movieid = this.queryData.movie.movie_id
-      axios({
-        method: "get",
-        url: `https://api.themoviedb.org/3/movie/${movieid}/videos?api_key=${key}`
-      })
-      .then((res) => {
-        // console.log(res)
-        this.trailerSrc = `https://www.youtube.com/embed/${res.data.results[0].key}?autoplay=1&loop=1&playlist=${res.data.results[0].key}`
-      })
-      .catch((err) => {
         console.log(err)
       })
     },
