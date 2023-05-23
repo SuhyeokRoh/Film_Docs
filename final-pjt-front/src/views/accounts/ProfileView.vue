@@ -6,21 +6,21 @@
     <p>User First Name : {{User.first_name}}</p>
     <p>User Last Name : {{User.last_name}}</p>
     <p>User Nick Name : {{User.nickname}}</p>
-    <h3>내가 남긴 리뷰</h3>
+    <h3>{{User.nickname}}님이 남긴 리뷰</h3>
     <div v-for="review in User.review_set" :key="review.id">
       <p>movie_title : {{ review.movie.title }}</p>
       <p>content : {{ review.content }}</p>
     </div>
-    <h3>좋아요 누른 영화</h3>
+    <h3>{{User.nickname}}님이 좋아요 누른 영화</h3>
     <div v-for="movie in User.movielike" :key="movie.id">
       <p>{{movie.title}}</p>
     </div>
-    <h3>좋아요 누른 리뷰</h3>
+    <h3>{{User.nickname}}님이 좋아요 누른 리뷰</h3>
     <div v-for="likereview in User.like_reviews" :key="likereview.id">
       <p>{{likereview.movie.title}} - {{likereview.content}}</p>
     </div>
 
-    <h3>내가 남긴 댓글</h3>
+    <h3>{{User.nickname}}님이 남긴 댓글</h3>
     <div v-for="comment in User.comment_set" :key="comment.id">
       <p>movie_title : {{ comment.movie_title }} </p>
       <p>review : {{ comment.review_content }}</p>

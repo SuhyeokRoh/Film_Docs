@@ -80,18 +80,20 @@ def review_update(request, movie_pk, review_pk):
     # movie = get_object_or_404(Movie, pk=movie_pk)
     review = get_object_or_404(Review,pk=review_pk)
     # review = movie.review_set.filter(pk=review_pk)[0]
-
-    if request.method == 'PUT':
-        if review.user_id != request.user.pk:
-            return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
-    
-        serializer = ReviewCreateSerializer(review, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+    if review.user_id != request.user.pk:
+        return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
-        review.delete()
-        return Response({ 'id': review_pk }, status=status.HTTP_204_NO_CONTENT)
+        if request.method == 'PUT':
+            # if review.user_id != request.user.pk:
+            #     return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+        
+            serializer = ReviewCreateSerializer(review, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+        else:
+            review.delete()
+            return Response({ 'id': review_pk }, status=status.HTTP_204_NO_CONTENT)
     
 
 @api_view(['POST'])
@@ -142,18 +144,20 @@ def comment_update(request, movie_pk, review_pk, comment_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.filter(pk=review_pk)[0]
     comment = review.comment_set.filter(pk=comment_pk)[0]
-
-    if request.method == 'PUT':
-        if not request.user.comment_set.filter(pk=review_pk).exists():
-            return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
-    
-        serializer = CommentSerializer(review, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+    if not request.user.comment_set.filter(pk=review_pk).exists():
+        return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
-        comment.delete()
-        return Response({ 'id': review_pk }, status=status.HTTP_204_NO_CONTENT)  
+        if request.method == 'PUT':
+            # if not request.user.comment_set.filter(pk=review_pk).exists():
+            #     return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+        
+            serializer = CommentUpdateSerializer(review, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
+        else:
+            comment.delete()
+            return Response({ 'id': review_pk }, status=status.HTTP_204_NO_CONTENT)  
 
 
 @api_view(['POST'])

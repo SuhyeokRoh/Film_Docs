@@ -111,3 +111,8 @@ class MoviechoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = "__all__"
+
+class CommentUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ('content', 'movie', 'review', 'user_id',)
