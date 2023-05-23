@@ -1,8 +1,11 @@
 <template>
-  <div v-if="queryData">
+  <div id="movie_detail" v-if="queryData">
+    <div>
+      <img :src="queryData.movie.backdrop_path_1280" >
+    </div>
     <h1>Movie Detail Page</h1>
     <h3>제목 : {{ queryData.movie.title }}</h3>
-    <img :src="queryData.movie.poster_path" >
+    <img :src="queryData.movie.poster_path_500" >
     <p>개봉일 : {{ queryData.movie.release_date }}</p>
     <p>인기도 : {{ queryData.movie.popularity }}</p>
     <p>투표수 : {{ queryData.movie.vote_count }}</p>
@@ -211,5 +214,8 @@ export default {
 </script>
 
 <style>
-
+#movie_detail {
+  width: 80%;
+  margin:0 auto;
+}
 </style>

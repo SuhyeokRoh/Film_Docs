@@ -1,6 +1,6 @@
 <template>
   <div @click="gotoDetail">
-    <img :src="movie.poster_path" >
+    <img :src="movie.poster_path_500" >
     <h2>{{ movie.title }}</h2>
   </div>
 </template>

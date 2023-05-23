@@ -1,20 +1,49 @@
 <template>
-  <div v-if="movieList">
-    <h1>HomePage</h1>
-    <!-- <div @click="gotoDetail(movie)" v-for="movie in movieList" :key="movie.id">
-      <h3>{{movie.title}}</h3>
-      <img :src=getPoster(movie)>
-    </div> -->
-    <vueper-slides autoplay fade :touchable="false">
-      <vueper-slide v-for="movie in movieList"
-      :key="movie.id" 
-      :title="movie.title"
-      :image="getPoster(movie)" 
-      />
-      <template #pause>
-        <i class="icon pause_circle_outline"></i>
-      </template>
-    </vueper-slides>
+  <div id="home" v-if="movieList">
+
+    <div id="video_slider">
+      <vueper-slides
+        ref="vueperslides1"
+        @slide="$refs.vueperslides2 && $refs.vueperslides2.goToSlide($event.currentSlide.index, { emit: false })"
+        :touchable="false"
+        :arrows="false"
+        autoplay
+        fade
+        :bullets="false"
+        fixed-height="500px"
+        :slide-content-outside="contentPosition">
+        <vueper-slide
+          v-for="(movie, i) in movieList"
+          :key="i"
+          :video="movie.trailerUrl">
+          <template #content>
+            <div class="vueperslide__content-wrapper"><h1>{{movie.title}}</h1></div>
+          </template>
+        </vueper-slide>
+      </vueper-slides>
+    </div>
+
+    <div id="image_slider">
+      <vueper-slides
+      ref="vueperslides2"
+      @slide="$refs.vueperslides1 && $refs.vueperslides1.goToSlide($event.currentSlide.index, { emit: false })"
+      :slide-ratio="1 / 10"
+      :dragging-distance="70"
+      :gap="3"
+      :visible-slides="3"
+      fixed-height="169px">
+        <vueper-slide
+          v-for="(movie, i) in movieList"
+          :key="i"
+          @click="$refs.vueperslides2 && $refs.vueperslides2.goToSlide(i + 1)">
+          <template #content>
+            <div>
+              <img @click="gotoDetail(movie)" class="vueperslide__content-wrapper" :src="movie.backdrop_path_300">
+            </div>
+          </template>
+        </vueper-slide>
+      </vueper-slides>
+    </div>
   </div>
 </template>
 
@@ -28,6 +57,7 @@ export default {
   name: 'HomeView',
   data() {
     return {
+      contentPosition: 'top',
       movieList: [],
     }
   },
@@ -41,24 +71,9 @@ export default {
         url: `${URL}/movies/main/`,
       })
       .then((res) => {
-        const movies = res.data
-        console.log(movies)
-        for (let i=0; i<movies.length; i++) {
-          const content = {
-            title : movies[i].title,
-            image: movies[i].backdrop_path,
-            video : {
-              url : movies[i].trailerUrl,
-            }
-          }
-          this.movieList.push(content)
-        }
+        this.movieList = res.data
       })
       .catch(err => console.log(err))
-    },
-
-    getPoster(movie) {
-      return `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`
     },
 
     gotoDetail(select_movie) {
@@ -74,7 +89,21 @@ export default {
 </script>
 
 <style>
+#home {
+  width: 80%;
+  margin: auto;
+}
+
 .vueperslides__arrow {
   color: yellow
+}
+
+#video_slider {
+  margin: 40px;
+}
+
+#image_slider {
+  padding-top: 50px;
+  margin: 40px;
 }
 </style>

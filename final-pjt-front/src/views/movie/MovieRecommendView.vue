@@ -2,9 +2,9 @@
   <div>
     <h1>영화 추천입니다.</h1>
     <div>
-      <p>무작위</p>
+      <h1>무작위</h1>
       <div @click="gotoDetail(r_movie)" v-for="r_movie in random_movies" :key="r_movie.id">
-        <img :src="r_movie.poster_path" >
+        <img :src="r_movie.poster_path_500" >
         <h2>{{ r_movie.title }}</h2>
       </div>
     </div>
