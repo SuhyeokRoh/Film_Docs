@@ -106,6 +106,7 @@ export default {
   data: function() {
     return {
       movies: null,
+      selectedGenres : [],
       isActionclicked: true,
       isAdventureclicked: true,
       isAnimationclicked: true,
@@ -138,7 +139,7 @@ export default {
         url: `${URL}/movies/`,
       })
       .then(res => {
-        // console.log(res)
+        console.log(res)
         this.movies = res.data
       })
       .catch(err => {
@@ -146,15 +147,229 @@ export default {
       })
     },
     getchoiceMovies() {
-      // const selectedOption = []
+  
+      if (this.isActionclicked) {
+        this.selectedGenres.push('Action')
+        } else {
+          const valueToRemove = 'Action'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
 
+      if (this.isAdventureclicked) {
+        this.selectedGenres.push('Adventure')
+      } else {
+          const valueToRemove = 'Adventure'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+
+      if (this.isAnimationclicked) {
+        this.selectedGenres.push('Animation')
+        } else {
+          const valueToRemove = 'Animation'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isComedyclicked) {
+        this.selectedGenres.push('Comedy')
+      } else {
+          const valueToRemove = 'Comedy'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isCrimeclicked) {
+        this.selectedGenres.push('Crime')
+        } else {
+          const valueToRemove = 'Crime'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isDocumentaryclicked) {
+        this.selectedGenres.push('Documentary')
+        } else {
+          const valueToRemove = 'Documentary'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isDramaclicked) {
+        this.selectedGenres.push('Drama')
+        } else {
+          const valueToRemove = 'Drama'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isFamilyclicked) {
+        this.selectedGenres.push('Family')
+        } else {
+          const valueToRemove = 'Family'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isFantasyclicked) {
+        this.selectedGenres.push('Fantasy')
+        } else {
+          const valueToRemove = 'Fantasy'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isHistoryclicked) {
+        this.selectedGenres.push('History')
+        } else {
+          const valueToRemove = 'History'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isHorrorclicked) {
+        this.selectedGenres.push('Horror')
+        } else {
+          const valueToRemove = 'Horror'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isMusicclicked) {
+        this.selectedGenres.push('Music')
+        } else {
+          const valueToRemove = 'Music'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isMysteryclicked) {
+        this.selectedGenres.push('Mystery')
+        } else {
+          const valueToRemove = 'Mystery'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isRomanceclicked) {
+        this.selectedGenres.push('Romance')
+        } else {
+          const valueToRemove = 'Romance'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isScience_Fictionclicked) {
+        this.selectedGenres.push('Science Fiction')
+        } else {
+          const valueToRemove = 'Science Fiction'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isTV_Movieclicked) {
+        this.selectedGenres.push('TV Movie')
+        } else {
+          const valueToRemove = 'TV Movie'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isThrillerclicked) {
+        this.selectedGenres.push('Thriller')
+        } else {
+          const valueToRemove = 'Thriller'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isWarclicked) {
+        this.selectedGenres.push('War')
+        } else {
+          const valueToRemove = 'War'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      if (this.isWesternclicked) {
+        this.selectedGenres.push('Western')
+        } else {
+          const valueToRemove = 'Western'
+          for(let i = 0; i < this.selectedGenres.length; i++){
+            if (this.selectedGenres[i] === valueToRemove) {
+              this.selectedGenres.splice(i, 1);
+              i--;
+            }
+          }
+        }
+      // 초기값으로 넣어지는 것 확인
+      console.log(this.selectedGenres)
+      
       axios({
         method: 'get',
         url: `${URL}/movies/choice/`,
+        params: { genres: this.selectedGenres.join(',') }, // 선택한 장르 정보를 쿼리 파라미터로 전달
       })
       .then(res => {
-        console.log(res.data)
-        console.log(res.data[0].genres)
+        console.log(res)
+        this.movies = res.data
       })
       .catch(err => {
         console.log(err)

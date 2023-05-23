@@ -27,7 +27,9 @@ class MovieSerializer(serializers.ModelSerializer):
         
 
 class CommentListSerializer(serializers.ModelSerializer):
-    
+    # 프로필에서 댓글을 보기 위해 추가
+    movie_title = serializers.ReadOnlyField(source='movie.title')
+    review_content = serializers.ReadOnlyField(source='review.content')
     class UserSerializer(serializers.ModelSerializer):
         
         class Meta:
@@ -98,7 +100,7 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         
 
 class CommentSerializer(serializers.ModelSerializer):
-        
+    # review_set = ReviewListSerializer(many=True)
     class Meta:
         model = Comment
         fields = "__all__"

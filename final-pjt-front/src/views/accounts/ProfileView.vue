@@ -8,7 +8,7 @@
     <p>User Nick Name : {{User.nickname}}</p>
     <h3>내가 남긴 리뷰</h3>
     <div v-for="review in User.review_set" :key="review.id">
-      <p>title : {{ review.movie.title }}</p>
+      <p>movie_title : {{ review.movie.title }}</p>
       <p>content : {{ review.content }}</p>
     </div>
     <h3>좋아요 누른 영화</h3>
@@ -19,6 +19,14 @@
     <div v-for="likereview in User.like_reviews" :key="likereview.id">
       <p>{{likereview.movie.title}} - {{likereview.content}}</p>
     </div>
+
+    <h3>내가 남긴 댓글</h3>
+    <div v-for="comment in User.comment_set" :key="comment.id">
+      <p>movie_title : {{ comment.movie_title }} </p>
+      <p>review : {{ comment.review_content }}</p>
+      <p>content : {{ comment.content }}</p>
+    </div>
+
 
     
     <div>
@@ -51,6 +59,7 @@ export default {
   },
   mounted() {
     // this.followPerson()
+    this.getUser()
   },
   methods: {
     setToken: function() {
@@ -69,6 +78,7 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
+        // console.log(res.data)
         this.User = res.data
         this.following = res.data.followings.length
         this.follower = res.data.followers.length
