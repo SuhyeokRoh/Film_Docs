@@ -11,11 +11,11 @@
           <button @click="deleteReview">삭제</button>
         </div>
         <div v-else>
-          <label for="comment">review title 수정하기 : </label>
-          <input type="text" id="comment" v-model="updatereviewtitle">
-          <label for="comment">review content 수정하기 : </label>
-          <input type="text" id="comment" v-model="updatereviewcontent">
-          <button @click="updateComment">댓글 수정</button>
+          <label for="review">review title 수정하기 : </label>
+          <input type="text" id="review" v-model="updatereviewtitle">
+          <label for="review">review content 수정하기 : </label>
+          <input type="text" id="review" v-model="updatereviewcontent">
+          <button @click="updateReview">리뷰 수정</button>
         </div>
       </div>
       <div>
@@ -33,13 +33,23 @@
         <p>싫어요 : {{dislike_reviews.length}}</p>
       </div>
       <div>
-        <label for="comment">댓글 남기기 : </label>
-        <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
-        <button @click="saveComment">입력</button>
+      <div v-if="isCommentupdate">
+        <div>
+          <label for="comment">댓글 남기기 : </label>
+          <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
+          <button @click="saveComment">입력</button>
+        </div>
+        <div v-for="comment in comments" :key="comment.id">
+          <button @click="changeupdate_comment_state">댓글 수정</button>
+          <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
+          <button @click="deleteComment(comment)">[삭제]</button>
+        </div>
       </div>
-      <div v-for="comment in comments" :key="comment.id">
-        <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
-        <button @click="deleteComment(comment)">[삭제]</button>
+      <div v-else>
+        <label for="comment">comment 수정하기 : </label>
+        <input type="text" id="comment" v-model="updatecomment">
+        <button @click="updateComment">댓글 수정</button>
+      </div>
       </div>
     </div>
   </div>
@@ -63,6 +73,7 @@ export default {
       updatereviewtitle : null,
       updatereviewcontent : null,
       commentContent: null,
+      updatecomment: null,
       comments: [],
     }
   },
@@ -228,35 +239,45 @@ export default {
         })
     },
     updateReview: function () {
+      // console.log(this.queryData.reviews)
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
+      
       this.isReviewupdate = false
       axios({
         method: 'put',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/update/`,
         headers: this.setToken(),
         data: {
-          title: this.updatereviewtitle, content: this.updatereviewcontent
+          title: this.updatereviewtitle, content: this.updatereviewcontent, movie:movieid,
         },
 
       }).then(res => {
           console.log(res, reviewid)
+          this.queryData.reviews.title = res.data.title
+          this.queryData.reviews.content = res.data.content
+          this.isReviewupdate = true
         })
         .catch(err => {
           console.log(err)
         })
     },
     updateComment: function (comment) {
+      
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       this.isCommentupdate = false
       axios({
         method: 'put',
-        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/update`,
-        headers: this.setToken()
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/update/`,
+        headers: this.setToken(),
+        data: {
+          content: this.updatecomment,
+        }
 
       }).then(res => {
           console.log(res, comment)
+          
         })
         .catch(err => {
           console.log(err)
@@ -267,9 +288,12 @@ export default {
         this.isReviewupdate = false
       }
 
-      // if (this.isCommentupdate) {
-      //   this.isCommentupdate = false
-      // }
+    },
+    changeupdate_comment_state() {
+    
+      if (this.isCommentupdate) {
+        this.isCommentupdate = false
+      }
 
     },
   }
