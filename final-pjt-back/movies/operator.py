@@ -59,13 +59,16 @@ def saveDb():
                 else:
                     release_date = x.get('release_date')
                 
-                poster_path = f"https://image.tmdb.org/t/p/w500/{x.get('poster_path')}"
-                backdrop_path = f"https://image.tmdb.org/t/p/w300/{x.get('backdrop_path')}"
+                poster_path_500 = f"https://image.tmdb.org/t/p/w500/{x.get('poster_path')}"
+                poster_path_original = f"https://image.tmdb.org/t/p/original/{x.get('poster_path')}"
+                backdrop_path_300 = f"https://image.tmdb.org/t/p/w300/{x.get('backdrop_path')}"
+                backdrop_path_1280 = f"https://image.tmdb.org/t/p/w1280/{x.get('backdrop_path')}"
 
                 movie = Movie(movie_id = id, title = x.get('title'), release_date = release_date, 
                             popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
                             vote_average = x.get('vote_average'), overview = x.get('overview'),
-                            poster_path = poster_path, backdrop_path = backdrop_path,
+                            poster_path_500 = poster_path_500, poster_path_original = poster_path_original, 
+                            backdrop_path_300 = backdrop_path_300, backdrop_path_1280 = backdrop_path_1280,
                             trailerUrl = trailerUrl,)
                     
                 movie.validate_unique()
@@ -80,5 +83,5 @@ def saveDb():
 def start():
     scheduler = BackgroundScheduler()
     # scheduler.add_job(saveDb, 'cron', hour=16, minute=0, id="saveDataBase")
-    scheduler.add_job(saveDb, 'interval', seconds=30, id="saveDataBase")
+    scheduler.add_job(saveDb, 'interval', seconds=1000, id="saveDataBase")
     scheduler.start()
