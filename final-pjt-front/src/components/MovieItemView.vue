@@ -1,7 +1,9 @@
 <template>
-  <div class="ableToClick" @click="gotoDetail">
-    <img :src="movie.poster_path_500" >
-    <h2>{{ movie.title }}</h2>
+  <div class="OnePoster ableToClick">
+    <div class="card" @click="gotoDetail">
+      <div class="front"><img class="posterlist" :src="movie.poster_path_500" ></div>
+      <div class="back">{{movie.title}}</div>
+    </div>
   </div>
 </template>
 
@@ -31,5 +33,44 @@ export default {
 </script>
 
 <style>
+.OnePoster {
+  position: relative;
+  margin-bottom: 30px;
+  width: 230px;
+  height: 345px;
+}
 
+.posterlist {
+  width: 230px;
+  height: 345px;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  transition: 1s ;
+  transform-style: preserve-3d;
+}
+
+
+.front, .back {
+  position: absolute;
+  width: 100%; 
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.OnePoster:hover .card {
+  transform: rotateY(180deg);
+}
+
+.back {
+  background-color: black;
+  color:white;
+  border-radius: 7px;
+  line-height: 300px;
+  font-size: 17px;
+  transform: rotateY(180deg);
+}
 </style>

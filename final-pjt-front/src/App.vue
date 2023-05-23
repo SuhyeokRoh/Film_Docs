@@ -149,7 +149,7 @@ img{
 }
 
 .inner {
-  /* width: 1300px; */
+  width: 1280px;
   margin: 0px auto;
   margin-top: 50px;
   padding: 0px auto;
