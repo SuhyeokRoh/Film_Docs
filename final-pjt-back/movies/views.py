@@ -166,10 +166,10 @@ def comment_like(request, movie_pk, review_pk, comment_pk):
     review = movie.review_set.filter(pk=review_pk)[0]
     comment = review.comment_set.filter(pk=comment_pk)[0]
     if comment.like_comment_users.filter(pk=request.user.pk).exists():
-        review.like_comment_users.remove(request.user)
+        comment.like_comment_users.remove(request.user)
     else:
-        review.like_comment_users.add(request.user)
-    serialzer = CommentSerializer(review)
+        comment.like_comment_users.add(request.user)
+    serialzer = CommentSerializer(comment)
     return Response(serialzer.data)
 
 
@@ -179,10 +179,10 @@ def comment_dislike(request, movie_pk, review_pk, comment_pk):
     review = movie.review_set.filter(pk=review_pk)[0]
     comment = review.comment_set.filter(pk=comment_pk)[0]
     if comment.dislike_comment_users.filter(pk=request.user.pk).exists():
-        review.dislike_comment_users.remove(request.user)
+        comment.dislike_comment_users.remove(request.user)
     else:
-        review.dislike_comment_users.add(request.user)
-    serialzer = CommentSerializer(review)
+        comment.dislike_comment_users.add(request.user)
+    serialzer = CommentSerializer(comment)
     return Response(serialzer.data)
 
 
