@@ -1,5 +1,8 @@
 <template>
-  <div v-if="queryData">
+  <div id="movie_detail" v-if="queryData">
+    <div>
+      <img :src="queryData.movie.backdrop_path" >
+    </div>
     <h1>Movie Detail Page</h1>
     <h3>제목 : {{ queryData.movie.title }}</h3>
     <img :src="queryData.movie.poster_path" >
@@ -211,5 +214,8 @@ export default {
 </script>
 
 <style>
-
+#movie_detail {
+  width: 80%;
+  margin:0 auto;
+}
 </style>
