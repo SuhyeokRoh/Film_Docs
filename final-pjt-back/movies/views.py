@@ -82,7 +82,7 @@ def review_update(request, movie_pk, review_pk):
     # review = movie.review_set.filter(pk=review_pk)[0]
 
     if request.method == 'PUT':
-        if review.user_id==request.user.pk:
+        if review.user_id != request.user.pk:
             return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     
         serializer = ReviewCreateSerializer(review, data=request.data)
