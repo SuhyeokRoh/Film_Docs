@@ -14,7 +14,7 @@
       </div>
       <div id="AboutAccount">
         <span>
-          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">안녕하세요, {{$store.state.username}}</router-link>
+          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">안녕하세요, {{$store.state.username}}님</router-link>
         </span>
         <span>
           <router-link to="#" @click.native="logout">Logout</router-link>
@@ -85,6 +85,7 @@ html, body {
 }
 a {
   text-decoration-line: none;
+  font-size: 25px;
 }
 body {
 	line-height: 1;
@@ -105,8 +106,11 @@ table {
 	border-spacing: 0;
 }
 span {
-  margin: 0px auto;
-  padding: 0px auto;
+  margin: auto;
+  padding: auto;
+  display: block; 
+  /* justify-content: center; */
+  text-align: center;
 }
 img{
   border-radius: 7px;
@@ -123,7 +127,7 @@ img{
 }
 
 #logo {
-  width: 140px;
+  width: 200px;
   /* height: 30px; */
 }
 
@@ -132,11 +136,7 @@ img{
   flex-direction: row;
   justify-content: space-between;
   align-content: center;
-  /* width: 100%; */
-  /* height: 50px; */
-  /* background-color: black; */
-  padding: 20px;
-  font-size: 20px;
+  padding: 30px 20px;
 }
 
 #nav a {
@@ -159,16 +159,17 @@ img{
 
 #AboutAccount {
   display: flex;
-  width: 180px;
+  width: 300px;
   justify-content: space-between;
   align-content: center;
-  margin-right: 20px;
+  margin-right: 100px;
 }
 
 #AboutMovie {
   display: flex;
-  width: 380px;
+  width: 500px;
   justify-content: space-between;
+  margin-left: 50px;
 }
 
 .ableToClick {
