@@ -212,7 +212,15 @@ def movie_release_list(request):
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
+# def movie_choice(request, name):
 def movie_choice(request):
-    movies = get_list_or_404(Movie)
+    # genre=get_object_or_404(Genre, name=request.data)
+    # movies = get_list_or_404(Movie,genres=genre)
+    selected_genres = request.GET.getlist('genres')
+    selected_genres = selected_genres[0].split(',')
+    # print(selected_genres)
+    movies = Movie.objects.filter(genres__name__in=selected_genres).distinct()
+    # print(movies)
+    # # movie = get_object_or_404(Genre, name=name)
     serializers = MoviechoiceSerializer(movies, many=True)
     return Response(serializers.data)
