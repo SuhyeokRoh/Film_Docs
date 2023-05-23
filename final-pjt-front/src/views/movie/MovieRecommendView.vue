@@ -4,7 +4,7 @@
     <div>
       <p>무작위</p>
       <div @click="gotoDetail(r_movie)" v-for="r_movie in random_movies" :key="r_movie.id">
-        <img :src="getMoviePoster(r_movie)" >
+        <img :src="r_movie.poster_path" >
         <h2>{{ r_movie.title }}</h2>
       </div>
     </div>
@@ -105,9 +105,6 @@ export default {
       const randomMovies = _.sampleSize(rdMovies, 5)
       console.log(randomMovies)
       this.random_movies = randomMovies
-    },
-    getMoviePoster(movie) {
-      return `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
     },
     gotoDetail(r_movie) {
         const movie = r_movie

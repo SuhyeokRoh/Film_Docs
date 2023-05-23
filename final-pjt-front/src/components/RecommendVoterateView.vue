@@ -1,6 +1,6 @@
 <template>
   <div @click="gotoDetail">
-    <img :src=getPoster >
+    <img :src="movie.poster_path" >
     <h2>{{ movie.title }}</h2>
   </div>
 </template>
@@ -15,11 +15,6 @@ export default {
   data() {
     return {
       reviews: null,
-    }
-  },
-  computed: {
-    getPoster() {
-      return `https://image.tmdb.org/t/p/w500/${this.movie.poster_path}`
     }
   },
   

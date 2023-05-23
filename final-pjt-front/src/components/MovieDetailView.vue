@@ -2,7 +2,7 @@
   <div v-if="queryData">
     <h1>Movie Detail Page</h1>
     <h3>제목 : {{ queryData.movie.title }}</h3>
-    <img :src=getPoster >
+    <img :src="queryData.movie.poster_path" >
     <p>개봉일 : {{ queryData.movie.release_date }}</p>
     <p>인기도 : {{ queryData.movie.popularity }}</p>
     <p>투표수 : {{ queryData.movie.vote_count }}</p>
@@ -78,10 +78,6 @@ export default {
     ReviewItemView,
   },
   computed: {
-    getPoster() {
-      return `https://image.tmdb.org/t/p/w500/${this.queryData.movie.poster_path}`
-    },
-
     getGenreData() {
       return this.Genre
     }
