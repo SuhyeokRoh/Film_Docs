@@ -17,6 +17,7 @@ class Movie(models.Model):
     backdrop_path = models.CharField(max_length=200, null=True)
     poster_path = models.CharField(max_length=200)
     genres = models.ManyToManyField(Genre)
+    trailerUrl = models.TextField()
     movie_like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movielike")
     movie_dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movieDislike")
 

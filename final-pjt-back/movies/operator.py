@@ -43,16 +43,28 @@ def saveDb():
 
         for x in data:
             try:
-                if x.get('release_date'):
-                    movie = Movie(movie_id = x.get('id'), title = x.get('title'), release_date = x.get('release_date'), 
-                                popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
-                                vote_average = x.get('vote_average'), overview = x.get('overview'),
-                                poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'))
+                id = x.get('id')
+                prms = {
+                    "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
+                }
+                movieTrailerUrl = f"https://api.themoviedb.org/3/movie/{id}/videos"
+
+                res = requests.get(movieTrailerUrl, params=prms)
+                key = res.json()['results']
+                trailer_key = key[0].get('key')
+                trailerUrl = f"https://www.youtube.com/embed/{trailer_key}?autoplay=1&mute=1&loop=1&playlist={trailer_key}"
+
+                if x.get('release_date') == None:
+                    release_date = '1999-12-31'
                 else:
-                    movie = Movie(movie_id = x.get('id'), title = x.get('title'), release_date = '1999-12-31', 
-                                popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
-                                vote_average = x.get('vote_average'), overview = x.get('overview'),
-                                poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'))
+                    release_date = x.get('release_date')
+
+                movie = Movie(movie_id = id, title = x.get('title'), release_date = release_date, 
+                            popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
+                            vote_average = x.get('vote_average'), overview = x.get('overview'),
+                            poster_path = x.get('poster_path'), backdrop_path = x.get('backdrop_path'),
+                            trailerUrl = trailerUrl,)
+                    
                 movie.validate_unique()
                 movie.save()
                 for g in x.get('genre_ids'):
