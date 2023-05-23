@@ -5,10 +5,15 @@
       <h3>{{movie.title}}</h3>
       <img :src=getPoster(movie)>
     </div> -->
-    <vueper-slides>
-      <vueper-slide v-for="movie in movieList" :key="movie.id" 
+    <vueper-slides autoplay fade :touchable="false">
+      <vueper-slide v-for="movie in movieList"
+      :key="movie.id" 
       :title="movie.title"
-      :image="getPoster(movie)" />
+      :image="getPoster(movie)" 
+      />
+      <template #pause>
+        <i class="icon pause_circle_outline"></i>
+      </template>
     </vueper-slides>
   </div>
 </template>
@@ -36,13 +41,24 @@ export default {
         url: `${URL}/movies/main/`,
       })
       .then((res) => {
-        this.movieList = res.data
+        const movies = res.data
+        console.log(movies)
+        for (let i=0; i<movies.length; i++) {
+          const content = {
+            title : movies[i].title,
+            image: movies[i].backdrop_path,
+            video : {
+              url : movies[i].trailerUrl,
+            }
+          }
+          this.movieList.push(content)
+        }
       })
       .catch(err => console.log(err))
     },
 
     getPoster(movie) {
-      return `https://image.tmdb.org/t/p/w500/${movie.poster_path}`
+      return `https://image.tmdb.org/t/p/original/${movie.backdrop_path}`
     },
 
     gotoDetail(select_movie) {
@@ -58,5 +74,7 @@ export default {
 </script>
 
 <style>
-
+.vueperslides__arrow {
+  color: yellow
+}
 </style>
