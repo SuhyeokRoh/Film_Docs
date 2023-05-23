@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="inner">
     <h1>영화 추천입니다.</h1>
     <div>
       <h1>무작위</h1>
@@ -73,6 +73,13 @@ export default {
     RecommendDislikeView,
   },
   methods: {
+    ConfirmLogin() {
+      const user = this.$store.state.username
+      if (!user) {
+        alert("로그인이 필요합니다.")
+        this.$router.push({name: 'Login'})
+      }
+    },
     setToken: function() {
       const token = this.$store.state.access_token
       const config = {
@@ -114,7 +121,9 @@ export default {
   created() {
     this.getRecommendMovie()
   },
-  
+  mounted() {
+    this.ConfirmLogin()
+  },
 }
 </script>
 

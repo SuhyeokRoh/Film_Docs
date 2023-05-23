@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h1>리뷰 상세 페이지</h1>
+  <div class="inner">
     <div v-if="queryData">
       <div>
         <button @click="changeupdate_state">댓글 수정하기</button>

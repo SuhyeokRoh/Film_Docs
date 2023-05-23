@@ -93,6 +93,14 @@ export default {
     }
   },
   methods: {
+    ConfirmLogin() {
+      const user = this.$store.state.username
+      if (!user) {
+        alert("로그인이 필요합니다.")
+        return this.$router.push({name: 'Login'})
+      }
+    },
+
     setToken: function() {
       const token = this.$store.state.access_token
       const config = {
@@ -149,6 +157,8 @@ export default {
     },
 
     createReview: function() {
+      this.ConfirmLogin()
+
       const movieid = this.queryData.movie.id
       if (!this.NewReviewTitle) {
         this.NewReviewContent = ''
@@ -199,6 +209,8 @@ export default {
     },
 
     likeMovie() {
+      this.ConfirmLogin()
+
       const movieid = this.queryData.movie.id 
 
       axios({
@@ -215,6 +227,8 @@ export default {
     },
 
     dislikeMovie() {
+      this.ConfirmLogin()
+      
       const movieid = this.queryData.movie.id 
 
       axios({
