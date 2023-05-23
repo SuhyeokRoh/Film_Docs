@@ -37,12 +37,12 @@ export default {
   position: relative;
   margin-bottom: 30px;
   width: 230px;
-  height: 345px;
+  height: 250px;
 }
 
 .posterlist {
   width: 230px;
-  height: 345px;
+  height: 250px;
 }
 
 .card {
@@ -69,7 +69,7 @@ export default {
   background-color: black;
   color:white;
   border-radius: 7px;
-  line-height: 300px;
+  line-height: 250px;
   font-size: 17px;
   transform: rotateY(180deg);
 }
