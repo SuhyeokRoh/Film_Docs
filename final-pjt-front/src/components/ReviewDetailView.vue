@@ -2,9 +2,22 @@
   <div>
     <h1>리뷰 상세 페이지</h1>
     <div v-if="queryData">
-      <h2>{{queryData.reviews.title}}</h2>
-      <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
-      <p>{{queryData.reviews.content}}</p>
+      <div>
+        <button @click="changeupdate_state">댓글 수정하기</button>
+        <div v-if="isReviewupdate">
+          <h2>{{queryData.reviews.title}}</h2>
+          <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
+          <p>{{queryData.reviews.content}}</p>
+          <button @click="deleteReview">삭제</button>
+        </div>
+        <div v-else>
+          <label for="comment">review title 수정하기 : </label>
+          <input type="text" id="comment" v-model="updatereviewtitle">
+          <label for="comment">review content 수정하기 : </label>
+          <input type="text" id="comment" v-model="updatereviewcontent">
+          <button @click="updateComment">댓글 수정</button>
+        </div>
+      </div>
       <div>
         <button v-if="like_state" @click="likeReview">
           <p v-if="dislike_state">좋아요</p>
@@ -26,6 +39,7 @@
       </div>
       <div v-for="comment in comments" :key="comment.id">
         <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
+        <button @click="deleteComment(comment)">[삭제]</button>
       </div>
     </div>
   </div>
@@ -44,7 +58,10 @@ export default {
       dislike_reviews: [],
       like_state: true,
       dislike_state: true,
-
+      isReviewupdate: true,
+      isCommentupdate: true,
+      updatereviewtitle : null,
+      updatereviewcontent : null,
       commentContent: null,
       comments: [],
     }
@@ -174,6 +191,86 @@ export default {
     gotoProfile() {
       const username = this.queryData.user.username
       this.$router.push({name: 'Profile', query : {user: username}})
+    },
+    deleteReview: function () {
+      const movie = this.queryData.reviews.movie
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+    
+      axios({
+        method: 'delete',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/update/`,
+        headers: this.setToken()
+
+      }).then(res => {
+          console.log(res, reviewid)
+          this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    deleteComment: function (comment) {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+    
+      axios({
+        method: 'delete',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/update`,
+        headers: this.setToken()
+
+      }).then(res => {
+          console.log(res, comment)
+          this.getComment()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    updateReview: function () {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+      this.isReviewupdate = false
+      axios({
+        method: 'put',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/update/`,
+        headers: this.setToken(),
+        data: {
+          title: this.updatereviewtitle, content: this.updatereviewcontent
+        },
+
+      }).then(res => {
+          console.log(res, reviewid)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    updateComment: function (comment) {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+      this.isCommentupdate = false
+      axios({
+        method: 'put',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/update`,
+        headers: this.setToken()
+
+      }).then(res => {
+          console.log(res, comment)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    changeupdate_state() {
+      if (this.isReviewupdate) {
+        this.isReviewupdate = false
+      }
+
+      // if (this.isCommentupdate) {
+      //   this.isCommentupdate = false
+      // }
+
     },
   }
 }
