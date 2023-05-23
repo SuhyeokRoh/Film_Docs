@@ -1,91 +1,90 @@
 <template>
   <div>
-    <div>
-      <p>옵션</p>
+    <button @click="getchoiceMovies">옵션 적용</button>
+    <div id="optionbox">
       <p>장르</p>
-      <button @click="actionclick">
+      <hr>
+      <span @click="actionclick">
         <p v-if="isActionclicked">Action</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="adventureclick">
+      </span>
+      <span @click="adventureclick">
         <p v-if="isAdventureclicked">Adventure</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="animationclick">
+        </span>
+      <span @click="animationclick">
         <p v-if="isAnimationclicked">Animation</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="comedyclick">
+        </span>
+      <span @click="comedyclick">
         <p v-if="isComedyclicked">Comedy</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="crimeclick">
+        </span>
+      <span @click="crimeclick">
         <p v-if="isCrimeclicked">Crime</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="documentaryclick">
+        </span>
+      <span @click="documentaryclick">
         <p v-if="isDocumentaryclicked">Documentary</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="dramaclick">
+        </span>
+      <span @click="dramaclick">
         <p v-if="isDramaclicked">Drama</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="familyclick">
+        </span>
+      <span @click="familyclick">
         <p v-if="isFamilyclicked">Family</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="fantasyclick">
+        </span>
+      <span @click="fantasyclick">
         <p v-if="isFantasyclicked">Fantasy</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="historyclick">
+        </span>
+      <span @click="historyclick">
         <p v-if="isHistoryclicked">History</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="horrorclick">
+        </span>
+      <span @click="horrorclick">
         <p v-if="isHorrorclicked">Horror</p>
         <p v-else>cancel</p>
-        </button>
-      <button @click="musicclick">
+        </span>
+      <span @click="musicclick">
         <p v-if="isMusicclicked">Music</p>
         <p v-else>cancel</p>
-      </button>
-      <button @click="mysteryclick">
+      </span>
+      <span @click="mysteryclick">
         <p v-if="isMysteryclicked">Mystery</p>
         <p v-else>cancel</p>
-      </button>
-      <button @click="romanceclick">
+      </span>
+      <span @click="romanceclick">
         <p v-if="isRomanceclicked">Romance</p>
         <p v-else>cancel</p>
-      </button>
-      <button @click="SFclick">
+      </span>
+      <span @click="SFclick">
         <p v-if="isScience_Fictionclicked">Science Fiction</p>
         <p v-else>cancel</p>
-      </button>
-      <button @click="tvmovieclick">
+      </span>
+      <span @click="tvmovieclick">
         <p v-if="isTV_Movieclicked">TV Movie</p>
         <p v-else>cancel</p>
-      </button>
-      <button @click="thrillerclick">
+      </span>
+      <span @click="thrillerclick">
         <p v-if="isThrillerclicked">Thriller</p>
         <p v-else>cancel</p>
-      </button>
-      <button @click="warclick">
+      </span>
+      <span @click="warclick">
         <p v-if="isWarclicked">War</p>
         <p v-else>cancel</p>
-      </button>
-      <button @click="westernclick">
+      </span>
+      <span @click="westernclick">
         <p v-if="isWesternclicked">Western</p>
         <p v-else>cancel</p>
-      </button>
+      </span>
     </div>
     <div>
       <p>평점</p>
     </div>
-    <div>
-      <p>인기도</p>
-    </div>
+
     <ul>
       <MovieItemView v-for="movie in movies" :key="movie.id" 
       :movie="movie" />
@@ -107,25 +106,25 @@ export default {
   data: function() {
     return {
       movies: null,
-      isActionclicked: false,
-      isAdventureclicked: false,
-      isAnimationclicked: false,
-      isComedyclicked: false,
-      isCrimeclicked: false,
-      isDocumentaryclicked: false,
-      isDramaclicked: false,
-      isFamilyclicked: false,
-      isFantasyclicked: false,
-      isHistoryclicked: false,
-      isHorrorclicked: false,
-      isMusicclicked: false,
-      isMysteryclicked: false,
-      isRomanceclicked: false,
-      isScience_Fictionclicked: false,
-      isTV_Movieclicked: false,
-      isThrillerclicked: false,
-      isWarclicked: false,
-      isWesternclicked: false,
+      isActionclicked: true,
+      isAdventureclicked: true,
+      isAnimationclicked: true,
+      isComedyclicked: true,
+      isCrimeclicked: true,
+      isDocumentaryclicked: true,
+      isDramaclicked: true,
+      isFamilyclicked: true,
+      isFantasyclicked: true,
+      isHistoryclicked: true,
+      isHorrorclicked: true,
+      isMusicclicked: true,
+      isMysteryclicked: true,
+      isRomanceclicked: true,
+      isScience_Fictionclicked: true,
+      isTV_Movieclicked: true,
+      isThrillerclicked: true,
+      isWarclicked: true,
+      isWesternclicked: true,
     }
   },
   created() {
@@ -139,70 +138,29 @@ export default {
         url: `${URL}/movies/`,
       })
       .then(res => {
-        console.log(res)
+        // console.log(res)
         this.movies = res.data
       })
       .catch(err => {
         console.log(err)
       })
     },
-    // getchoiceMovies() {
-    //   axios({
-    //     method: 'get',
-    //     url: `${URL}/movies/choice/`,
-    //   })
-    //   .then(res => {
-    //     console.log(res.data)
-    //     // this.movies = res.data
-    //   })
-    //   .catch(err => {
-    //     console.log(err)
-    //   })
-    // },
-    choosegenre() {
-      const selectedGenres = []
-      if (this.isActionclicked) selectedGenres.push('Action')
-      if (this.isAdventureclicked) selectedGenres.push('Adventure')
-      if (this.isAnimationclicked) selectedGenres.push('Animation')
-      if (this.isComedyclicked) selectedGenres.push('Comedy')
-      if (this.isCrimeclicked) selectedGenres.push('Crime')
-      if (this.isDocumentaryclicked) selectedGenres.push('Documentary')
-      if (this.isDramaclicked) selectedGenres.push('Drama')
-      if (this.isFamilyclicked) selectedGenres.push('Family')
-      if (this.isFantasyclicked) selectedGenres.push('Fantasy')
-      if (this.isHistoryclicked) selectedGenres.push('History')
-      if (this.isHorrorclicked) selectedGenres.push('Horror')
-      if (this.isMusicclicked) selectedGenres.push('Music')
-      if (this.isMysteryclicked) selectedGenres.push('Mystery')
-      if (this.isRomanceclicked) selectedGenres.push('Romance')
-      if (this.isScience_Fictionclicked) selectedGenres.push('Science Fiction')
-      if (this.isTV_Movieclicked) selectedGenres.push('TV Movie')
-      if (this.isThrillerclicked) selectedGenres.push('Thriller')
-      if (this.isWarclicked) selectedGenres.push('War')
-      if (this.isWesternclicked) selectedGenres.push('Western')
+    getchoiceMovies() {
+      // const selectedOption = []
 
-      if (selectedGenres.length === 0) {
-        // 모든 장르의 영화를 출력
-        // this.getchoiceMovies()
-        this.getMovies()
-      } else {
-        // 선택된 장르의 영화만 출력
-        axios({
-          method: 'get',
-          url: `${URL}/movies/choice/`,
-          params: {
-            genre: selectedGenres.join(',')
-          }
-        })
-        .then(res => {
-          // console.log(res.data)
-          this.movies = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      }
+      axios({
+        method: 'get',
+        url: `${URL}/movies/choice/`,
+      })
+      .then(res => {
+        console.log(res.data)
+        console.log(res.data[0].genres)
+      })
+      .catch(err => {
+        console.log(err)
+      })
     },
+    
     actionclick() {
       if (this.isActionclicked) {
         this.isActionclicked = false
@@ -342,5 +300,7 @@ export default {
 </script>
 
 <style>
-
+#optionbox {
+  border: 3px solid black;
+}
 </style>
