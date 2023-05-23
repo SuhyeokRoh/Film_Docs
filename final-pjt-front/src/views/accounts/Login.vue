@@ -64,7 +64,8 @@ export default {
  }
 
  #Login {
-  border: 5px solid black;
+
+  box-shadow: 5px 5px 5px 5px rgba(51, 51, 96, 96);
   width: 500px;
   height: 60%;
   display: flex;
