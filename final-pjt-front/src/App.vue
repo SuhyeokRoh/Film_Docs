@@ -185,4 +185,10 @@ img{
   display: flex;
   flex-direction: column;
 }
+
+.contain {
+  border: solid 1px black;
+  border-radius: 7px;
+  margin: 20px auto;
+}
 </style>
