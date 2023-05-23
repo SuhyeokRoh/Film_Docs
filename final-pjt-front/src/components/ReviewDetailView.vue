@@ -40,6 +40,22 @@
             <div v-if="isCommentupdate">
               <button @click="changeupdate_comment_state">댓글 수정 하기</button>
               <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
+              <div>
+                <div>
+                  <button v-if="comment_like_state" @click="likeComment(comment)">
+                    <p v-if="comment_dislike_state">좋아요</p>
+                    <p v-else>좋아요 취소</p>
+                  </button>
+                  <p>좋아요 : {{like_comments.length}}</p>
+                </div>
+                <div>
+                  <button v-if="comment_dislike_state" @click="dislikeComment(comment)">
+                    <p v-if="comment_like_state">싫어요</p>
+                    <p v-else>싫어요 취소</p>
+                  </button>
+                  <p>싫어요 : {{dislike_comments.length}}</p>
+                </div>
+              </div>
               <button @click="deleteComment(comment)">[삭제]</button>
             </div>
             <div v-else>
@@ -65,10 +81,14 @@ export default {
       queryData: null,
       like_reviews: [],
       dislike_reviews: [],
+      like_comments: [],
+      dislike_comments: [],
       like_state: true,
       dislike_state: true,
       isReviewupdate: true,
       isCommentupdate: true,
+      comment_like_state:true,
+      comment_dislike_state:true,
       updatereviewtitle : null,
       updatereviewcontent : null,
       commentContent: null,
@@ -304,6 +324,76 @@ export default {
         this.isCommentupdate = false
       }
 
+    },
+    getCommentLike(comment) {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+      const user_name = this.queryData.user.username
+
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.like_comments = res.data.like_comment_users
+        this.dislike_comments = res.data.dislike_comment_users
+        const like_comments = this.like_comments
+        const dislike_comments = this.dislike_comments
+
+        const like = like_comments.find(element => {
+          if (element.username === user_name) {
+            return true;
+          }
+        })
+
+        const dislike = dislike_comments.find(element => {
+          if (element.username === user_name) {
+            return true;
+          }
+        })
+
+        if (like) {
+          this.comment_dislike_state = false
+        }
+        if (dislike) {
+          this.comment_like_state = false
+        }
+      })
+      .catch((err) => console.log(err))
+    },
+
+    likeComment(comment) {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+      console.log(comment)
+      axios({
+        method: 'post',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/like/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        console.log(res)
+        this.like_comments = res.data.like_comment_users
+        this.comment_dislike_state = !this.comment_dislike_state
+      })
+      .catch((err) => console.log(err))
+    },
+
+    dislikeComment(comment) {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+
+      axios({
+        method: 'post',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/dislike/`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.dislike_comments = res.data.dislike_comment_users
+        this.comment_like_state = !this.comment_like_state
+      })
+      .catch((err) => console.log(err))
     },
   }
 }
