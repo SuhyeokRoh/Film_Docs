@@ -54,22 +54,27 @@ def saveDb():
                 trailer_key = key[0].get('key')
                 trailerUrl = f"https://www.youtube.com/embed/{trailer_key}?autoplay=1&mute=1&loop=1&playlist={trailer_key}"
 
-                if x.get('release_date') == None:
-                    release_date = '1999-12-31'
-                else:
-                    release_date = x.get('release_date')
-                
                 poster_path_500 = f"https://image.tmdb.org/t/p/w500/{x.get('poster_path')}"
                 poster_path_original = f"https://image.tmdb.org/t/p/original/{x.get('poster_path')}"
                 backdrop_path_300 = f"https://image.tmdb.org/t/p/w300/{x.get('backdrop_path')}"
                 backdrop_path_original = f"https://image.tmdb.org/t/p/original/{x.get('backdrop_path')}"
 
-                movie = Movie(movie_id = id, title = x.get('title'), release_date = release_date, 
-                            popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
-                            vote_average = x.get('vote_average'), overview = x.get('overview'),
-                            poster_path_500 = poster_path_500, poster_path_original = poster_path_original, 
-                            backdrop_path_300 = backdrop_path_300, backdrop_path_original = backdrop_path_original,
-                            trailerUrl = trailerUrl,)
+                if x.get('release_date'):
+                    movie = Movie(movie_id = id, title = x.get('title'), release_date = x.get('release_date'), 
+                        popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
+                        vote_average = x.get('vote_average'), overview = x.get('overview'),
+                        poster_path_500 = poster_path_500, poster_path_original = poster_path_original, 
+                        backdrop_path_300 = backdrop_path_300, backdrop_path_original = backdrop_path_original,
+                        trailerUrl = trailerUrl,)
+                    
+                else:
+                    movie = Movie(movie_id = id, title = x.get('title'), release_date = '1999-12-31', 
+                        popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
+                        vote_average = x.get('vote_average'), overview = x.get('overview'),
+                        poster_path_500 = poster_path_500, poster_path_original = poster_path_original, 
+                        backdrop_path_300 = backdrop_path_300, backdrop_path_original = backdrop_path_original,
+                        trailerUrl = trailerUrl,)
+                
                     
                 movie.validate_unique()
                 movie.save()
