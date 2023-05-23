@@ -60,7 +60,7 @@ def saveDb():
                     release_date = x.get('release_date')
                 
                 poster_path = f"https://image.tmdb.org/t/p/w500/{x.get('poster_path')}"
-                backdrop_path = f"https://image.tmdb.org/t/p/original/{x.get('backdrop_path')}"
+                backdrop_path = f"https://image.tmdb.org/t/p/w300/{x.get('backdrop_path')}"
 
                 movie = Movie(movie_id = id, title = x.get('title'), release_date = release_date, 
                             popularity = x.get('popularity'), vote_count = x.get('vote_count'), 
@@ -80,5 +80,5 @@ def saveDb():
 def start():
     scheduler = BackgroundScheduler()
     # scheduler.add_job(saveDb, 'cron', hour=16, minute=0, id="saveDataBase")
-    scheduler.add_job(saveDb, 'interval', seconds=10, id="saveDataBase")
+    scheduler.add_job(saveDb, 'interval', seconds=30, id="saveDataBase")
     scheduler.start()
