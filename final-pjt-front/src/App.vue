@@ -53,7 +53,6 @@ export default {
   data: function () {
     return {
       isLogin: false,
-      // isMySessionActive: false
     }
   },
   methods: {
@@ -63,16 +62,6 @@ export default {
       // localStorage.removeItem('jwt')
       this.$router.push({name:'Login'})
     },
-    // onLoad() {
-    //   window.localStorage.setItem("isMySessionActive", true);
-    // },
-    // onUnload(event) {
-    //   window.localStorage.setItem("isMySessionActive", false);
-    //   // this.$store.dispatch('Logout_delete_username');
-    //   localStorage.removeItem('jwt');
-    //   event.returnValue = "";
-    // }
-    
   },
   created() {
     const token = this.$store.state.access_token
@@ -80,22 +69,11 @@ export default {
       this.isLogin = true
     }
   },
-  // beforeMount() {
-  //   window.addEventListener("load", this.onLoad);
-  //   window.addEventListener("beforeunload", this.onUnload);
-  // },
-  // beforeDestroy() {
-  //   window.removeEventListener("load", this.onLoad);
-  //   window.removeEventListener("beforeunload", this.onUnload);
-  // },
 }
 </script>
 
 <style>
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+
 
 html, body {
 	margin: 0;
@@ -127,7 +105,8 @@ table {
 	border-spacing: 0;
 }
 span {
-  margin: auto;
+  margin: 0px auto;
+  padding: 0px auto;
 }
 img{
   border-radius: 7px;
@@ -169,6 +148,15 @@ img{
   color: #FFDF00;
 }
 
+.inner {
+  /* width: 1300px; */
+  margin: 0px auto;
+  margin-top: 50px;
+  padding: 0px auto;
+  /* border: solid 3px black;
+  border-radius: 7px; */
+}
+
 #AboutAccount {
   display: flex;
   width: 180px;
@@ -185,5 +173,15 @@ img{
 
 .ableToClick {
   cursor: pointer;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
 }
 </style>

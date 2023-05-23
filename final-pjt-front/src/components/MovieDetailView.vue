@@ -1,5 +1,5 @@
 <template>
-  <div id="movie_detail" v-if="queryData">
+  <div class="inner" v-if="queryData">
     <div>
       <img id="backimage" :src="queryData.movie.backdrop_path_original" >
       <iframe id="trailer" :src="queryData.movie.trailerUrl" width="500" height="255" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -234,12 +234,6 @@ export default {
 </script>
 
 <style>
-#movie_detail {
-  width: 1280px;
-  margin: 10px auto;
-  /* border: solid 3px black;
-  border-radius: 7px; */
-}
 
 #backimage{
   width: 1280px;
