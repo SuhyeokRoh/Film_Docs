@@ -3,7 +3,7 @@
     <h1>리뷰 상세 페이지</h1>
     <div v-if="queryData">
       <div>
-        <button @click="changeupdate_state">댓글 수정하기</button>
+        <button @click="changeupdate_state">리뷰 수정하기</button>
         <div v-if="isReviewupdate">
           <h2>{{queryData.reviews.title}}</h2>
           <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
@@ -33,23 +33,23 @@
         <p>싫어요 : {{dislike_reviews.length}}</p>
       </div>
       <div>
-      <div v-if="isCommentupdate">
-        <div>
-          <label for="comment">댓글 남기기 : </label>
-          <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
-          <button @click="saveComment">입력</button>
+      <div>
+        <label for="comment">댓글 남기기 : </label>
+        <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
+        <button @click="saveComment">입력</button>
+          <div v-for="comment in comments" :key="comment.id">
+            <div v-if="isCommentupdate">
+              <button @click="changeupdate_comment_state">댓글 수정 하기</button>
+              <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
+              <button @click="deleteComment(comment)">[삭제]</button>
+            </div>
+            <div v-else>
+              <label for="comment">comment 수정하기 : </label>
+              <input type="text" id="comment" v-model="updatecomment">
+              <button @click="updateComment(comment)">댓글 수정</button>
+            </div>
+          </div>
         </div>
-        <div v-for="comment in comments" :key="comment.id">
-          <button @click="changeupdate_comment_state">댓글 수정</button>
-          <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
-          <button @click="deleteComment(comment)">[삭제]</button>
-        </div>
-      </div>
-      <div v-else>
-        <label for="comment">comment 수정하기 : </label>
-        <input type="text" id="comment" v-model="updatecomment">
-        <button @click="updateComment">댓글 수정</button>
-      </div>
       </div>
     </div>
   </div>
@@ -260,27 +260,37 @@ export default {
         })
         .catch(err => {
           console.log(err)
+          alert('본인 댓글만 수정 가능합니다.')
+          this.isReviewupdate = true
         })
     },
     updateComment: function (comment) {
-      
+
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
+      
       this.isCommentupdate = false
+
       axios({
         method: 'put',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/update/`,
         headers: this.setToken(),
         data: {
+          movie:movieid,
+          review:reviewid,
+          user:comment.user,
           content: this.updatecomment,
         }
 
       }).then(res => {
-          console.log(res, comment)
-          
+          console.log(res, this.comments)
+          comment.content = res.data.content
+          this.isCommentupdate = true
         })
         .catch(err => {
           console.log(err)
+          alert('본인 댓글만 수정 가능합니다.')
+          this.isCommentupdate = true
         })
     },
     changeupdate_state() {
