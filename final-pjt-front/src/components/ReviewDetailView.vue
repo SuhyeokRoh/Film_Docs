@@ -1,68 +1,108 @@
 <template>
-  <div class="inner">
-    <div v-if="queryData">
-      <div>
-        <button @click="changeupdate_state">리뷰 수정하기</button>
-        <div v-if="isReviewupdate">
-          <h2>{{queryData.reviews.title}}</h2>
-          <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
-          <p>{{queryData.reviews.content}}</p>
-          <button @click="deleteReview">삭제</button>
+  <div v-if="queryData" class="inner">
+    <div class="col reviewcontent">
+      <div v-if="is_review_user" class="row reviewupdate">
+        <div class="row updatebutton">
+          <span>
+            <button @click="changeupdate_state">리뷰 수정하기</button>
+          </span>
+          <span>
+            <button @click="deleteReview">삭제</button>
+          </span>
         </div>
+      </div>
+      <div class="col">
+
+        <div v-if="isReviewupdate">
+          <div>
+            <h1 class="title">{{queryData.reviews.title}}</h1>
+          </div>
+          <div class="row titleuser">
+            <p>영화 : {{queryData.reviews.movie.title}}</p>
+            <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
+          </div>
+          <div class="reviewText">
+            <p style="margin: 15px 15px auto;">{{queryData.reviews.content}}</p>
+          </div>
+        </div>
+
         <div v-else>
-          <label for="review">review title 수정하기 : </label>
-          <input type="text" id="review" v-model="updatereviewtitle">
-          <label for="review">review content 수정하기 : </label>
-          <input type="text" id="review" v-model="updatereviewcontent">
+          <div class="row">
+            <label for="review">review title 수정하기 : </label>
+            <input type="text" id="review" v-model="updatereviewtitle">
+          </div>
+          <div class="row">
+            <label for="review">review content 수정하기 : </label>
+            <input type="text" id="review" v-model="updatereviewcontent">
+          </div>
           <button @click="updateReview">리뷰 수정</button>
         </div>
+
+        <div class="row likebutton">
+          <div class="col reviewlikebutton">
+            <p>좋아요 : {{like_reviews.length}}</p>
+            <button v-if="like_state" @click="likeReview">
+              <p v-if="dislike_state">좋아요</p>
+              <p v-else>좋아요 취소</p>
+            </button>
+          </div>
+          <div class="col reviewlikebutton">
+            <p>싫어요 : {{dislike_reviews.length}}</p>
+            <button v-if="dislike_state" @click="dislikeReview">
+              <p v-if="like_state">싫어요</p>
+              <p v-else>싫어요 취소</p>
+            </button>
+          </div>
+        </div>
+
       </div>
-      <div>
-        <button v-if="like_state" @click="likeReview">
-          <p v-if="dislike_state">좋아요</p>
-          <p v-else>좋아요 취소</p>
-        </button>
-        <p>좋아요 : {{like_reviews.length}}</p>
-      </div>
-      <div>
-        <button v-if="dislike_state" @click="dislikeReview">
-          <p v-if="like_state">싫어요</p>
-          <p v-else>싫어요 취소</p>
-        </button>
-        <p>싫어요 : {{dislike_reviews.length}}</p>
-      </div>
-      <div>
+    </div>
+    <div class="col reviewcontent contain">
       <div>
         <label for="comment">댓글 남기기 : </label>
         <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
         <button @click="saveComment">입력</button>
-          <div v-for="comment in comments" :key="comment.id">
-            <div v-if="isCommentupdate">
-              <button @click="changeupdate_comment_state">댓글 수정 하기</button>
-              <p>{{comment.content}} - <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span></p>
-              <div>
-                <div>
-                  <button v-if="comment_like_state" @click="likeComment(comment)">
-                    <p v-if="comment_dislike_state">좋아요</p>
-                    <p v-else>좋아요 취소</p>
-                  </button>
-                  <p>좋아요 : {{like_comments.length}}</p>
-                </div>
-                <div>
-                  <button v-if="comment_dislike_state" @click="dislikeComment(comment)">
-                    <p v-if="comment_like_state">싫어요</p>
-                    <p v-else>싫어요 취소</p>
-                  </button>
-                  <p>싫어요 : {{dislike_comments.length}}</p>
-                </div>
+      </div>
+      <div class="col">
+        <div v-for="comment in comments" :key="comment.id" class="commentbox">
+          <div v-if="isCommentupdate">
+            <div>
+              <p>{{comment.content}}</p>
+            </div>
+            <div>
+              <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span>
+            </div>
+            <div class="row commentlikebutton">
+              <div class="col commentbutton">
+                <p>좋아요 : {{like_comments.length}}</p>
+                <button v-if="comment_like_state" @click="likeComment(comment)">
+                  <p v-if="comment_dislike_state">좋아요</p>
+                  <p v-else>좋아요 취소</p>
+                </button>
               </div>
-              <button @click="deleteComment(comment)">[삭제]</button>
+              <div class="col commentbutton">
+                <p>싫어요 : {{dislike_comments.length}}</p>
+                <button v-if="comment_dislike_state" @click="dislikeComment(comment)">
+                  <p v-if="comment_like_state">싫어요</p>
+                  <p v-else>싫어요 취소</p>
+                </button>
+              </div>
             </div>
-            <div v-else>
-              <label for="comment">comment 수정하기 : </label>
-              <input type="text" id="comment" v-model="updatecomment">
-              <button @click="updateComment(comment)">댓글 수정</button>
+            <div class="row commentupdate">
+              <div v-if="is_comment_user(comment)" class="row updatebutton">
+                <span>
+                  <button @click="changeupdate_comment_state">댓글 수정 하기</button>
+                </span>
+                <span>
+                  <button @click="deleteComment(comment)">삭제</button>
+                </span>
+              </div>
             </div>
+          </div>
+          <div v-else>
+            <label for="comment">comment 수정하기 : </label>
+            <input type="text" id="comment" v-model="updatecomment">
+            <button @click="updateComment(comment)">댓글 수정</button>
           </div>
         </div>
       </div>
@@ -83,6 +123,9 @@ export default {
       dislike_reviews: [],
       like_comments: [],
       dislike_comments: [],
+
+      is_review_user: false,
+
       like_state: true,
       dislike_state: true,
       isReviewupdate: true,
@@ -100,10 +143,7 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getReviewLike()
     this.comments = this.getComment()
-    // this.getCommentLike(this.comment)
-  },
-  created() {
-    // this.getCommentLike(this.comment)
+    this.confirmUser()
   },
   methods: {
     setToken: function() {
@@ -112,6 +152,20 @@ export default {
         Authorization: `Bearer ${token}`
       }
       return config
+    },
+
+    confirmUser() {
+      if (this.queryData.user.username === this.$store.state.username) {
+        this.is_review_user = true
+      }
+    },
+
+    is_comment_user(select_comment) {
+      if (select_comment.user.username === this.$store.state.username) {
+        return true;
+      } else {
+        return false;
+      }
     },
 
     getReviewLike() {
@@ -405,5 +459,72 @@ export default {
 </script>
 
 <style>
+.reviewcontent {
+  margin: auto;
+  width: 1176px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 
+.updatebutton {
+  width: 200px;
+  height: 70px;
+  /* margin: 0 auto; */
+  justify-content: space-evenly;
+}
+
+.commentbox {
+  width: 80%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: solid 1px black;
+  border-radius: 7px;
+}
+
+.reviewupdate {
+  margin-left: auto;
+}
+
+.commentupdate {
+  /* margin-left: auto; */
+  justify-content:flex-end;
+}
+
+.likebutton {
+  margin: 0 auto;
+}
+
+.commentlikebutton {
+  justify-content: center;
+}
+
+.commentbutton {
+  margin: 10px 10px auto;
+}
+
+.reviewlikebutton {
+  margin: 10px 10px auto;
+}
+
+.title {
+  text-align: left;
+  margin-left: 50px;
+  font-size: 40px;
+}
+
+.titleuser {
+  justify-content: space-between;
+  margin: 0px 50px auto;
+  font-size: 20px;
+}
+
+.reviewText {
+  text-align: left;
+  margin: 10px 50px;
+  font-size: 15px;
+  min-height: 300px;
+  border: solid 2px black;
+  border-radius: 7px;
+}
 </style>
