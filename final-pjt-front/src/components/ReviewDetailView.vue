@@ -91,7 +91,7 @@
             <div class="row commentupdate">
               <div v-if="is_comment_user(comment)" class="row updatebutton">
                 <span>
-                  <button @click="changeupdate_comment_state">댓글 수정 하기</button>
+                  <button @click="changeupdate_comment_state(comment)">댓글 수정 하기</button>
                 </span>
                 <span>
                   <button @click="deleteComment(comment)">삭제</button>
@@ -144,6 +144,9 @@ export default {
     this.getReviewLike()
     this.comments = this.getComment()
     this.confirmUser()
+  },
+  created() {
+    
   },
   methods: {
     setToken: function() {
@@ -248,6 +251,8 @@ export default {
       })
       .then((res) => {
         this.comments = res.data
+        // this.like_comments = res.data.like_comment_users
+        // this.dislike_comments = res.data.dislike_comment_users
       })
       .catch(err => console.log(err))
     },
@@ -341,7 +346,7 @@ export default {
         })
     },
     updateComment: function (comment) {
-
+      // console.log(comment)
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       
@@ -375,55 +380,58 @@ export default {
       }
 
     },
-    changeupdate_comment_state() {
-    
-      if (this.isCommentupdate) {
-        this.isCommentupdate = false
+    changeupdate_comment_state(comment) {
+      console.log(this.$store.state.username)
+      // console.log(this.$store.state)
+      console.log(comment)
+      if (this.$store.state.username === comment.user.username) {
+        if (this.isCommentupdate) {
+          this.isCommentupdate = false
+        }
       }
 
     },
-    getCommentLike() {
-      const movieid = this.queryData.reviews.movie.id
-      const reviewid = this.queryData.reviews.id
-      const user_name = this.queryData.user.username
-      // console.log(this.queryData.reviews)
-      // console.log(reviews)
-      axios({
-        method: 'get',
-        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
-        headers: this.setToken()
-      })
-      .then((res) => {
-        console.log(res)
-        // likecomments = res.data.like_comment_users
-        this.like_comments = res.data.like_comment_users
-        this.dislike_comments = res.data.dislike_comment_users
-        
-        const like_comments = this.like_comments
-        console.log(like_comments)
-        const dislike_comments = this.dislike_comments
+    // getCommentLike() {
+    //   const movieid = this.queryData.reviews.movie.id
+    //   const reviewid = this.queryData.reviews.id
+    //   const user_name = this.queryData.user.username
+      
+    //   axios({
+    //     method: 'get',
+    //     url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
+    //     headers: this.setToken()
+    //   })
+    //   .then((res) => {
+    //     console.log(res)
+    //     // likecomments = res.data.like_comment_users
+    //     this.like_comments = res.data.like_comment_users
+    //     this.dislike_comments = res.data.dislike_comment_users
 
-        const like = like_comments.find(element => {
-          if (element.username === user_name) {
-            return true;
-          }
-        })
+    //     const like_comments = this.like_comments
+    //     console.log(like_comments)
+    //     const dislike_comments = this.dislike_comments
 
-        const dislike = dislike_comments.find(element => {
-          if (element.username === user_name) {
-            return true;
-          }
-        })
+    //     const like = like_comments.find(element => {
+    //       if (element.username === user_name) {
+    //         return true;
+    //       }
+    //     })
 
-        if (like) {
-          this.comment_dislike_state = false
-        }
-        if (dislike) {
-          this.comment_like_state = false
-        }
-      })
-      .catch((err) => console.log(err))
-    },
+    //     const dislike = dislike_comments.find(element => {
+    //       if (element.username === user_name) {
+    //         return true;
+    //       }
+    //     })
+
+    //     if (like) {
+    //       this.comment_dislike_state = false
+    //     }
+    //     if (dislike) {
+    //       this.comment_like_state = false
+    //     }
+    //   })
+    //   .catch((err) => console.log(err))
+    // },
 
     likeComment(comment) {
       const movieid = this.queryData.reviews.movie.id
@@ -438,7 +446,7 @@ export default {
         // console.log(res)
         this.like_comments = res.data.like_comment_users
         this.comment_dislike_state = !this.comment_dislike_state
-        this.getCommentLike(comment)
+        // this.getCommentLike(comment)
       })
       .catch((err) => console.log(err))
     },
