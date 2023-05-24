@@ -100,10 +100,10 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getReviewLike()
     this.comments = this.getComment()
-    // this.getCommentLike(this.comment)
+    this.getCommentLike()
   },
   created() {
-    // this.getCommentLike(this.comment)
+    
   },
   methods: {
     setToken: function() {
@@ -328,20 +328,25 @@ export default {
       }
 
     },
-    getCommentLike(comment) {
+    getCommentLike() {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       const user_name = this.queryData.user.username
-      console.log(this.queryData.user)
+      // console.log(this.queryData.reviews)
+      // console.log(reviews)
       axios({
         method: 'get',
-        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/`,
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
         headers: this.setToken()
       })
       .then((res) => {
+        console.log(res)
+        // likecomments = res.data.like_comment_users
         this.like_comments = res.data.like_comment_users
         this.dislike_comments = res.data.dislike_comment_users
+        
         const like_comments = this.like_comments
+        console.log(like_comments)
         const dislike_comments = this.dislike_comments
 
         const like = like_comments.find(element => {
@@ -369,17 +374,17 @@ export default {
     likeComment(comment) {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
-      console.log(comment)
+      // console.log(comment)
       axios({
         method: 'post',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/like/`,
         headers: this.setToken()
       })
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         this.like_comments = res.data.like_comment_users
         this.comment_dislike_state = !this.comment_dislike_state
-        this.getCommentLike(this.comment)
+        this.getCommentLike(comment)
       })
       .catch((err) => console.log(err))
     },
@@ -396,7 +401,7 @@ export default {
       .then((res) => {
         this.dislike_comments = res.data.dislike_comment_users
         this.comment_like_state = !this.comment_like_state
-        this.getCommentLike(this.comment)
+        // this.getCommentLike(this.comment)
       })
       .catch((err) => console.log(err))
     },
