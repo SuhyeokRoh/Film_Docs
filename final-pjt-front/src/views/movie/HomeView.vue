@@ -38,7 +38,7 @@
           @click="$refs.vueperslides2 && $refs.vueperslides2.goToSlide(i + 1)">
           <template #content>
             <div>
-              <img @click="gotoDetail(movie)" class="vueperslide__content-wrapper" :src="movie.backdrop_path_300">
+              <img @click="gotoDetail(movie)" class="vueperslide__content-wrapper backdrop" :src="movie.backdrop_path_original">
             </div>
           </template>
         </vueper-slide>
@@ -105,5 +105,9 @@ export default {
 #image_slider {
   padding-top: 50px;
   margin: 40px;
+}
+
+.backdrop{
+  width: 300px;
 }
 </style>

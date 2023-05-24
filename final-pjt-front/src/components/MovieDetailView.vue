@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col" id="left">
-        <img id="poster" :src="queryData.movie.poster_path_500" >
+        <img id="poster" :src="queryData.movie.poster_path_original" >
       </div>
       <div class="col" id="right">
         <p id="title">{{ queryData.movie.title }}</p>
@@ -22,6 +22,22 @@
         <p>줄거리 : {{ queryData.movie.overview }}</p>
         <div class="row container">
           장르 : <p v-for="(genre,index) in getGenreData" :key="index">{{ genre.name }}</p>
+        </div>
+        <div class="col">
+          <p>출연 배우</p>
+          <div class="row a_box">
+            <div class="actorbox" v-for="actor in queryData.movie.actor" :key="actor.id">
+              <div class="actorimagebox"><img @click="gotoActorPage(actor)" class="ableToClick actorprofile" :src="actor.profile_path"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <p>배급사</p>
+          <div class="row pro_box">
+            <div class="probox" v-for="production in queryData.movie.production_companies" :key="production.id">
+              <div class="ableToClick proimagebox"><img class="production" :src="production.logo_path"></div>
+            </div>
+          </div>
         </div>
         <div class="row container">
           <div>
@@ -117,6 +133,7 @@ export default {
         url: `${URL}/movies/${movieid}/`,
       })  
       .then(res => {
+        console.log(res.data)
         this.like_user = res.data.movie_like_users
         this.dislike_user = res.data.movie_dislike_users
         const like_user = this.like_user
@@ -243,6 +260,12 @@ export default {
         console.log(err)
       })
     },
+
+    gotoActorPage(select_actor) {
+      const actor = select_actor
+
+      this.$router.push({name: 'actor', query: {data: JSON.stringify({actor: actor, })}})
+    }
   },
 }
 </script>
@@ -300,5 +323,60 @@ export default {
   font-size: 50px;
   text-align: left;
   padding-left: 20px;
+}
+
+.a_box {
+  height: 300px;
+  align-items: center;
+  overflow: auto;
+  overflow-y: hidden;
+}
+
+.actorbox {
+  width: 220px;
+  height: 220px;
+  margin: 10px auto;
+}
+
+.actorimagebox {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto;
+  justify-content: center;
+  align-content: center;
+}
+
+.actorprofile {
+  width: 90%;
+  height: 90%;
+  border-radius: 70%;
+  object-fit: cover;
+}
+
+.pro_box {
+  height: 350px;
+  align-items: center;
+  overflow: auto;
+  overflow-y: hidden;
+}
+
+.probox {
+  width: 300px;
+  height: 300px;
+}
+
+.proimagebox {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  align-content: center;
+}
+
+.production {
+  width: 100%;
+  height: 100%;
+  border-radius: 30%;
+  object-fit: cover;
+  overflow: hidden;
 }
 </style>

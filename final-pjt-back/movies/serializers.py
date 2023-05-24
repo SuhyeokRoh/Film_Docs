@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Movie, Review, Genre, Comment
+from .models import *
 from django.contrib.auth import get_user_model
 
 
@@ -9,6 +9,20 @@ class GenreSerializer(serializers.ModelSerializer):
         fields = ('name',)
         
         
+class ActorSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Actor
+        fields = '__all__'
+
+
+class ProductionSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Production
+        fields = '__all__'
+        
+        
 class MovieSerializer(serializers.ModelSerializer):
 
     class UserNameSerializer(serializers.ModelSerializer):
@@ -16,10 +30,12 @@ class MovieSerializer(serializers.ModelSerializer):
         class Meta:
             model = get_user_model()
             fields = 'username',
-
+    
     movie_like_users = UserNameSerializer(many=True)
     movie_dislike_users = UserNameSerializer(many=True)
     genres = GenreSerializer(many=True)
+    production_companies = ProductionSerializer(many=True, read_only=True)
+    actor = ActorSerializer(many=True, read_only=True)
     
     class Meta:
         model = Movie
@@ -80,6 +96,8 @@ class MovieListSerializer(serializers.ModelSerializer):
     review_set = ReviewListSerializer(many=True)
     # 실험을 위한 장르 코드 삽입
     genres = GenreSerializer(many=True)
+    production_companies = ProductionSerializer(many=True, read_only=True)
+    actor = ActorSerializer(many=True, read_only=True)
     class Meta:
         model = Movie
         fields = "__all__"
@@ -122,12 +140,14 @@ class CommentSerializer(serializers.ModelSerializer):
         model = Comment
         fields = "__all__"
 
+
 class MoviechoiceSerializer(serializers.ModelSerializer):
    
     genres = GenreSerializer(many=True)
     class Meta:
         model = Movie
         fields = "__all__"
+
 
 class CommentUpdateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -139,3 +159,12 @@ class WorldcupSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = "__all__"
+
+
+class ActorAllSerializer(serializers.ModelSerializer):
+            
+    movie_actor = MovieListSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Actor
+        fields = '__all__'

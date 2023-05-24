@@ -10,6 +10,7 @@ import ReviewDetailView from '@/components/ReviewDetailView'
 import MovieRecommendView from '@/views/movie/MovieRecommendView'
 import MovieSearchView from '@/views/movie/MovieSearchView'
 import MovieWorldcupView from '@/views/movie/MovieWorldcupView'
+import ActorDetailView from '@/components/ActorDetailView'
 
 Vue.use(VueRouter)
 
@@ -63,6 +64,11 @@ const routes = [
     path: '/worldcup',
     name: 'worldcup',
     component: MovieWorldcupView,
+  },
+  {
+    path: '/actor',
+    name: 'actor',
+    component: ActorDetailView,
   },
 ]
 
