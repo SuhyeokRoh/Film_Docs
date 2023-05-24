@@ -1,7 +1,7 @@
 from django.shortcuts import get_list_or_404, get_object_or_404
 from .serializers import *
 
-from .models import Movie, Genre, Review
+from .models import Movie, Genre, Review, Actor
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
@@ -294,11 +294,13 @@ def movie_worldcup(request):
     worldcup_serializer = WorldcupSerializer(worldcup)
     return Response(worldcup_serializer.data)
 
+
 @api_view(['GET'])
 def worldcup_detail(request, worldcup_pk):
     worldcup = get_object_or_404(Worldcup, pk=worldcup_pk)
     worldcup_serializer = WorldcupSerializer(worldcup)
     return Response(worldcup_serializer.data)
+
 
 @api_view(['POST'])
 def create_worldcup(request):
@@ -307,3 +309,11 @@ def create_worldcup(request):
         serializer.save()
         return Response(serializer.data)
     return Response(status=400)
+
+# 배우 관련 함수
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def actorDetail(request, actor_pk):
+    actor = get_object_or_404(Actor, pk=actor_pk)
+    serializer = ActorAllSerializer(actor)
+    return Respons(serializer.data)

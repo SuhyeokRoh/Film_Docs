@@ -58,17 +58,12 @@ def GetMovieDetail(id):
 def saveDb():
 
     fixedDataSave()
-
-    # sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding = 'utf-8')
-    # sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding = 'utf-8')
-
-
+                        
     MovieList_URL = "https://api.themoviedb.org/3/discover/movie"
-    PersonURL = "https://api.themoviedb.org/3/person/popular"
 
     # MovieList json으로 저장하기
 
-    for i in range(1, 2):
+    for i in range(1, 11):
         params = {
             "api_key" : api_key,
             "language" : "ko-KR",
@@ -81,18 +76,64 @@ def saveDb():
         for x in data:
             try:
                 id = x.get('id')
-
+                
                 key = GetMovieDetail(id)
 
                 for data in key['production_companies']:
                     try:
-                        logo_path = f"https://image.tmdb.org/t/p/original/{data.get('logo_path')}"
+                        if (data.get('logo_path')):
+                            logo_path = f"https://image.tmdb.org/t/p/original/{data.get('logo_path')}"
+                        else:
+                            logo_path = 'https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg'
 
                         production = Production(id=data.get('id'), name=data.get('name'), logo_path=logo_path, original_country=data.get('original_country'))
                         production.validate_unique()
                         production.save()
                     except:
                         continue
+                
+                movieCreditURL = f"https://api.themoviedb.org/3/movie/{id}/credits"
+                
+                parameter = {
+                    "api_key" : api_key,
+                    "language" : "ko-KR",
+                }
+                
+                actor_data = requests.get(movieCreditURL, params=parameter).json()['cast']
+                
+                for act in actor_data:
+                    if (act.get('known_for_department') == "Acting"):
+                        try:
+                            actor_id = act.get('id')
+                            prm = {
+                            "api_key" : api_key,
+                            "language" : "ko-KR",                
+                            }
+                            PersonDetailURL = f"https://api.themoviedb.org/3/person/{actor_id}"
+                            res = requests.get(PersonDetailURL, params=prm)
+
+                            dt = res.json()
+                            
+                            if (dt.get('gender') == 1) :
+                                gender = 'Female'
+                            else:
+                                gender = 'Male'
+                            
+                            if (dt.get('profile_path')):
+                                profile_path = f"https://image.tmdb.org/t/p/original/{dt.get('profile_path')}"
+                            else:
+                                profile_path = "https://icons.veryicon.com/png/o/internet--web/55-common-web-icons/person-4.png"
+                                
+                            actor = Actor(name=dt.get('name'), biography=dt.get('biography'), birthday=dt.get('birthday'),
+                                        deathday=dt.get('deathday'), gender=gender, id=actor_id, place_of_birth=dt.get('place_of_birth'),
+                                        popularity=dt.get('popularity'), profile_path=profile_path)
+                            
+                            actor.validate_unique()
+                            actor.save()
+                            
+                        except:
+                            continue
+                
 
                 trailerUrl = GetTrailerUrl(id)
 
@@ -118,63 +159,24 @@ def saveDb():
                     
                 movie.validate_unique()
                 movie.save()
+                
                 for g in key.get('genres'):
-                    try:
-                        movie.genres.add(g.get('id'))
-                    except:
-                        continue
+                    movie.genres.add(g.get('id'))
+
                 for company in key.get('production_companies'):
                     movie.production_companies.add(company.get('id'))
-
-                
-            except:
-                continue
-
-    for i in range(1, 2):
-        params = {
-            "api_key" : api_key,
-            "language" : "ko-KR",
-            "page": i,
-        }
-
-        r = requests.get(PersonURL, params=params)
-        data = r.json()['results']
-
-        for x in data:
-            try:
-                id = x.get('id')
-
-                prm = {
-                    "api_key" : api_key,
-                    "language" : "ko-KR",                
-                }
-                PersonDetailURL = f"https://api.themoviedb.org/3/person/{id}"
-
-                res = requests.get(PersonDetailURL, params=prm)
-
-                dt = res.json()
-                
-                if (dt.get('gender') == 1) :
-                    gender = 'Female'
-                else:
-                    gender = 'Male'
-                profile_path = f"https://image.tmdb.org/t/p/original/{dt.get('profile_path')}"
-                actor = Actor(name=dt.get('name'), biography=dt.get('biography'), birthday=dt.get('birthday'),
-                            deathday=dt.get('deathday'), gender=gender,id=dt.get('id'),place_of_birth=dt.get('place_of_birth'),
-                            popularity=dt.get('popularity'), profile_path=profile_path)
-                
-                actor.validate_unique()
-                actor.save()
-
-                for m in x.get('known_for'):
-                    actor.movie.add(m.get('id'))
+                    
+                for aid in actor_data:
+                    if aid.get('known_for_department') == "Acting":
+                        movie.actor.add(aid.get('id'))
 
             except:
                 continue
             
+            
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(saveDb, 'cron', hour=19, minute=51, second=0, id="saveDataBase")
+    scheduler.add_job(saveDb, 'cron', hour=21, minute=44, second=10, id="saveDataBase")
     # scheduler.add_job(saveDb, 'interval', seconds=30, id="saveDataBase")
     scheduler.start()

@@ -10,6 +10,17 @@ class Production(models.Model):
     name = models.CharField(max_length=100)
     logo_path = models.TextField(null=True)
     original_country = models.CharField(max_length=100, null=True)
+    
+    
+class Actor(models.Model):
+    name = models.CharField(max_length=100)
+    biography = models.TextField(null=True)
+    birthday = models.DateTimeField()
+    deathday = models.DateField(null=True)
+    gender = models.CharField(max_length=10)
+    place_of_birth = models.TextField(null=True)
+    popularity = models.FloatField(null=True)
+    profile_path = models.TextField(null=True)
 
 
 class Movie(models.Model):
@@ -31,7 +42,7 @@ class Movie(models.Model):
     production_companies = models.ManyToManyField(Production, related_name="movie_companies")
     movie_like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movielike")
     movie_dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movieDislike")
-
+    actor = models.ManyToManyField(Actor, related_name="movie_actor")
 
 
 class Review(models.Model):
@@ -54,15 +65,3 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_comment_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_comments")
     dislike_comment_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="dislike_comments")
-
-
-class Actor(models.Model):
-    name = models.CharField(max_length=100)
-    biography = models.TextField(null=True)
-    birthday = models.DateTimeField()
-    deathday = models.DateField(null=True)
-    gender = models.CharField(max_length=10)
-    place_of_birth = models.TextField(null=True)
-    popularity = models.FloatField(null=True)
-    profile_path = models.TextField(null=True)
-    movie = models.ManyToManyField(Movie, related_name="movie_actor")
