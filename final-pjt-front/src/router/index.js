@@ -8,6 +8,7 @@ import ProfileView from '@/views/accounts/ProfileView'
 import MovieDetailView from '@/components/MovieDetailView'
 import ReviewDetailView from '@/components/ReviewDetailView'
 import MovieRecommendView from '@/views/movie/MovieRecommendView'
+import MovieSearchView from '@/views/movie/MovieSearchView'
 
 Vue.use(VueRouter)
 
@@ -51,6 +52,11 @@ const routes = [
     path: '/movie/recommend',
     name: 'recommend',
     component: MovieRecommendView,
+  },
+  {
+    path: '/movie/search',
+    name: 'search',
+    component: MovieSearchView,
   },
 ]
 
