@@ -1,6 +1,6 @@
 <template>
 <div id="LoginBox">
-  <div id="Login">
+  <div class="col" id="Login">
     <h1>로그인</h1>
     <div class="form-group">
       <label for="username">ID: </label>
@@ -64,12 +64,9 @@ export default {
  }
 
  #Login {
-
-  box-shadow: 5px 5px 5px 5px rgba(51, 51, 96, 96);
+  box-shadow: 5px 5px 5px 5px #0f023b;
   width: 500px;
   height: 60%;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
