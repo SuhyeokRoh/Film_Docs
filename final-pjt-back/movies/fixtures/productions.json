@@ -37,6 +37,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 7,
+    "fields": {
+        "name": "DreamWorks Pictures",
+        "logo_path": "https://image.tmdb.org/t/p/original//vru2SssLX3FPhnKZGtYw00pVIS9.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 9,
     "fields": {
         "name": "Gaumont",
@@ -50,15 +59,6 @@
     "fields": {
         "name": "New Line Cinema",
         "logo_path": "https://image.tmdb.org/t/p/original//5ThIuO93vsk47oexKTSdfKEr7EC.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 14,
-    "fields": {
-        "name": "Miramax",
-        "logo_path": "https://image.tmdb.org/t/p/original//m6AHu84oZQxvq7n1rsvMNJIAsMu.png",
         "original_country": null
     }
 },
@@ -104,6 +104,15 @@
     "fields": {
         "name": "Sony Pictures",
         "logo_path": "https://image.tmdb.org/t/p/original//GagSvqWlyPdkFHMfQ3pNq6ix9P.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 47,
+    "fields": {
+        "name": "Constantin Film",
+        "logo_path": "https://image.tmdb.org/t/p/original//i7Z9ot2o3N5Sa3HrF09kniFs2y8.png",
         "original_country": null
     }
 },
@@ -199,6 +208,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 437,
+    "fields": {
+        "name": "Heyday Films",
+        "logo_path": "https://image.tmdb.org/t/p/original//nu20mtwbEIhUNnQ5NXVhHsNknZj.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 444,
     "fields": {
         "name": "Dune Entertainment",
@@ -239,6 +257,15 @@
     "fields": {
         "name": "Atlas Entertainment",
         "logo_path": "https://image.tmdb.org/t/p/original//z7H707qUWigbjHnJDMfj6QITEpb.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 520,
+    "fields": {
+        "name": "Pacific Data Images",
+        "logo_path": "https://image.tmdb.org/t/p/original//pU7YTI9FfrICurXpl5V9TfCO0oJ.png",
         "original_country": null
     }
 },
@@ -352,6 +379,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 1088,
+    "fields": {
+        "name": "Alcon Entertainment",
+        "logo_path": "https://image.tmdb.org/t/p/original//9WOE5AQUXbOtLU6GTwfjS8OMF0v.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 1115,
     "fields": {
         "name": "M6 Films",
@@ -383,6 +419,15 @@
     "fields": {
         "name": "The Asylum",
         "logo_path": "https://image.tmdb.org/t/p/original//ic2bTizdzRLDVzAvN7MXdUg3WQV.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 1373,
+    "fields": {
+        "name": "Jürgen Brüning Filmproduktion",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
 },
@@ -442,15 +487,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 2180,
-    "fields": {
-        "name": "Outerbanks Entertainment",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 2251,
     "fields": {
         "name": "Sony Pictures Animation",
@@ -464,6 +500,15 @@
     "fields": {
         "name": "Marc Platt Productions",
         "logo_path": "https://image.tmdb.org/t/p/original//osO7TGmlRMistSQ5JZusPhbKUHk.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 2531,
+    "fields": {
+        "name": "Media Rights Capital",
+        "logo_path": "https://image.tmdb.org/t/p/original//9MfCJ2G6Nrf9yyRj4tAgPmMiDcn.png",
         "original_country": null
     }
 },
@@ -622,15 +667,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 3958,
-    "fields": {
-        "name": "Front Street Pictures",
-        "logo_path": "https://image.tmdb.org/t/p/original//xkdYNmOW6e4gjgp4NSLRt0W5UIj.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 4171,
     "fields": {
         "name": "Playtone",
@@ -730,10 +766,19 @@
 },
 {
     "model": "movies.production",
-    "pk": 6254,
+    "pk": 6458,
     "fields": {
-        "name": "The Jim Henson Company",
-        "logo_path": "https://image.tmdb.org/t/p/original//dHfP8fUyykmTsMXbtXO0kSsYz5E.png",
+        "name": "INCAA",
+        "logo_path": "https://image.tmdb.org/t/p/original//eT4oMUK7ODM0vvZue8yq3Ojwqf8.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 6626,
+    "fields": {
+        "name": "Voltage Pictures",
+        "logo_path": "https://image.tmdb.org/t/p/original//A1BnMoWjzjOrjzpWimyBQkf84mS.png",
         "original_country": null
     }
 },
@@ -973,6 +1018,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 10146,
+    "fields": {
+        "name": "Focus Features",
+        "logo_path": "https://image.tmdb.org/t/p/original//xnFIOeq5cKw09kCWqV7foWDe4AA.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 10163,
     "fields": {
         "name": "Working Title Films",
@@ -1117,6 +1171,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 12139,
+    "fields": {
+        "name": "Material Pictures",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 12219,
     "fields": {
         "name": "Cinereach",
@@ -1216,15 +1279,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 13113,
-    "fields": {
-        "name": "A-1 Pictures",
-        "logo_path": "https://image.tmdb.org/t/p/original//xV5tPYKZhP2Ko9dOh5A3FahuKsx.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 13240,
     "fields": {
         "name": "Bron Studios",
@@ -1264,15 +1318,6 @@
     "pk": 14608,
     "fields": {
         "name": "Twin Co. Ltd.",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 14708,
-    "fields": {
-        "name": "Machete Producciones",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
@@ -1364,6 +1409,15 @@
     "fields": {
         "name": "Paul Thiltges Distributions",
         "logo_path": "https://image.tmdb.org/t/p/original//1VqbDOThEcmDR6gn7et7cAs4lwr.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 19456,
+    "fields": {
+        "name": "Envision Media Arts",
+        "logo_path": "https://image.tmdb.org/t/p/original//d6rHHbJPFkDlULQsvxYgRh9McvN.png",
         "original_country": null
     }
 },
@@ -1603,6 +1657,24 @@
 },
 {
     "model": "movies.production",
+    "pk": 36259,
+    "fields": {
+        "name": "DefyNite Films",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 36433,
+    "fields": {
+        "name": "MJW Films",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 36616,
     "fields": {
         "name": "Amusement Park Films",
@@ -1657,10 +1729,28 @@
 },
 {
     "model": "movies.production",
+    "pk": 40486,
+    "fields": {
+        "name": "Parkville Pictures",
+        "logo_path": "https://image.tmdb.org/t/p/original//nA0fcwrBXV9qm3gmfHNtzSNSk4Y.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 41077,
     "fields": {
         "name": "A24",
         "logo_path": "https://image.tmdb.org/t/p/original//1ZXsGaFPgrgS6ZZGS37AqD5uU12.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 41377,
+    "fields": {
+        "name": "Habakari Cinema",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
 },
@@ -1688,15 +1778,6 @@
     "fields": {
         "name": "Bushiroad",
         "logo_path": "https://image.tmdb.org/t/p/original//nQNmHvcmaT0zk1Rf0TYtLYO5MpI.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 44311,
-    "fields": {
-        "name": "Steven Paul Production",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
 },
@@ -1760,6 +1841,15 @@
     "fields": {
         "name": "Yong Film",
         "logo_path": "https://image.tmdb.org/t/p/original//dj9VQ8Tqw4OTP8h5JkSOQGpEeMR.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 49968,
+    "fields": {
+        "name": "Will Packer Productions",
+        "logo_path": "https://image.tmdb.org/t/p/original//gz2hSoMkvMJdTMgCLFGRJErPwXY.png",
         "original_country": null
     }
 },
@@ -1837,15 +1927,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 54734,
-    "fields": {
-        "name": "Lightcraft",
-        "logo_path": "https://image.tmdb.org/t/p/original//kywbYYwd2xgXFGeaSqQQVAZeuqv.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 55143,
     "fields": {
         "name": "Strongman",
@@ -1918,6 +1999,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 62693,
+    "fields": {
+        "name": "RVK Studios",
+        "logo_path": "https://image.tmdb.org/t/p/original//i8mR4YqKiyDvxwmpSqzly9tQ31f.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 64469,
     "fields": {
         "name": "JuVee Productions",
@@ -1940,15 +2030,6 @@
     "fields": {
         "name": "Movistar+",
         "logo_path": "https://image.tmdb.org/t/p/original//vgVqq5hunVs8GN5Je9d9rG7Q2NU.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 72969,
-    "fields": {
-        "name": "Bigscope Films",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
 },
@@ -2098,15 +2179,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 81667,
-    "fields": {
-        "name": "ShadowMachine",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 82819,
     "fields": {
         "name": "Skydance",
@@ -2152,15 +2224,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 84645,
-    "fields": {
-        "name": "Terminal",
-        "logo_path": "https://image.tmdb.org/t/p/original//chCohwvNl0TZEGaxI4UGZN4NK5L.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 84792,
     "fields": {
         "name": "2.0 Entertainment",
@@ -2201,6 +2264,15 @@
     "fields": {
         "name": "11:11 Films & TV",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 88606,
+    "fields": {
+        "name": "Vertical Entertainment",
+        "logo_path": "https://image.tmdb.org/t/p/original//3w49QoRwptUujWxSjcR3iEr1XSU.png",
         "original_country": null
     }
 },
@@ -2341,15 +2413,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 98438,
-    "fields": {
-        "name": "74 Entertainment",
-        "logo_path": "https://image.tmdb.org/t/p/original//cjkuW0QeX3hcUUBkZFFCiYmZvcr.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 100121,
     "fields": {
         "name": "Film Bridge International",
@@ -2368,19 +2431,19 @@
 },
 {
     "model": "movies.production",
-    "pk": 101082,
+    "pk": 101405,
     "fields": {
-        "name": "Double Dare You Productions",
+        "name": "6th & Idaho",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
 },
 {
     "model": "movies.production",
-    "pk": 101405,
+    "pk": 101890,
     "fields": {
-        "name": "6th & Idaho",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "name": "Wonderfilm Media",
+        "logo_path": "https://image.tmdb.org/t/p/original//1uN1lWLR1bwTGwu52j1SS21KPnu.png",
         "original_country": null
     }
 },
@@ -2449,6 +2512,33 @@
 },
 {
     "model": "movies.production",
+    "pk": 106786,
+    "fields": {
+        "name": "RainMaker Films",
+        "logo_path": "https://image.tmdb.org/t/p/original//w1frKfyOXbGcK6kKtRnTNJfmtBv.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 107107,
+    "fields": {
+        "name": "CalMaple Films",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 107108,
+    "fields": {
+        "name": "Wattpad",
+        "logo_path": "https://image.tmdb.org/t/p/original//5mxc7uNtFOZm2ly0BxixxGPvPlb.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 108143,
     "fields": {
         "name": "Orange",
@@ -2471,15 +2561,6 @@
     "fields": {
         "name": "The Monk Studios",
         "logo_path": "https://image.tmdb.org/t/p/original//57USdIAM7wevIRCp7CIhjjBIXCf.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 110799,
-    "fields": {
-        "name": "AGC Studios",
-        "logo_path": "https://image.tmdb.org/t/p/original//eHjtiQJjrGQTooEsBmPSYoUnNB.png",
         "original_country": null
     }
 },
@@ -2534,6 +2615,15 @@
     "fields": {
         "name": "Artist Company",
         "logo_path": "https://image.tmdb.org/t/p/original//6sbBRmXRa1hGrnNINwxKp34hfya.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 114690,
+    "fields": {
+        "name": "Khalabo Ink Society",
+        "logo_path": "https://image.tmdb.org/t/p/original//dP4q0910XaQmW6WsDGNaAyZDK8J.png",
         "original_country": null
     }
 },
@@ -2650,6 +2740,15 @@
     "pk": 123703,
     "fields": {
         "name": "Upper Street",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 124233,
+    "fields": {
+        "name": "JB Pictures",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
@@ -2845,15 +2944,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 133294,
-    "fields": {
-        "name": "NoDancingToday",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 133303,
     "fields": {
         "name": "Beck/Woods",
@@ -2872,15 +2962,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 134419,
-    "fields": {
-        "name": "Horror Wasteland Pictures International",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 135466,
     "fields": {
         "name": "Future Space",
@@ -2894,15 +2975,6 @@
     "fields": {
         "name": "Jack Blue Productions",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 137586,
-    "fields": {
-        "name": "Mattel Television",
-        "logo_path": "https://image.tmdb.org/t/p/original//yRstxvfbutR1yJcCDb8EXyn8jTX.png",
         "original_country": null
     }
 },
@@ -3106,6 +3178,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 153891,
+    "fields": {
+        "name": "Mortal Media",
+        "logo_path": "https://image.tmdb.org/t/p/original//bSFsUmj7xDBSDaKcYL4apOjBPYB.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 154887,
     "fields": {
         "name": "20th Television Animation",
@@ -3151,19 +3232,19 @@
 },
 {
     "model": "movies.production",
-    "pk": 156903,
+    "pk": 157471,
     "fields": {
-        "name": "Decal",
-        "logo_path": "https://image.tmdb.org/t/p/original//fU4120R991AGlFnAqRbDY0ATirS.png",
+        "name": "Nichion",
+        "logo_path": "https://image.tmdb.org/t/p/original//sWoNzrlMtRH8p3zKayLfOaTNmiG.png",
         "original_country": null
     }
 },
 {
     "model": "movies.production",
-    "pk": 157471,
+    "pk": 158529,
     "fields": {
-        "name": "Nichion",
-        "logo_path": "https://image.tmdb.org/t/p/original//sWoNzrlMtRH8p3zKayLfOaTNmiG.png",
+        "name": "Ethea Entertainment",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
 },
@@ -3191,24 +3272,6 @@
     "fields": {
         "name": "ADK Marketing Solutions",
         "logo_path": "https://image.tmdb.org/t/p/original//inMGZK76HIbFhTnCGzVx39BMGzr.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 162531,
-    "fields": {
-        "name": "Moonriver Content",
-        "logo_path": "https://image.tmdb.org/t/p/original//keM5jjHkTOMh3X65GbbtFaNWHqs.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 162615,
-    "fields": {
-        "name": "SAO-P Project",
-        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
 },
@@ -3263,15 +3326,6 @@
     "fields": {
         "name": "Avi Arad Productions",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 167461,
-    "fields": {
-        "name": "Bourke Films",
-        "logo_path": "https://image.tmdb.org/t/p/original//ou13pzVLAIioKOl3uE7MlMLu1ud.png",
         "original_country": null
     }
 },
@@ -3475,15 +3529,6 @@
 },
 {
     "model": "movies.production",
-    "pk": 177095,
-    "fields": {
-        "name": "SP Media Group",
-        "logo_path": "https://image.tmdb.org/t/p/original//nfwWCvMNaK687bjyM7un8p7ilz0.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
     "pk": 177201,
     "fields": {
         "name": "Hex Movie",
@@ -3524,15 +3569,6 @@
     "fields": {
         "name": "The Global Ensemble Drama",
         "logo_path": "https://image.tmdb.org/t/p/original//wjk63fhEE1oe0cEdhBy3khwXKA3.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 178553,
-    "fields": {
-        "name": "Viaplay",
-        "logo_path": "https://image.tmdb.org/t/p/original//kS4skZedh5N537SIICGl7A50ibb.png",
         "original_country": null
     }
 },
@@ -3601,6 +3637,15 @@
 },
 {
     "model": "movies.production",
+    "pk": 182897,
+    "fields": {
+        "name": "Wattpad WEBTOON Studios",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
     "pk": 183180,
     "fields": {
         "name": "Millenium Media Group",
@@ -3637,18 +3682,9 @@
 },
 {
     "model": "movies.production",
-    "pk": 184310,
+    "pk": 184518,
     "fields": {
-        "name": "Disruptiva Films",
-        "logo_path": "https://image.tmdb.org/t/p/original//tJMneZ6K3W2nLHS2UGRpxUPCiJ5.png",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 184311,
-    "fields": {
-        "name": "Maligno Gorehouse",
+        "name": "C2 Motion Picture Group",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
         "original_country": null
     }
@@ -3695,6 +3731,42 @@
     "fields": {
         "name": "Confluence Productions",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 186580,
+    "fields": {
+        "name": "Heroes and Villains Entertainment",
+        "logo_path": "https://image.tmdb.org/t/p/original//kFN2wXpaOHHKZ0K2E5ChOaLVkpr.png",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 187220,
+    "fields": {
+        "name": "Wild Chickens",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 187221,
+    "fields": {
+        "name": "Organism Pictures",
+        "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
+        "original_country": null
+    }
+},
+{
+    "model": "movies.production",
+    "pk": 187303,
+    "fields": {
+        "name": "Spark Productions",
+        "logo_path": "https://image.tmdb.org/t/p/original//5CJA1Ej3gJxosjkzz2T7AeLw1SQ.png",
         "original_country": null
     }
 },
@@ -3749,15 +3821,6 @@
     "fields": {
         "name": "KD Studios",
         "logo_path": "https://cdn.pixabay.com/photo/2017/04/06/09/39/nothing-2207785_960_720.jpg",
-        "original_country": null
-    }
-},
-{
-    "model": "movies.production",
-    "pk": 188979,
-    "fields": {
-        "name": "La Productora Films",
-        "logo_path": "https://image.tmdb.org/t/p/original//qL5868T1CijrGjW0ywMNTdFZb3b.png",
         "original_country": null
     }
 },
