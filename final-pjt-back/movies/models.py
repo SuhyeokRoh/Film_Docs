@@ -65,3 +65,16 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_comment_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_comments")
     dislike_comment_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="dislike_comments")
+
+class Worldcup(models.Model):
+    movies = models.ManyToManyField(Movie, related_name='worldcups', through='Ranking', blank=True)
+
+class Ranking(models.Model):
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+    worldcup = models.ForeignKey(Worldcup, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)
+
+class Scoring(models.Model):
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    score = models.IntegerField(default=0)

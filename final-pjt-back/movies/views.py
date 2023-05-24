@@ -238,14 +238,6 @@ def movie_search(request):
     return Response(serializers.data)
 
 
-# 월드컵!
-@api_view(['GET'])
-def movie_worldcup(request):
-    random_movies = random.sample(list(Movie.objects.all()), 32)
-    serializers = WorldcupSerializer(random_movies, many=True)
-    return Response(serializers.data)
-
-
 # 배우 관련 함수
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -253,3 +245,37 @@ def actorDetail(request, actor_pk):
     actor = get_object_or_404(Actor, pk=actor_pk)
     serializer = ActorAllSerializer(actor)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def random_worldcup(request):
+    # random & filterting 자료 https://stackoverflow.com/questions/32389519/django-get-10-random-instances-from-a-queryset-and-order-them-into-a-new-querys
+    random_movies = random.sample(list(Movie.objects.all()), 8)
+    # random_movies = Movie.objects.all().order_by('?')[:32]
+
+    worldcup = Worldcup()
+    worldcup.save()
+    worldcup.movies.set(random_movies)
+    print('a')
+    print(worldcup)
+    print('b')
+    # worldcup = Worldcup.create(random_movies)
+    worldcup_serializer = WorldcupSerializer(worldcup)
+    return Response(worldcup_serializer.data)
+
+# .../worldcup/pk/
+@api_view(['GET'])
+def worldcup_detail(request, worldcup_pk):
+    worldcup = get_object_or_404(Worldcup, pk=worldcup_pk)
+    
+    worldcup_serializer = WorldcupSerializer(worldcup)
+    return Response(worldcup_serializer.data)
+
+# .../worldcup/custom/
+@api_view(['POST'])
+def create_worldcup(request):
+    serializer = WorldcupSerializer(data=request.POST)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(status=400)

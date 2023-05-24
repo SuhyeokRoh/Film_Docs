@@ -168,3 +168,9 @@ class ActorAllSerializer(serializers.ModelSerializer):
     class Meta:
         model = Actor
         fields = '__all__'
+
+class WorldcupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Worldcup
+        # fields = ('id', 'movies')
+        fields = '__all__'

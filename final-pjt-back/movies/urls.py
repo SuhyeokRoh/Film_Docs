@@ -9,9 +9,9 @@ urlpatterns = [
     path('choice/', views.movie_choice, name="movie_choice"),
     path('search/', views.movie_search, name="movie_search"),
     
-    path('worldcup/', views.movie_worldcup, name="movie_worldcup"),
-    # path('worldcup/<int:worldcup_pk>/', views.worldcup_detail, name='worldcup_detail'),
-    # path('worldcup/custom/', views.create_worldcup, name='create_worldcup'),
+    path('worldcup/', views.random_worldcup, name='random_worldcup'),
+    path('worldcup/<int:worldcup_pk>/', views.worldcup_detail, name='worldcup_detail'),
+    path('worldcup/custom/', views.create_worldcup, name='create_worldcup'),
     
     
     path('<int:movie_pk>/', views.movie_detail, name="movie_detail"),
