@@ -60,8 +60,9 @@ def signup(request):
 # 회원 탈퇴
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
-def account_delete(request):
-    request.user.delete()
+def account_delete(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    user.delete()
     return Response(status=status.HTTP_204_NO_CONTENT)
 
 

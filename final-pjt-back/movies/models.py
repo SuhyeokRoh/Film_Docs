@@ -24,7 +24,7 @@ class Actor(models.Model):
 
 
 class Movie(models.Model):
-    movie_id = models.IntegerField(unique=True)
+    id = models.IntegerField(unique=True, primary_key=True)
     title = models.CharField(max_length=100)
     release_date = models.DateField()
     popularity = models.FloatField(null=True)

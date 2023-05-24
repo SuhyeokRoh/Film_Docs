@@ -46,6 +46,7 @@ def GetTrailerUrl(id):
 def GetMovieDetail(id):
     prms = {
         "api_key" : api_key,
+        "language" : "ko-KR",
     }
     movieDetailUrl = f"https://api.themoviedb.org/3/movie/{id}"
 
@@ -141,7 +142,7 @@ def saveDb():
                 backdrop_path_original = f"https://image.tmdb.org/t/p/original/{key.get('backdrop_path')}"
 
                 if key.get('release_date'):
-                    movie = Movie(movie_id = id, title = key.get('title'), release_date = key.get('release_date'), 
+                    movie = Movie(id = id, title = key.get('title'), release_date = key.get('release_date'), 
                         popularity = key.get('popularity'), vote_count = key.get('vote_count'), 
                         vote_average = key.get('vote_average'), overview = key.get('overview'),
                         poster_path_original = poster_path_original, backdrop_path_original = backdrop_path_original,
@@ -149,7 +150,7 @@ def saveDb():
                         runtime = key.get('runtime'), homepage = key.get('homepage'))
                     
                 else:
-                    movie = Movie(movie_id = id, title = key.get('title'), release_date = '1999-12-31', 
+                    movie = Movie(id = id, title = key.get('title'), release_date = '1999-12-31', 
                         popularity = key.get('popularity'), vote_count = key.get('vote_count'), 
                         vote_average = key.get('vote_average'), overview = key.get('overview'),
                         poster_path_original = poster_path_original, backdrop_path_original = backdrop_path_original,
@@ -159,7 +160,7 @@ def saveDb():
                     
                 movie.validate_unique()
                 movie.save()
-                
+
                 for g in key.get('genres'):
                     movie.genres.add(g.get('id'))
 
@@ -177,6 +178,6 @@ def saveDb():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(saveDb, 'cron', hour=21, minute=44, second=10, id="saveDataBase")
+    scheduler.add_job(saveDb, 'cron', hour=1, minute=51, second=10, id="saveDataBase")
     # scheduler.add_job(saveDb, 'interval', seconds=30, id="saveDataBase")
     scheduler.start()
