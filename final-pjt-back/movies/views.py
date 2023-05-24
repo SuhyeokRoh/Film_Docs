@@ -159,6 +159,14 @@ def comment_update(request, movie_pk, review_pk, comment_pk):
             comment.delete()
             return Response({ 'id': review_pk }, status=status.HTTP_204_NO_CONTENT)  
 
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def comment_detail(request, movie_pk, review_pk, comment_pk):
+    movie = get_object_or_404(Movie, pk=movie_pk)
+    review = movie.review_set.filter(pk=review_pk)[0]
+    comment = review.comment_set.filter(pk=comment_pk)[0]
+    serializer = CommentSerializer(comment)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def comment_like(request, movie_pk, review_pk, comment_pk):
