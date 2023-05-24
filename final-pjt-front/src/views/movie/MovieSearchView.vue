@@ -1,12 +1,12 @@
 <template>
   <div class="inner">
-    <label for="search">검색어를 입력하세요 : </label>
-    <input type="text" id="search" v-model="searchContent" @keyup.enter="searchMovie">
+    <label for="search" class="search-label">검색어를 입력하세요 : </label>
+    <input type="text" id="search" v-model="searchContent" @keyup.enter="searchMovie" class="search-input">
     <button @click="searchMovie">검색</button>
     <div v-if="searchresults">
-        <div v-if="issearchVaild">
-            <div v-for="searchresult in searchresults" :key="searchresult.id"
-                :searchresult="searchresult">
+        <div v-if="issearchVaild" id="searchResbox">
+            <div class="wrap" v-for="searchresult in searchresults" :key="searchresult.id"
+                :searchresult="searchresult" @click="gotoDetail(searchresult)">
                 <div><img class="posterlist" :src="searchresult.poster_path_original" ></div>
                 <p>{{searchresult.title}}</p>
             </div>
@@ -80,6 +80,10 @@ export default {
         })
      }
     },
+    gotoDetail(searchresult) {
+        const movie = searchresult
+        this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})
+    },
   },
   created() {
    
@@ -92,6 +96,41 @@ export default {
 
 <style>
 .posterlist {
-  width: 500px;
+  width: 400px;
+}
+
+#searchResbox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.wrap {
+  width: 400px;
+  margin: 10px;
+  text-align: center;
+}
+
+.wrap p {
+  text-align: center;
+  margin: 0 auto;
+  display: inline-block;
+}
+.search-label {
+  display: inline-block;
+  width: 180px; /* 원하는 크기로 조정 */
+  text-align: right;
+}
+
+.search-input {
+  width: 300px; /* 원하는 크기로 조정 */
+  padding: 5px;
+}
+
+
+@media (min-width: 768px) {
+  .wrap {
+    flex: 0 0 calc(33.33% - 20px);
+  }
 }
 </style>
