@@ -244,7 +244,6 @@ export default {
     },
 
     getComment() {
-      console.log(this.comment_up_state_arr)
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       axios({
@@ -254,9 +253,6 @@ export default {
       })
       .then((res) => {
         this.comments = res.data
-        console.log(this.comments)
-        // this.like_comments = res.data.like_comment_users
-        // this.dislike_comments = res.data.dislike_comment_users
       })
       .catch(err => console.log(err))
     },
@@ -265,7 +261,6 @@ export default {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       const content = this.commentContent
-      console.log()
 
       axios({
         method: 'post',
@@ -299,8 +294,7 @@ export default {
         method: 'delete',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/update/`,
         headers: this.setToken()
-
-      }).then(res => {
+        }).then(res => {
           console.log(res, reviewid)
           this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})
         })
@@ -326,7 +320,6 @@ export default {
         })
     },
     updateReview: function () {
-      // console.log(this.queryData.reviews)
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       
@@ -369,7 +362,6 @@ export default {
         }
 
       }).then(res => {
-          console.log(res, this.comments)
           comment.content = res.data.content
           this.isCommentupdate = true
         })
@@ -394,17 +386,14 @@ export default {
     likeComment(comment) {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
-      // console.log(comment)
       axios({
         method: 'post',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/like/`,
         headers: this.setToken()
       })
       .then((res) => {
-        // console.log(res)
         this.like_comments = res.data.like_comment_users
         this.comment_dislike_state = !this.comment_dislike_state
-        // this.getCommentLike(comment)
       })
       .catch((err) => console.log(err))
      },
@@ -421,7 +410,6 @@ export default {
       .then((res) => {
         this.dislike_comments = res.data.dislike_comment_users
         this.comment_like_state = !this.comment_like_state
-        // this.getCommentLike(this.comment)
       })
       .catch((err) => console.log(err))
     },
@@ -440,7 +428,6 @@ export default {
 .updatebutton {
   width: 200px;
   height: 70px;
-  /* margin: 0 auto; */
   justify-content: space-evenly;
 }
 
@@ -458,7 +445,6 @@ export default {
 }
 
 .commentupdate {
-  /* margin-left: auto; */
   justify-content:flex-end;
 }
 

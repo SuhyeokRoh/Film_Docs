@@ -71,16 +71,24 @@ export default {
     logout() {
       this.isLogin = false
       this.$store.dispatch('Logout_delete')
-      // localStorage.removeItem('jwt')
       this.$router.push({name:'Login'})
     },
-  },
-  created() {
-    const token = this.$store.state.access_token
-    if (token) {
-      this.isLogin = true
+
+    confirmLogin() {
+      const token = this.$store.state.access_token
+      if (token) {
+        this.isLogin = true
+      } else {
+        this.isLogin = false
+      }
     }
   },
+  created() {
+    this.confirmLogin()
+  },
+  updated() {
+    this.confirmLogin()
+  }
 }
 </script>
 
@@ -206,4 +214,5 @@ p{
   border-radius: 7px;
   margin: 20px auto;
 }
+
 </style>

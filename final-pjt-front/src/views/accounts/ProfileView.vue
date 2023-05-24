@@ -10,6 +10,21 @@
         <p>User Nick Name : {{User.nickname}}</p>
         <button>회원정보 수정</button>
 
+        <button v-if="is_my_profile" @click="withdrawalChange">회원 탈퇴</button>
+        <div class="black-bg" v-if="this.drawalVal == true">
+          <div class="white-bg col">
+            <h1>계정을 삭제하시겠습니까?</h1>
+            <div class="row buttons">
+              <span>
+                <button class="deletebutton" @click="Deleteaccount">Yes</button>
+              </span>
+              <span>
+                <button class="deletebutton" @click="withdrawalChange">No</button>
+              </span>
+            </div>
+          </div>
+        </div>
+
         <div class="col">
           <div class="row follow">
             <p> 팔로워 : {{ follower }} </p>
@@ -76,13 +91,17 @@ export default {
   name: 'ProfileView',
   data() {
     return {
-        queryData: null,
-        User: null,
-        movieTitle: null,
-        following: null,
-        follower: null,
-        isfollowed: false,
-        comments: null,
+      queryData: null,
+      User: null,
+      movieTitle: null,
+      following: null,
+      follower: null,
+      isfollowed: false,
+      comments: null,
+
+      is_my_profile: false,
+      drawalVal: false,
+      UpdateVal: false,
     }
   },
   mounted() {
@@ -97,8 +116,34 @@ export default {
       return config
     },
 
+    withdrawalChange() {
+      this.drawalVal = !this.drawalVal
+    },
+
+    Deleteaccount() {
+      const username = this.$store.state.username
+
+      axios({
+        method: 'delete',
+        url: `${URL}/accounts/${username}/profile/delete/`,
+        headers: this.setToken()
+      })
+      .then(() => {
+        this.$store.dispatch('Logout_delete')
+        this.$router.replace({name:'home'})
+      })
+      .catch(err => console.log(err))
+    },
+
     getUser() {
       const username = this.$route.query.user
+
+      if(username === this.$store.state.username) {
+        this.is_my_profile = true
+      } else {
+        this.is_my_profile = false
+      }
+
       axios({
         method: 'get',
         url: `${URL}/accounts/${username}/profile/`,
@@ -243,5 +288,37 @@ export default {
   border-radius: 7px;
   width: 80%;
   margin: 10px auto;
+}
+
+.black-bg {
+  width: 1880px;
+  height: 860px;
+  background: rgba(0,0,0,0.5);
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding: 20px;
+}
+.white-bg {
+  width: 50%;
+  height: 20%;
+  background: white;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.buttons {
+  height: 50%;
+  margin: auto;
+}
+
+.deletebutton {
+  width: 100px;
+  height: 50px;
+  margin: 0 10px auto;
+  align-items: center;
 }
 </style>
