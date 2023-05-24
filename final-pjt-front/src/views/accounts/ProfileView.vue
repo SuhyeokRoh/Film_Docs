@@ -36,13 +36,13 @@
         <div class="row">
           <div class="col contain division">
             <h3>{{User.nickname}}님이 좋아요 누른 리뷰</h3>
-            <div class="output" v-for="likereview in User.like_reviews" :key="likereview.id" @click="gotoDetailReview(likereview)">
+            <div class="output ableToClick" v-for="likereview in User.like_reviews" :key="likereview.id" @click="gotoDetailReview(likereview)">
               <p>{{likereview.movie.title}} - {{likereview.content}}</p>
             </div>
           </div>
           <div class="col contain division">
             <h3>{{User.nickname}}님이 좋아요 누른 댓글</h3>
-            <div class="output" v-for="likereview in User.like_reviews" :key="likereview.id">
+            <div class="output ableToClick" v-for="likereview in User.like_reviews" :key="likereview.id">
               <p>{{likereview.movie.title}} - {{likereview.content}}</p>
             </div>
           </div>
@@ -50,14 +50,14 @@
         <div class="row">
           <div class="col contain division">
             <h3>{{User.nickname}}님이 남긴 리뷰</h3>
-            <div class="output" v-for="review in User.review_set" :key="review.id" @click="gotoDetail(review.movie)">
+            <div class="output ableToClick" v-for="review in User.review_set" :key="review.id" @click="gotoDetail(review.movie)">
               <p>movie_title : {{ review.movie.title }}</p>
               <p>content : {{ review.content }}</p>
             </div>
           </div>
           <div class="col contain division">
             <h3>{{User.nickname}}님이 남긴 댓글</h3>
-            <div class="output" v-for="comment in comments" :key="comment.id">
+            <div class="output ableToClick" v-for="comment in comments" :key="comment.id">
               <p>movie_title : {{ comment.movie.title }} </p>
               <p>content : {{ comment.content }}</p>
             </div>
