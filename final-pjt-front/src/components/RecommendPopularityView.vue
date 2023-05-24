@@ -1,7 +1,9 @@
 <template>
-  <div @click="gotoDetail">
-    <img :src="movie.poster_path_500" >
-    <h2>{{ movie.title }}</h2>
+  <div class="ableToClick rcmlist" @click="gotoDetail">
+    <div class="cardrcm"  @click="gotoDetail(movie)">
+      <div class="frontrcm"><img :src="movie.poster_path_500" class="rcmPoster"></div>
+      <div class="backrcm">{{movie.title}}</div>
+    </div>
   </div>
 </template>
 
