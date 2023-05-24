@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col" id="left">
-        <img id="poster" :src="queryData.movie.poster_path_500" >
+        <img id="poster" :src="queryData.movie.poster_path_original" >
       </div>
       <div class="col" id="right">
         <p id="title">{{ queryData.movie.title }}</p>
@@ -22,6 +22,10 @@
         <p>줄거리 : {{ queryData.movie.overview }}</p>
         <div class="row container">
           장르 : <p v-for="(genre,index) in getGenreData" :key="index">{{ genre.name }}</p>
+        </div>
+        <div class="row">
+          <p>{{queryData.movie.movie_actor}}</p>
+          <p>{{queryData.movie.production_companies}}</p>
         </div>
         <div class="row container">
           <div>
@@ -117,6 +121,7 @@ export default {
         url: `${URL}/movies/${movieid}/`,
       })  
       .then(res => {
+        console.log(res.data)
         this.like_user = res.data.movie_like_users
         this.dislike_user = res.data.movie_dislike_users
         const like_user = this.like_user
