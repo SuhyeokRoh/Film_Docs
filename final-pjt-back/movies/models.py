@@ -36,8 +36,8 @@ class Review(models.Model):
 
 
 class Comment(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name="comment_movie")
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name="comment_review")
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

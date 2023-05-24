@@ -126,7 +126,7 @@ def review_dislike(request, movie_pk, review_pk):
 def commentList(request, movie_pk, review_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.filter(pk=review_pk)[0]
-    comments = review.comment_set.all()
+    comments = review.comment_review.all()
     serializer = CommentListSerializer(comments, many=True)
     return Response(serializer.data)
 

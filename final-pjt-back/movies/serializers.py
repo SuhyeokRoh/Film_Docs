@@ -28,8 +28,23 @@ class MovieSerializer(serializers.ModelSerializer):
 
 class CommentListSerializer(serializers.ModelSerializer):
     # 프로필에서 댓글을 보기 위해 추가
-    movie_title = serializers.ReadOnlyField(source='movie.title')
-    review_content = serializers.ReadOnlyField(source='review.content')
+    # movie_title = serializers.ReadOnlyField(source='movie.title')
+    # review_content = serializers.ReadOnlyField(source='review.content')
+
+    class MovieAllAboutSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Movie
+            fields = '__all__'
+
+
+    class ReviewAllAboutSerializer(serializers.ModelSerializer):
+
+        class Meta:
+            model = Review
+            fields = '__all__'
+
+
     class UserSerializer(serializers.ModelSerializer):
         
         class Meta:
@@ -37,6 +52,8 @@ class CommentListSerializer(serializers.ModelSerializer):
             fields = ('username', 'nickname',)
             
     user = UserSerializer()
+    movie = MovieAllAboutSerializer(read_only=True)
+    review = ReviewAllAboutSerializer(read_only=True)
     
     class Meta:
         model = Comment
@@ -52,7 +69,7 @@ class ReviewListSerializer(serializers.ModelSerializer):
             fields = '__all__'
 
     movie = MovieAllSerializer(read_only=True)
-    comment_set = CommentListSerializer(many=True)
+    comment_review = CommentListSerializer(many=True)
     
     class Meta:
         model = Review
@@ -83,7 +100,7 @@ class ReviewSerializer(serializers.ModelSerializer):
             model = get_user_model()
             fields = ('username',)
     
-    comment_set = CommentListSerializer(many=True)
+    comment_review = CommentListSerializer(many=True)
     like_users = UserSerializer(many=True)
     dislike_users = UserSerializer(many=True)
 
