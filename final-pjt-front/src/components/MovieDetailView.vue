@@ -23,10 +23,23 @@
         <div class="row container">
           장르 : <p v-for="(genre,index) in getGenreData" :key="index">{{ genre.name }}</p>
         </div>
-        <div class="row">
-          <p>{{queryData.movie.movie_actor}}</p>
-          <p>{{queryData.movie.production_companies}}</p>
+        <div class="col">
+          <p>출연 배우</p>
+          <div class="row">
+            <div class="ableToClick" v-for="actor in queryData.movie.actor" :key="actor.id">
+              <img :src="actor.profile_path">
+            </div>
+          </div>
         </div>
+        <div class="col">
+          <p>배급사</p>
+          <div class="row">
+            <div class="ableToClick" v-for="production in queryData.movie.production_companies" :key="production.id">
+              <img :src="production.logo_path">
+            </div>
+          </div>
+        </div>
+          <p>{{queryData.movie.production_companies}}</p>
         <div class="row container">
           <div>
             <button v-if="like_state" @click="likeMovie">
