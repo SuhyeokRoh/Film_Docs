@@ -286,24 +286,14 @@ def movie_search(request):
 # 월드컵!
 @api_view(['GET'])
 def movie_worldcup(request):
-    random_movies = random.sample(list(Movie.objects.all()), 8)
-    worldcup = Worldcup()
-    worldcup.save()
-    worldcup.movies.set(random_movies)
-    # worldcup = Worldcup.create(random_movies)
-    worldcup_serializer = WorldcupSerializer(worldcup)
-    return Response(worldcup_serializer.data)
+    random_movies = random.sample(list(Movie.objects.all()), 32)
+    serializers = WorldcupSerializer(random_movies, many=True)
+    return Response(serializers.data)
 
-@api_view(['GET'])
-def worldcup_detail(request, worldcup_pk):
-    worldcup = get_object_or_404(Worldcup, pk=worldcup_pk)
-    worldcup_serializer = WorldcupSerializer(worldcup)
-    return Response(worldcup_serializer.data)
-
-@api_view(['POST'])
-def create_worldcup(request):
-    serializer = WorldcupSerializer(data=request.POST)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data)
-    return Response(status=400)
+# @api_view(['POST'])
+# def create_worldcup(request):
+#     serializer = WorldcupSerializer(data=request.POST)
+#     if serializer.is_valid():
+#         serializer.save()
+#         return Response(serializer.data)
+#     return Response(status=400)
