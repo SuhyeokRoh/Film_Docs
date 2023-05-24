@@ -100,6 +100,10 @@ export default {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getReviewLike()
     this.comments = this.getComment()
+    // this.getCommentLike(this.comment)
+  },
+  created() {
+    // this.getCommentLike(this.comment)
   },
   methods: {
     setToken: function() {
@@ -183,7 +187,6 @@ export default {
     getComment() {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
-
       axios({
         method: 'get',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
@@ -329,7 +332,7 @@ export default {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       const user_name = this.queryData.user.username
-
+      console.log(this.queryData.user)
       axios({
         method: 'get',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}/`,
@@ -376,6 +379,7 @@ export default {
         console.log(res)
         this.like_comments = res.data.like_comment_users
         this.comment_dislike_state = !this.comment_dislike_state
+        this.getCommentLike(this.comment)
       })
       .catch((err) => console.log(err))
     },
@@ -392,6 +396,7 @@ export default {
       .then((res) => {
         this.dislike_comments = res.data.dislike_comment_users
         this.comment_like_state = !this.comment_like_state
+        this.getCommentLike(this.comment)
       })
       .catch((err) => console.log(err))
     },
