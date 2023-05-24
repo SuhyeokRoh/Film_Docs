@@ -22,12 +22,12 @@
       <div class="col contain trace">
         <div class="col contain likemovie">
           <h3>{{User.nickname}}님이 좋아요 누른 영화</h3>
-          <div class="row posterlist">
+          <div class="row likeposterlist">
             <span class="posterbox" v-for="movie in User.movielike" :key="movie.id">
-                <div class="OnePoster">
+                <div class="TwoPoster">
                   <div class="card ableToClick" @click="gotoDetail(movie)">
-                    <div class="front"><img class="likeposter" :src="movie.poster_path_original" ></div>
-                    <div class="back">{{movie.title}}</div>
+                    <div class="frontprofile"><img class="likeposter" :src="movie.poster_path_original" ></div>
+                    <div class="backprofile">{{movie.title}}</div>
                   </div>
                 </div>
             </span>
@@ -36,7 +36,7 @@
         <div class="row">
           <div class="col contain division">
             <h3>{{User.nickname}}님이 좋아요 누른 리뷰</h3>
-            <div class="output" v-for="likereview in User.like_reviews" :key="likereview.id">
+            <div class="output" v-for="likereview in User.like_reviews" :key="likereview.id" @click="gotoDetailReview(likereview)">
               <p>{{likereview.movie.title}} - {{likereview.content}}</p>
             </div>
           </div>
@@ -50,16 +50,15 @@
         <div class="row">
           <div class="col contain division">
             <h3>{{User.nickname}}님이 남긴 리뷰</h3>
-            <div class="output" v-for="review in User.review_set" :key="review.id">
+            <div class="output" v-for="review in User.review_set" :key="review.id" @click="gotoDetail(review.movie)">
               <p>movie_title : {{ review.movie.title }}</p>
               <p>content : {{ review.content }}</p>
             </div>
           </div>
           <div class="col contain division">
             <h3>{{User.nickname}}님이 남긴 댓글</h3>
-            <div class="output" v-for="comment in User.comment_set" :key="comment.id">
-              <p>movie_title : {{ comment.movie_title }} </p>
-              <p>review : {{ comment.review_content }}</p>
+            <div class="output" v-for="comment in comments" :key="comment.id">
+              <p>movie_title : {{ comment.movie.title }} </p>
               <p>content : {{ comment.content }}</p>
             </div>
           </div>
@@ -83,10 +82,10 @@ export default {
         following: null,
         follower: null,
         isfollowed: false,
+        comments: null,
     }
   },
   mounted() {
-    // this.followPerson()
     this.getUser()
   },
   methods: {
@@ -106,11 +105,10 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
-        // console.log(res.data)
         this.User = res.data
         this.following = res.data.followings.length
         this.follower = res.data.followers.length
-        // console.log(this.User)
+        this.comments = res.data.comment_set
       })
       .catch((err) => console.log(err))
     },
@@ -137,7 +135,22 @@ export default {
       const movie = select_movie
 
       this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})
-    }
+    },
+
+    gotoDetailReview(select_review) {
+      const key = this.$store.state.access_token
+      if(key) {
+        const reviews = select_review
+        const user = {
+          'username' : this.username,
+          'nickname' : this.nickname,
+        }
+        this.$router.push({name: 'reviewdetail', query : {data: JSON.stringify({reviews: reviews, user: user, })}})
+      } else {
+        alert('로그인이 필요합니다!')
+        this.$router.push({name: 'Login'})
+      }
+    },
 
   },
   created() {
@@ -148,7 +161,7 @@ export default {
 
 <style>
 
-.OnePoster {
+.TwoPoster {
   position: relative;
   width: 133.33px;
   height: 200px;
@@ -162,18 +175,18 @@ export default {
   transform-style: preserve-3d;
 }
 
-.front, .back {
+.frontprofile, .backprofile {
   position: absolute;
   width: 100%; 
   height: 100%;
   backface-visibility: hidden;
 }
 
-.OnePoster:hover .card {
+.TwoPoster:hover .card {
   transform: rotateY(180deg);
 }
 
-.back {
+.backprofile {
   background-color: black;
   color:white;
   border-radius: 7px;
@@ -207,9 +220,9 @@ export default {
   justify-content: space-evenly;
 }
 
-.posterlist {
+.likeposterlist {
   width: 100%;
-  height: 250px;
+  height: 100%;
   overflow: auto;
   text-align: center;
   overflow-y: hidden;
