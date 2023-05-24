@@ -97,10 +97,9 @@ export default {
 
   #signup {
     color:#6a6f8c;
-    background:#c8c8c8;
+    /* background:#c8c8c8; */
     font:600 16px/18px 'Open Sans',sans-serif;
-
-    border: 3px solid black;
+    box-shadow: 5px 5px 5px 5px #0f023b;
     width: 500px;
     height: 60%;
     display: flex;
