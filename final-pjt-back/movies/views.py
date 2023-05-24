@@ -143,8 +143,8 @@ def comment_create(request, movie_pk, review_pk):
 def comment_update(request, movie_pk, review_pk, comment_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_set.filter(pk=comment_pk)[0]
-    if not request.user.comment_set.filter(pk=review_pk).exists():
+    comment = review.comment_review.filter(pk=comment_pk)[0]
+    if not request.user.comment_review.filter(pk=review_pk).exists():
         return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
         if request.method == 'PUT':
@@ -164,7 +164,7 @@ def comment_update(request, movie_pk, review_pk, comment_pk):
 def comment_detail(request, movie_pk, review_pk, comment_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_set.filter(pk=comment_pk)[0]
+    comment = review.comment_review.filter(pk=comment_pk)[0]
     serializer = CommentSerializer(comment)
     return Response(serializer.data)
 
@@ -172,7 +172,7 @@ def comment_detail(request, movie_pk, review_pk, comment_pk):
 def comment_like(request, movie_pk, review_pk, comment_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_set.filter(pk=comment_pk)[0]
+    comment = review.comment_review.filter(pk=comment_pk)[0]
     if comment.like_comment_users.filter(pk=request.user.pk).exists():
         comment.like_comment_users.remove(request.user)
     else:
@@ -185,7 +185,7 @@ def comment_like(request, movie_pk, review_pk, comment_pk):
 def comment_dislike(request, movie_pk, review_pk, comment_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_set.filter(pk=comment_pk)[0]
+    comment = review.comment_review.filter(pk=comment_pk)[0]
     if comment.dislike_comment_users.filter(pk=request.user.pk).exists():
         comment.dislike_comment_users.remove(request.user)
     else:
@@ -236,4 +236,26 @@ def movie_choice(request):
     # print(movies)
     # # movie = get_object_or_404(Genre, name=name)
     serializers = MoviechoiceSerializer(movies, many=True)
+    return Response(serializers.data)
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def movie_search(request):
+    movies = get_list_or_404(Movie)
+    search_movie = request.GET.getlist('searchcontentlist')
+    # search_movie가 장르에 들어옴. 
+    # print(search_movie)
+    search_result_movies = []
+    for movie in movies:
+        # print(movie.title)
+        for i in range(len(search_movie)):
+            if search_movie[i] in movie.title:
+                search_result_movies.append(movie)
+            # for j in search_movie[i]:
+            #     if j in movie.title:
+            #         search_result_movies.append(movie)
+    if search_result_movies == []:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    serializers = MovieListSerializer(search_result_movies, many=True)
     return Response(serializers.data)
