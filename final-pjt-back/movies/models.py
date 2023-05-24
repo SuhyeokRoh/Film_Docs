@@ -6,6 +6,12 @@ class Genre(models.Model):
     name = models.CharField(max_length=50)
 
 
+class Production(models.Model):
+    name = models.CharField(max_length=100)
+    logo_path = models.TextField(null=True)
+    original_country = models.CharField(max_length=100, null=True)
+
+
 class Movie(models.Model):
     movie_id = models.IntegerField(unique=True)
     title = models.CharField(max_length=100)
@@ -14,14 +20,18 @@ class Movie(models.Model):
     vote_count = models.IntegerField(null=True)
     vote_average = models.FloatField(null=True)
     overview = models.TextField(null=True)
-    backdrop_path_300 = models.CharField(max_length=200, null=True)
-    backdrop_path_original = models.CharField(max_length=200, null=True)
-    poster_path_500 = models.CharField(max_length=200)
-    poster_path_original = models.CharField(max_length=200)
-    genres = models.ManyToManyField(Genre)
+    backdrop_path_original = models.TextField(null=True)
+    poster_path_original = models.TextField(max_length=200)
     trailerUrl = models.TextField()
+    budget = models.IntegerField(null=True)
+    revenue = models.IntegerField(null=True)
+    runtime = models.IntegerField(null=True)
+    homepage = models.TextField(null=True)
+    genres = models.ManyToManyField(Genre)
+    production_companies = models.ManyToManyField(Production, related_name="movie_companies")
     movie_like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movielike")
     movie_dislike_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="movieDislike")
+
 
 
 class Review(models.Model):
@@ -44,28 +54,15 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_comment_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_comments")
     dislike_comment_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="dislike_comments")
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-class Worldcup(models.Model):
-    movies = models.ManyToManyField(Movie, related_name='worldcups', through='Ranking', blank=True)
 
-class Ranking(models.Model):
-    movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
-    worldcup = models.ForeignKey(Worldcup, on_delete=models.CASCADE)
 
-    
-    
+class Actor(models.Model):
+    name = models.CharField(max_length=100)
+    biography = models.TextField(null=True)
+    birthday = models.DateTimeField()
+    deathday = models.DateField(null=True)
+    gender = models.CharField(max_length=10)
+    place_of_birth = models.TextField(null=True)
+    popularity = models.FloatField(null=True)
+    profile_path = models.TextField(null=True)
+    movie = models.ManyToManyField(Movie, related_name="movie_actor")
