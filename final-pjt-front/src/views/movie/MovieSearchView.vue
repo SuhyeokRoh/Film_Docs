@@ -7,7 +7,7 @@
         <div v-if="issearchVaild">
             <div v-for="searchresult in searchresults" :key="searchresult.id"
                 :searchresult="searchresult">
-                <div><img class="posterlist" :src="searchresult.poster_path_500" ></div>
+                <div><img class="posterlist" :src="searchresult.poster_path_original" ></div>
                 <p>{{searchresult.title}}</p>
             </div>
         </div>
@@ -66,7 +66,7 @@ export default {
             }
         })
         .then((res) => {
-            // console.log(res)
+            console.log(res)
             this.searchresults = res.data
             // console.log(this.searchresults)
             this.searchcontentlist = []
@@ -91,5 +91,7 @@ export default {
 </script>
 
 <style>
-
+.posterlist {
+  width: 500px;
+}
 </style>
