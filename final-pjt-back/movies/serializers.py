@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Movie, Review, Genre, Comment, Worldcup
+from .models import Movie, Review, Genre, Comment
 from django.contrib.auth import get_user_model
 
 
@@ -135,7 +135,7 @@ class CommentUpdateSerializer(serializers.ModelSerializer):
         fields = ('content', 'movie', 'review', 'user_id',)
         
         
-class WorldcupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Worldcup
-        fields = ('id', 'movies')
+# class WorldcupSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Worldcup
+#         fields = ('id', 'movies')

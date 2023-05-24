@@ -1,10 +1,11 @@
 from apscheduler.schedulers.background import BackgroundScheduler
-# from django_apscheduler.jobstores import register_events, DjangoJobStore
 from django.conf import settings
 import requests
 import sys
 # import io
 from .models import Movie, Genre, Production, Actor
+
+api_key = settings.SECRET_KEY
 
 
 def fixedDataSave():
@@ -16,7 +17,7 @@ def fixedDataSave():
 
     # Genre 저장
     para = {
-        "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
+        "api_key" : api_key,
     }
 
     res = requests.get(Genre_URL, params=para)
@@ -31,7 +32,7 @@ def fixedDataSave():
 
 def GetTrailerUrl(id):
     prms = {
-        "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
+        "api_key" : api_key,
     }
     movieTrailerUrl = f"https://api.themoviedb.org/3/movie/{id}/videos"
 
@@ -44,7 +45,7 @@ def GetTrailerUrl(id):
 
 def GetMovieDetail(id):
     prms = {
-        "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
+        "api_key" : api_key,
     }
     movieDetailUrl = f"https://api.themoviedb.org/3/movie/{id}"
 
@@ -67,9 +68,9 @@ def saveDb():
 
     # MovieList json으로 저장하기
 
-    for i in range(1, 51):
+    for i in range(1, 2):
         params = {
-            "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
+            "api_key" : api_key,
             "language" : "ko-KR",
             "page": i,
         }
@@ -129,9 +130,9 @@ def saveDb():
             except:
                 continue
 
-    for i in range(1, 51):
+    for i in range(1, 2):
         params = {
-            "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
+            "api_key" : api_key,
             "language" : "ko-KR",
             "page": i,
         }
@@ -144,7 +145,7 @@ def saveDb():
                 id = x.get('id')
 
                 prm = {
-                    "api_key" : 'e66fa81c4a87396b24dd94a15cc7a8b1',
+                    "api_key" : api_key,
                     "language" : "ko-KR",                
                 }
                 PersonDetailURL = f"https://api.themoviedb.org/3/person/{id}"
@@ -174,6 +175,6 @@ def saveDb():
 
 def start():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(saveDb, 'cron', hour=17, minute=34, second=0, id="saveDataBase")
+    scheduler.add_job(saveDb, 'cron', hour=19, minute=51, second=0, id="saveDataBase")
     # scheduler.add_job(saveDb, 'interval', seconds=30, id="saveDataBase")
     scheduler.start()

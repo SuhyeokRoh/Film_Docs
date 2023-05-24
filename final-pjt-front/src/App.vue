@@ -11,10 +11,16 @@
         <span>
           <router-link :to="{ name: 'recommend' }">Recommend</router-link>
         </span>
+        <span>
+          <router-link :to="{ name: 'search' }">Search</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'worldcup' }">worldcup</router-link>
+        </span>
       </div>
       <div id="AboutAccount">
         <span>
-          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">안녕하세요, {{$store.state.username}}님</router-link>
+          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">Hi, {{$store.state.username}}님</router-link>
         </span>
         <span>
           <router-link to="#" @click.native="logout">Logout</router-link>
@@ -32,6 +38,12 @@
         </span>
         <span>
           <router-link :to="{ name: 'recommend' }">Recommend</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'search' }">Search</router-link>
+        </span>
+        <span>
+          <router-link :to="{ name: 'worldcup' }">worldcup</router-link>
         </span>
       </div>
       <div id="AboutAccount">
@@ -159,7 +171,7 @@ img{
 
 #AboutAccount {
   display: flex;
-  width: 300px;
+  width: 400px;
   justify-content: space-between;
   align-content: center;
   margin-right: 100px;
@@ -167,7 +179,7 @@ img{
 
 #AboutMovie {
   display: flex;
-  width: 500px;
+  width: 800px;
   justify-content: space-between;
   margin-left: 50px;
 }
