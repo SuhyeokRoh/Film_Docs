@@ -9,6 +9,7 @@ from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
 import random
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def movie_list(request):
@@ -64,7 +65,6 @@ def review_detail(request, movie_pk, review_pk):
     serializer = ReviewSerializer(review)
     return Response(serializer.data)
     
-    
 
 @api_view(['POST'])
 def review_create(request, movie_pk):
@@ -77,16 +77,11 @@ def review_create(request, movie_pk):
         
 @api_view(['PUT', 'DELETE'])
 def review_update(request, movie_pk, review_pk):
-    # movie = get_object_or_404(Movie, pk=movie_pk)
     review = get_object_or_404(Review,pk=review_pk)
-    # review = movie.review_set.filter(pk=review_pk)[0]
     if review.user_id != request.user.pk:
         return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
         if request.method == 'PUT':
-            # if review.user_id != request.user.pk:
-            #     return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
-        
             serializer = ReviewCreateSerializer(review, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
@@ -142,21 +137,11 @@ def comment_create(request, movie_pk, review_pk):
 
 @api_view(['PUT', 'DELETE'])
 def comment_update(request, movie_pk, review_pk, comment_pk):
-    # movie = get_object_or_404(Movie, pk=movie_pk)
-    # review = movie.review_set.filter(pk=review_pk)[0]
-    # print(review)
-    # comment = review.comment_review.filter(pk=comment_pk)[0]
     comment = get_object_or_404(Comment,pk=comment_pk)
-    # if not request.user.comment_set.filter(pk=review_pk).exists():
-    #     return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
-    # else:
-    #     if request.method == 'PUT':
     if comment.user_id != request.user.pk:
         return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
         if request.method == 'PUT':
-            # if not request.user.comment_set.filter(pk=review_pk).exists():
-            #     return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
             serializer = CommentUpdateSerializer(comment, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
@@ -173,17 +158,7 @@ def comment_detail(request, movie_pk, review_pk, comment_pk):
     serializer = CommentSerializer(comment)
     return Response(serializer.data)
 
-# @api_view(['POST'])
-# def comment_like(request, movie_pk, review_pk, comment_pk):
-#     movie = get_object_or_404(Movie, pk=movie_pk)
-#     review = movie.review_set.filter(pk=review_pk)[0]
-#     comment = review.comment_review.filter(pk=comment_pk)[0]
-#     if comment.like_comment_users.filter(pk=request.user.pk).exists():
-#         comment.like_comment_users.remove(request.user)
-#     else:
-#         comment.like_comment_users.add(request.user)
-#     serialzer = CommentSerializer(comment)
-#     return Response(serialzer.data)
+
 @api_view(['POST'])
 def comment_like(request, movie_pk, review_pk, comment_pk):
     comment = get_object_or_404(Comment,pk=comment_pk)
@@ -195,17 +170,6 @@ def comment_like(request, movie_pk, review_pk, comment_pk):
     return Response(serialzer.data)
 
 
-# @api_view(['POST'])
-# def comment_dislike(request, movie_pk, review_pk, comment_pk):
-#     movie = get_object_or_404(Movie, pk=movie_pk)
-#     review = movie.review_set.filter(pk=review_pk)[0]
-#     comment = review.comment_review.filter(pk=comment_pk)[0]
-#     if comment.dislike_comment_users.filter(pk=request.user.pk).exists():
-#         comment.dislike_comment_users.remove(request.user)
-#     else:
-#         comment.dislike_comment_users.add(request.user)
-#     serialzer = CommentSerializer(comment)
-#     return Response(serialzer.data)
 @api_view(['POST'])
 def comment_dislike(request, movie_pk, review_pk, comment_pk):
     comment = get_object_or_404(Comment,pk=comment_pk)
@@ -246,18 +210,13 @@ def movie_release_list(request):
     serializer = MovieListSerializer(latest_release_date_movies, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
 @permission_classes([AllowAny])
-# def movie_choice(request, name):
 def movie_choice(request):
-    # genre=get_object_or_404(Genre, name=request.data)
-    # movies = get_list_or_404(Movie,genres=genre)
     selected_genres = request.GET.getlist('genres')
     selected_genres = selected_genres[0].split(',')
-    # print(selected_genres)
     movies = Movie.objects.filter(genres__name__in=selected_genres).distinct()
-    # print(movies)
-    # # movie = get_object_or_404(Genre, name=name)
     serializers = MoviechoiceSerializer(movies, many=True)
     return Response(serializers.data)
 
@@ -268,20 +227,16 @@ def movie_search(request):
     movies = get_list_or_404(Movie)
     search_movie = request.GET.getlist('searchcontentlist')
     # search_movie가 장르에 들어옴. 
-    # print(search_movie)
     search_result_movies = []
     for movie in movies:
-        # print(movie.title)
         for i in range(len(search_movie)):
             if search_movie[i] in movie.title:
                 search_result_movies.append(movie)
-            # for j in search_movie[i]:
-            #     if j in movie.title:
-            #         search_result_movies.append(movie)
     if search_result_movies == []:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializers = MovieListSerializer(search_result_movies, many=True)
     return Response(serializers.data)
+
 
 # 월드컵!
 @api_view(['GET'])
@@ -290,7 +245,6 @@ def movie_worldcup(request):
     worldcup = Worldcup()
     worldcup.save()
     worldcup.movies.set(random_movies)
-    # worldcup = Worldcup.create(random_movies)
     worldcup_serializer = WorldcupSerializer(worldcup)
     return Response(worldcup_serializer.data)
 
@@ -310,10 +264,11 @@ def create_worldcup(request):
         return Response(serializer.data)
     return Response(status=400)
 
+
 # 배우 관련 함수
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def actorDetail(request, actor_pk):
     actor = get_object_or_404(Actor, pk=actor_pk)
     serializer = ActorAllSerializer(actor)
-    return Respons(serializer.data)
+    return Response(serializer.data)
