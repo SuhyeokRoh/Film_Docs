@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import AllowAny
-# import random
+import random
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -131,6 +131,7 @@ def commentList(request, movie_pk, review_pk):
     return Response(serializer.data)
 
 
+
 @api_view(['POST'])
 def comment_create(request, movie_pk, review_pk):
     serializer = CommentCreateSerializer(data=request.data)
@@ -141,17 +142,22 @@ def comment_create(request, movie_pk, review_pk):
 
 @api_view(['PUT', 'DELETE'])
 def comment_update(request, movie_pk, review_pk, comment_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_review.filter(pk=comment_pk)[0]
-    if not request.user.comment_review.filter(pk=review_pk).exists():
+    # movie = get_object_or_404(Movie, pk=movie_pk)
+    # review = movie.review_set.filter(pk=review_pk)[0]
+    # print(review)
+    # comment = review.comment_review.filter(pk=comment_pk)[0]
+    comment = get_object_or_404(Comment,pk=comment_pk)
+    # if not request.user.comment_set.filter(pk=review_pk).exists():
+    #     return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+    # else:
+    #     if request.method == 'PUT':
+    if comment.user_id != request.user.pk:
         return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
     else:
         if request.method == 'PUT':
             # if not request.user.comment_set.filter(pk=review_pk).exists():
             #     return Response({'detail':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
-        
-            serializer = CommentUpdateSerializer(review, data=request.data)
+            serializer = CommentUpdateSerializer(comment, data=request.data)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data)
@@ -162,17 +168,25 @@ def comment_update(request, movie_pk, review_pk, comment_pk):
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def comment_detail(request, movie_pk, review_pk, comment_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_review.filter(pk=comment_pk)[0]
+   
+    comment = get_object_or_404(Comment,pk=comment_pk)
     serializer = CommentSerializer(comment)
     return Response(serializer.data)
 
+# @api_view(['POST'])
+# def comment_like(request, movie_pk, review_pk, comment_pk):
+#     movie = get_object_or_404(Movie, pk=movie_pk)
+#     review = movie.review_set.filter(pk=review_pk)[0]
+#     comment = review.comment_review.filter(pk=comment_pk)[0]
+#     if comment.like_comment_users.filter(pk=request.user.pk).exists():
+#         comment.like_comment_users.remove(request.user)
+#     else:
+#         comment.like_comment_users.add(request.user)
+#     serialzer = CommentSerializer(comment)
+#     return Response(serialzer.data)
 @api_view(['POST'])
 def comment_like(request, movie_pk, review_pk, comment_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_review.filter(pk=comment_pk)[0]
+    comment = get_object_or_404(Comment,pk=comment_pk)
     if comment.like_comment_users.filter(pk=request.user.pk).exists():
         comment.like_comment_users.remove(request.user)
     else:
@@ -181,11 +195,20 @@ def comment_like(request, movie_pk, review_pk, comment_pk):
     return Response(serialzer.data)
 
 
+# @api_view(['POST'])
+# def comment_dislike(request, movie_pk, review_pk, comment_pk):
+#     movie = get_object_or_404(Movie, pk=movie_pk)
+#     review = movie.review_set.filter(pk=review_pk)[0]
+#     comment = review.comment_review.filter(pk=comment_pk)[0]
+#     if comment.dislike_comment_users.filter(pk=request.user.pk).exists():
+#         comment.dislike_comment_users.remove(request.user)
+#     else:
+#         comment.dislike_comment_users.add(request.user)
+#     serialzer = CommentSerializer(comment)
+#     return Response(serialzer.data)
 @api_view(['POST'])
 def comment_dislike(request, movie_pk, review_pk, comment_pk):
-    movie = get_object_or_404(Movie, pk=movie_pk)
-    review = movie.review_set.filter(pk=review_pk)[0]
-    comment = review.comment_review.filter(pk=comment_pk)[0]
+    comment = get_object_or_404(Comment,pk=comment_pk)
     if comment.dislike_comment_users.filter(pk=request.user.pk).exists():
         comment.dislike_comment_users.remove(request.user)
     else:
@@ -259,3 +282,28 @@ def movie_search(request):
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializers = MovieListSerializer(search_result_movies, many=True)
     return Response(serializers.data)
+
+# 월드컵!
+@api_view(['GET'])
+def movie_worldcup(request):
+    random_movies = random.sample(list(Movie.objects.all()), 8)
+    worldcup = Worldcup()
+    worldcup.save()
+    worldcup.movies.set(random_movies)
+    # worldcup = Worldcup.create(random_movies)
+    worldcup_serializer = WorldcupSerializer(worldcup)
+    return Response(worldcup_serializer.data)
+
+@api_view(['GET'])
+def worldcup_detail(request, worldcup_pk):
+    worldcup = get_object_or_404(Worldcup, pk=worldcup_pk)
+    worldcup_serializer = WorldcupSerializer(worldcup)
+    return Response(worldcup_serializer.data)
+
+@api_view(['POST'])
+def create_worldcup(request):
+    serializer = WorldcupSerializer(data=request.POST)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(status=400)
