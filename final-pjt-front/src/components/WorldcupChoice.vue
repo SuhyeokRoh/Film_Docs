@@ -1,58 +1,50 @@
 <template>
-
   <div v-if="!!movie">
     <h2>{{movie.title}}</h2>
-    <v-hover
-      v-slot:default="{ hover }"
-      :open-delay="openDelay"
-      :close-delay="closeDelay"
-      :disabled="disabled"
-      :value="value"
-      max-height="600px"
+    <div
+      v-on:mouseenter="hover = true"
+      v-on:mouseleave="hover = false"
+      v-bind:class="{ 'elevation-12': hover, 'elevation-2': !hover }"
+      @click="select"
     >
-      <v-img
-        @click="select"
-        :src="movie.img_url"
+      <img
+        :src="movie.poster_path_500"
         alt=""
         width="400px"
         height="600px"
-        :elevation="hover ? 12 : 2"
-      ></v-img>
-    </v-hover>
+      >
+    </div>
   </div>
-
 </template>
 
 <script>
 // import axios from 'axios'
 
 export default {
-  data () {
+  data() {
     return {
       movieObject: null,
-      disabled: false,
-      openDelay: '0',
-      closeDelay: '0',
-      value: false,
-    }
+      hover: false,
+    };
   },
-  
+
   props: {
-    movie:{
+    movie: {
       type: Object,
       required: false,
-    }
+    },
   },
 
   methods: {
     select() {
-      this.$emit('choiceEvent', true)
-    }
-  }
-
-}
+      this.$emit('choiceEvent', true);
+    },
+  },
+};
 </script>
 
-<style>
+<style scoped>
+
+
 
 </style>
