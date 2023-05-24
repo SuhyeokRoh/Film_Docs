@@ -156,14 +156,8 @@ class CommentUpdateSerializer(serializers.ModelSerializer):
         
 
 class ActorAllSerializer(serializers.ModelSerializer):
-    
-    class MovieAllAboutSerializer(serializers.ModelSerializer):
-        
-        class Meta:
-            model = Movie
-            fields = '__all__'
             
-    movie_actor = MovieAllAboutSerializer(many=True, read_only=True)
+    movie_actor = MovieListSerializer(many=True, read_only=True)
     
     class Meta:
         model = Actor
