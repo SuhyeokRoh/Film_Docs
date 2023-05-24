@@ -124,6 +124,8 @@ export default {
       like_comments: [],
       dislike_comments: [],
 
+      comment_up_state_arr: [],
+
       is_review_user: false,
 
       like_state: true,
@@ -242,6 +244,7 @@ export default {
     },
 
     getComment() {
+      console.log(this.comment_up_state_arr)
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       axios({
@@ -251,6 +254,7 @@ export default {
       })
       .then((res) => {
         this.comments = res.data
+        console.log(this.comments)
         // this.like_comments = res.data.like_comment_users
         // this.dislike_comments = res.data.dislike_comment_users
       })
@@ -261,7 +265,7 @@ export default {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       const content = this.commentContent
-
+      console.log()
 
       axios({
         method: 'post',
@@ -276,6 +280,7 @@ export default {
       .then(() => {
         this.getComment()
         this.commentContent = ''
+        
       })
       .catch(err => console.log(err))
     },
@@ -284,6 +289,7 @@ export default {
       const username = this.queryData.user.username
       this.$router.push({name: 'Profile', query : {user: username}})
     },
+
     deleteReview: function () {
       const movie = this.queryData.reviews.movie
       const movieid = this.queryData.reviews.movie.id
@@ -346,7 +352,6 @@ export default {
         })
     },
     updateComment: function (comment) {
-      // console.log(comment)
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
       
@@ -380,58 +385,11 @@ export default {
       }
 
     },
-    changeupdate_comment_state(comment) {
-      console.log(this.$store.state.username)
-      // console.log(this.$store.state)
-      console.log(comment)
-      if (this.$store.state.username === comment.user.username) {
-        if (this.isCommentupdate) {
-          this.isCommentupdate = false
-        }
+    changeupdate_comment_state() {
+    if (this.isCommentupdate) {
+        this.isCommentupdate = false
       }
-
     },
-    // getCommentLike() {
-    //   const movieid = this.queryData.reviews.movie.id
-    //   const reviewid = this.queryData.reviews.id
-    //   const user_name = this.queryData.user.username
-      
-    //   axios({
-    //     method: 'get',
-    //     url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
-    //     headers: this.setToken()
-    //   })
-    //   .then((res) => {
-    //     console.log(res)
-    //     // likecomments = res.data.like_comment_users
-    //     this.like_comments = res.data.like_comment_users
-    //     this.dislike_comments = res.data.dislike_comment_users
-
-    //     const like_comments = this.like_comments
-    //     console.log(like_comments)
-    //     const dislike_comments = this.dislike_comments
-
-    //     const like = like_comments.find(element => {
-    //       if (element.username === user_name) {
-    //         return true;
-    //       }
-    //     })
-
-    //     const dislike = dislike_comments.find(element => {
-    //       if (element.username === user_name) {
-    //         return true;
-    //       }
-    //     })
-
-    //     if (like) {
-    //       this.comment_dislike_state = false
-    //     }
-    //     if (dislike) {
-    //       this.comment_like_state = false
-    //     }
-    //   })
-    //   .catch((err) => console.log(err))
-    // },
 
     likeComment(comment) {
       const movieid = this.queryData.reviews.movie.id
@@ -449,8 +407,8 @@ export default {
         // this.getCommentLike(comment)
       })
       .catch((err) => console.log(err))
-    },
-
+     },
+    
     dislikeComment(comment) {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
