@@ -3,13 +3,13 @@
   <div class="col" id="Login">
     <h1>Welcome Back!</h1>
     <br>
-    <div class="form-group">
+    <div class="login-form-group">
       <label for="username"></label>
-      <input type="text" id="username" v-model="userdata.username" class="input-field" placeholder="    ID를 입력해주세요!"/>
+      <input type="text" id="username" v-model="userdata.username" class="login-input-field" placeholder="  ID를 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
-    <div class="form-group">
+    <div class="login-form-group">
       <label for="password"></label>
-      <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" class="input-field" placeholder="    비밀번호를 입력해주세요!"/>
+      <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" class="login-input-field" placeholder="  비밀번호를 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
     <br>
     <div>
@@ -122,17 +122,17 @@ background: linear-gradient(0deg, rgb(228, 215, 39) 0%, rgb(236, 230, 135) 100%)
 }
 
 
-.form-group {
+.login-form-group {
   margin-bottom: 8px;
   padding: 3px;
   border-radius: 3px;
 }
 
-.label-left {
+.login-label-left {
   width: 100px;
 }
 
-.input-field {
+.login-input-field {
   width: 300px;
   height: 40px;
   border-radius: 4px;
