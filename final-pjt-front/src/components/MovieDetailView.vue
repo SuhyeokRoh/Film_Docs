@@ -510,8 +510,8 @@ export default {
 #review_content {
   margin-top: 10px;
   margin-left: 30px;
-  margin-right: 10px;
-  width: 70%;
+  margin-right: 40px;
+  width: 65%;
   height: 40px;
   border: none;
   border-bottom: dashed 2px orange;
