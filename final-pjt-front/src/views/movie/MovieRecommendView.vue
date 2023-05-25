@@ -171,8 +171,8 @@ export default {
 }
 
 .backrcm {
-  background-color: black;
-  color:white;
+  background-color: white;
+  color:black;
   border-radius: 7px;
   line-height: 350px;
   font-size: 17px;

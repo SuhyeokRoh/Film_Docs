@@ -253,8 +253,8 @@ export default {
 }
 
 .backprofile {
-  background-color: black;
-  color:white;
+  background-color: white;
+  color:black;
   border-radius: 7px;
   line-height: 200px;
   font-size: 10px;

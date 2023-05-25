@@ -112,7 +112,7 @@ export default {
   margin: 0px 0px auto;
   margin-top: 10px;
   padding: 20px;
-  border: solid 1px black;
+  border: solid 1px white;
   border-radius: 7px;
   text-align: left;
 }
@@ -150,8 +150,8 @@ export default {
 }
 
 .backcome {
-  background-color: black;
-  color:white;
+  background-color: white;
+  color:black;
   border-radius: 7px;
   line-height: 300px;
   font-size: 17px;
@@ -161,7 +161,7 @@ export default {
   height: 300px;
   border-radius: 7px;
   margin: 0 0 auto;
-  border: solid 1px black;
+  border: solid 1px white;
 }
 .comeposterlist {
   width: 100%;
@@ -169,7 +169,7 @@ export default {
   overflow: auto;
   text-align: center;
   overflow-y: hidden;
-  border: solid 1px black;
+  border: solid 1px white;
   border-radius: 7px;
 }
 </style>
