@@ -64,8 +64,8 @@
           </div>
           <div class="col contain division">
             <h3>{{User.nickname}}님이 좋아요 누른 댓글</h3>
-            <div class="output ableToClick" v-for="likereview in User.like_reviews" :key="likereview.id">
-              <p>{{likereview.movie.title}} - {{likereview.content}}</p>
+            <div class="output ableToClick" v-for="likecomment in User.comment_set" :key="likecomment.id">
+              <p>{{likecomment.movie.title}} - {{likecomment.content}}</p>
             </div>
           </div>
         </div>
