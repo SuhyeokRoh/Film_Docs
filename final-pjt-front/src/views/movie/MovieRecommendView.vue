@@ -1,7 +1,8 @@
 <template>
   <div class="inner">
+    <h1 style="font-size: 50px;">오늘의 추천 영화</h1>
     <div class="col">
-      <h1>무작위</h1>
+      <h1 class="recomdmovies" style="color: #ed8b13; font-size: 32px;">이런 영화들은 어떠세요?</h1>
       <div class="row wrapper">
         <div class="ableToClick rcmlist" v-for="r_movie in random_movies" :key="r_movie.id">
           <div class="cardrcm"  @click="gotoDetail(r_movie)">
@@ -13,7 +14,7 @@
     </div>
 
     <div class="col">
-      <h1>평점순</h1>
+      <h1 class="recomdmovies" style="color: #ed8b13; font-size: 32px;">가장 평점이 높은 영화들이에요!</h1>
       <div class="row wrapper">
         <RecommendVoterateView v-for="v_movie in vote_rate_movies" :key="v_movie.id" 
       :movie="v_movie" />
@@ -21,7 +22,7 @@
     </div>
 
     <div class="col">
-      <h1>인기순</h1>
+      <h1 class="recomdmovies" style="color: #ed8b13; font-size: 32px;">가장 인기가 높은 영화들이에요!</h1>
       <div class="row wrapper">
         <RecommendPopularityView v-for="p_movie in popularity_movies" :key="p_movie.id" 
       :movie="p_movie" />
@@ -29,7 +30,7 @@
     </div>
 
     <div class="col">
-      <h1>좋아요순</h1>
+      <h1 class="recomdmovies" style="color: #ed8b13; font-size: 32px;">가장 사랑받은 영화들이에요!</h1>
       <div class="row wrapper">
         <RecommendLikeView v-for="l_movie in like_movies" :key="l_movie.id" 
       :movie="l_movie" />
@@ -37,7 +38,7 @@
     </div>
 
     <div class="col">
-      <h1>싫어요순</h1>
+      <h1 class="recomdmovies" style="color: #ed8b13; font-size: 32px;">많은 사람들이 싫어하는 영화들이에요!</h1>
       <div class="row wrapper">
         <RecommendDislikeView v-for="d_movie in dislike_movies" :key="d_movie.id" 
       :movie="d_movie" />
@@ -177,5 +178,10 @@ export default {
   line-height: 350px;
   font-size: 17px;
   transform: rotateY(180deg);
+}
+
+.recomdmovies {
+  margin: 20px 0px 30px;
+  text-align: left;
 }
 </style>
