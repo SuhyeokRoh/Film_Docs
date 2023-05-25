@@ -106,6 +106,9 @@ p {
 .ableToClick {
   cursor: pointer;
 }
+button {
+  border-radius: 7px;
+}
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
