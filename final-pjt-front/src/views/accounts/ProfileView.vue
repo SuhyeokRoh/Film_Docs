@@ -9,7 +9,6 @@
         <p>User Last Name : {{User.last_name}}</p>
         <p>User Nick Name : {{User.nickname}}</p>
         <button>회원정보 수정</button>
-
         <button v-if="is_my_profile" @click="withdrawalChange">회원 탈퇴</button>
         <div class="black-bg" v-if="this.drawalVal == true">
           <div class="white-bg col">
@@ -30,7 +29,15 @@
             <p> 팔로워 : {{ follower }} </p>
             <p>팔로잉 : {{ following }} </p>
           </div>
-          <button @click="followPerson">follow / 취소</button>
+          <div v-if="is_my_profile"></div>
+          <div v-else>
+            <button @click="followPerson">
+            <p v-if="isfollowed">취소</p>
+            <p v-else>follow</p>
+          </button>
+          </div>
+          
+        
         </div>
       </div>
 
@@ -96,7 +103,7 @@ export default {
       movieTitle: null,
       following: null,
       follower: null,
-      isfollowed: false,
+      isfollowed: true,
       comments: null,
 
       is_my_profile: false,
@@ -150,16 +157,29 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
+        console.log(res)
         this.User = res.data
         this.following = res.data.followings.length
         this.follower = res.data.followers.length
         this.comments = res.data.comment_set
+        this.isfollowed = false
+        this.User.followers.forEach(element => {
+          if (element.username === this.$store.state.username) {
+            this.isfollowed = true
+            return 
+          }
+        });
       })
       .catch((err) => console.log(err))
     },
 
     followPerson() {
       const username = this.$route.query.user
+      if (this.isfollowed) {
+        this.isfollowed = false
+      } else {
+        this.isfollowed = true
+      }
       
       axios({
         method: 'post',
@@ -170,6 +190,7 @@ export default {
         console.log(res)
         // 여기서 키중복 경고가 발생함 그러나 follow 실시간 반영을 위해 일단 남겨두었음
         this.follower = res.data.followers.length
+        
       })
       .catch((err) => {
         alert(err.response.data.err)

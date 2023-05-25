@@ -1,7 +1,7 @@
 <template>
   <div class="ableToClick rcmlist" @click="gotoDetail">
     <div class="cardrcm"  @click="gotoDetail(movie)">
-      <div class="frontrcm"><img :src="movie.poster_path_500" class="rcmPoster"></div>
+      <div class="frontrcm"><img :src="movie.poster_path_original" class="rcmPoster"></div>
       <div class="backrcm">{{movie.title}}</div>
     </div>
   </div>

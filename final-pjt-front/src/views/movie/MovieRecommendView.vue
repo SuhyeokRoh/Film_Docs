@@ -5,7 +5,7 @@
       <div class="row wrapper">
         <div class="ableToClick rcmlist" v-for="r_movie in random_movies" :key="r_movie.id">
           <div class="cardrcm"  @click="gotoDetail(r_movie)">
-            <div class="frontrcm"><img :src="r_movie.poster_path_500" class="rcmPoster"></div>
+            <div class="frontrcm"><img :src="r_movie.poster_path_original" class="rcmPoster"></div>
             <div class="backrcm">{{r_movie.title}}</div>
           </div>
         </div>

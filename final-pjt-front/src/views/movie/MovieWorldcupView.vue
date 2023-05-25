@@ -4,17 +4,19 @@
     <div>
       <button @click="call_WorldCup_data">처음부터 시작</button>
       <div>
-        <button @click="pickworldcup">그냥ㅋ</button>
-        <div class="OnePoster ableToClick">
-          <div class="card" @click="clickLeft">
-            <div class="front"><img class="posterlist" :src="this.random_movies[0].poster_path_original" ></div>
-          <div class="back">{{this.random_movies[0].title}}</div>
+        <button @click="pickworldcup">누르지 마세요</button>
+        <div class="worldcup-container">
+          <div class="OnePoster ableToClick">
+            <div class="card" @click="clickLeft">
+              <div class="front"><img class="posterlist" :src="this.random_movies[0].poster_path_original" ></div>
+              <div class="back">{{this.random_movies[0].title}}</div>
+            </div>
           </div>
-        </div>
-        <div class="OnePoster ableToClick">
-          <div class="card" @click="clickRight">
-            <div class="front"><img class="posterlist" :src="this.random_movies[1].poster_path_original" ></div>
-          <div class="back">{{this.random_movies[1].title}}</div>
+          <div class="OnePoster ableToClick">
+            <div class="card" @click="clickRight">
+              <div class="front"><img class="posterlist" :src="this.random_movies[1].poster_path_original" ></div>
+              <div class="back">{{this.random_movies[1].title}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -123,8 +125,10 @@ export default {
 <style>
 .worldcup-container {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 
 .OnePoster {
