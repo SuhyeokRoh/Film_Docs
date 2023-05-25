@@ -99,6 +99,9 @@ a {
 body {
 	line-height: 1;
 }
+p {
+  font-size: 20px;
+}
 
 .ableToClick {
   cursor: pointer;

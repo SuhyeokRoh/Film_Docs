@@ -2,29 +2,53 @@
   <div class="inner" v-if="queryData">
     <div>
       <img id="backimage" :src="queryData.movie.backdrop_path_original" >
-      <iframe id="trailer" :src="queryData.movie.trailerUrl" width="500" height="255" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen></iframe>
     </div>
-    <div class="row">
+    <div class="row lowerbox">
       <div class="col" id="left">
         <img id="poster" :src="queryData.movie.poster_path_original" >
+        <div>
+          <h1>예고편</h1>
+          <iframe id="trailer" :src="queryData.movie.trailerUrl" width="500" height="255" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen></iframe>
+        </div>
       </div>
       <div class="col" id="right">
         <p id="title">{{ queryData.movie.title }}</p>
+        <div style="border-bottom: solid 1px white; height: 3px; width:100%; margin-bottom: 10px;"></div>
         <div class="row container">
-          <p>개봉일 : {{ queryData.movie.release_date }}</p>
-          <p>인기도 : {{ queryData.movie.popularity }}</p>
+          <div class="row textbox">
+            <h2>개봉일 : </h2>
+            <p> {{ queryData.movie.release_date }}</p>
+          </div>
+          <div class="row textbox">
+            <h2>인기도 : </h2>
+            <p>{{ queryData.movie.popularity }}</p>
+          </div>
         </div>
         <div class="row container">
-          <p>투표수 : {{ queryData.movie.vote_count }}</p>
-          <p>투표 평점 : {{ queryData.movie.vote_average }}</p>
+          <div class="row textbox">
+            <h2>투표수 : </h2>
+            <p>{{ queryData.movie.vote_count }}</p>
+          </div>
+          <div class="row textbox">
+            <h2>투표 평점 : </h2>
+            <p>{{ queryData.movie.vote_average }}</p>
+          </div>
         </div>
-        <p>줄거리 : {{ queryData.movie.overview }}</p>
-        <div class="row container">
-          장르 : <p v-for="(genre,index) in getGenreData" :key="index">{{ genre.name }}</p>
+        <div class="col textboxtitle">
+          <h1 style="color: #0c05f5;">줄거리</h1>
+          <p class="overviewtextbox">{{ queryData.movie.overview }}</p>
+        </div>
+        <div class="row textbox">
+          <h2>장르 : </h2>
+          <div class="row genrebox">
+            <div v-for="(genre,index) in getGenreData" :key="index">
+              <p> {{ genre.name }} </p>
+            </div>
+          </div>
         </div>
         <div class="col">
-          <p>출연 배우</p>
+          <h1>출연 배우</h1>
           <div class="row a_box">
             <div class="actorbox" v-for="actor in queryData.movie.actor" :key="actor.id">
               <div class="actorimagebox"><img @click="gotoActorPage(actor)" class="ableToClick actorprofile" :src="actor.profile_path"></div>
@@ -32,7 +56,7 @@
           </div>
         </div>
         <div class="col">
-          <p>배급사</p>
+          <h1>배급사</h1>
           <div class="row pro_box">
             <div class="probox" v-for="production in queryData.movie.production_companies" :key="production.id">
               <div class="ableToClick proimagebox"><img class="production" :src="production.logo_path"></div>
@@ -41,18 +65,18 @@
         </div>
         <div class="row container">
           <div>
-            <button v-if="like_state" @click="likeMovie">
-              <p v-if="dislike_state">좋아요</p>
-              <p v-else>좋아요 취소</p>
-              </button>
-            <p>좋아요 수 : {{like_user.length}}</p>
+            <div v-if="like_state">
+              <font-awesome-icon class="ableToClick likeheart" v-if="dislike_state" @click="likeMovie" size="2xl" :icon="['far', 'heart']" style="color: #ff0000;" />
+              <font-awesome-icon class="ableToClick likeheart" v-else @click="likeMovie" size="2xl" :icon="['fas', 'heart']" style="color: #ff0000;" />
+            </div>
+            <p>like : {{like_user.length}}</p>
           </div>
           <div>
-            <button v-if="dislike_state" @click="dislikeMovie">
-              <p v-if="like_state">싫어요</p>
-              <p v-else>싫어요 취소</p>
-              </button>
-            <p>싫어요 수 : {{dislike_user.length}}</p>
+            <div v-if="dislike_state">
+              <font-awesome-icon class="ableToClick unlikex" v-if="like_state" @click="dislikeMovie" :icon="['far', 'circle-xmark']" size="2xl" style="color: #001df5;" />
+              <font-awesome-icon class="ableToClick unlikex" v-else @click="dislikeMovie" :icon="['fas', 'circle-xmark']" size="2xl" style="color: #001df5;" />
+            </div>
+            <p>unlike : {{dislike_user.length}}</p>
           </div>
         </div>
         <div class="col">
@@ -274,8 +298,11 @@ export default {
 
 #backimage{
   width: 1280px;
-  height: 600px;
-  /* filter: blur(1px); */
+  height: 700px;
+}
+
+.ableToClick {
+  cursor: pointer;
 }
 
 .row {
@@ -290,33 +317,59 @@ export default {
   justify-content: space-around;
 }
 
+.lowerbox {
+  width: 66.3%;
+  position: absolute;
+}
+
+.textbox {
+  width: 100%;
+  text-align: left;
+  padding-left: 20px;
+  align-items: center;
+}
+
+.textboxtitle {
+  width: 100%;
+  text-align: left;
+  padding-left: 20px;
+  align-items: left;
+  align-content: center;
+}
+
+.overviewtextbox {
+  word-spacing : 5px;
+  line-height: 1.5;
+}
+
 #left {
   position: relative;
-  top: -450px;
+  top: -0px;
   padding: 20px;
-  width: 30%
+  width: 28%
 }
-#right {
+
+/* #right {
   position: relative;
   top: -450px;
   padding: 20px;
   width: 70%
-}
+} */
 
 #trailer{
   position: relative;
-  width: 650px;
-  height: 450px;
-  top: -550px;
-  left: 250px
+  width: 400px;
+  height: 300px;
+  left: -30px;
+  top: -50px;
 }
 
 #poster {
   position: relative;
   width: 300px;
   object-fit: cover;
-  top: -150px;  
-  left: 15px;
+  top: -200px;  
+  left: 30px;
 }
 
 #title {
@@ -378,5 +431,21 @@ export default {
   border-radius: 30%;
   object-fit: cover;
   overflow: hidden;
+}
+
+.likeheart:hover {
+  transition: all 0.3s linear;
+  transform: scale(1.5);
+}
+
+.unlikex:hover {
+  transition: all 0.3s linear;
+  transform: scale(1.5);
+}
+
+.genrebox {
+  width: 90%;
+  justify-content: space-around;
+
 }
 </style>
