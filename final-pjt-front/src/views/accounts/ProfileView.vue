@@ -111,8 +111,19 @@ export default {
       UpdateVal: false,
     }
   },
-  mounted() {
+  created() {
+    this.queryData = this.$route.query.user
     this.getUser()
+  },
+  mounted() {
+    this.queryData = this.$route.query.user
+    this.getUser()
+  },
+  watch: {
+    '$route' (to) {
+      this.queryData = to.query.user
+      this.getUser()
+    }
   },
   methods: {
     setToken: function() {
@@ -143,7 +154,7 @@ export default {
     },
 
     getUser() {
-      const username = this.$route.query.user
+      const username = this.queryData
 
       if(username === this.$store.state.username) {
         this.is_my_profile = true
@@ -157,11 +168,12 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
-        console.log(res)
+
         this.User = res.data
         this.following = res.data.followings.length
         this.follower = res.data.followers.length
         this.comments = res.data.comment_set
+
         this.isfollowed = false
         this.User.followers.forEach(element => {
           if (element.username === this.$store.state.username) {
@@ -217,10 +229,6 @@ export default {
         this.$router.push({name: 'Login'})
       }
     },
-
-  },
-  created() {
-    this.getUser()
   },
 }
 </script>
