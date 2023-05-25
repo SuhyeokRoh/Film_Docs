@@ -4,109 +4,118 @@
       <div v-if="is_review_user" class="row reviewupdate">
         <div class="row updatebutton">
           <span>
-            <button @click="changeupdate_state">리뷰 수정하기</button>
+            <input class="ableToClick reviewupdatebutton" type="button" @click="changeupdate_state" value="리뷰 수정하기" />
           </span>
           <span>
-            <button @click="deleteReview">삭제</button>
+            <input class="ableToClick reviewdeletebutton" type="button" @click="deleteReview" value="삭제" />
           </span>
         </div>
       </div>
       <div class="col">
-
         <div v-if="isReviewupdate">
           <div>
             <h1 class="title">{{queryData.reviews.title}}</h1>
           </div>
+          <div style="border-bottom: solid 2px white; width: 91.5%; margin: auto; margin-bottom: 10px;"></div>
           <div class="row titleuser">
             <p>영화 : {{queryData.reviews.movie.title}}</p>
             <p class="ableToClick" @click="gotoProfile">작성자 : {{queryData.user.nickname}}</p>
           </div>
           <div class="reviewText">
-            <p style="margin: 15px 15px auto;">{{queryData.reviews.content}}</p>
+            <p style="margin: 20px 20px auto;">{{queryData.reviews.content}}</p>
+          </div>
+          <div class="row likebutton">
+            <div class="col reviewlikebutton">
+              <p>Like : {{like_reviews.length}}</p>
+              <div v-if="like_state">
+                <font-awesome-icon class="ableToClick likeheart" v-if="dislike_state" @click="likeReview" size="2xl" :icon="['far', 'heart']" style="color: #ff0000;" />
+                <font-awesome-icon class="ableToClick likeheart" v-else @click="likeReview" size="2xl" :icon="['fas', 'heart']" style="color: #ff0000;" />
+              </div>
+            </div>
+            <div class="col reviewlikebutton">
+              <p>Unlike : {{dislike_reviews.length}}</p>
+              <div v-if="dislike_state">
+                <font-awesome-icon class="ableToClick unlikex" v-if="like_state" @click="dislikeReview" :icon="['far', 'circle-xmark']" size="2xl" style="color: #001df5;" />
+                <font-awesome-icon class="ableToClick unlikex" v-else @click="dislikeReview" :icon="['fas', 'circle-xmark']" size="2xl" style="color: #001df5;" />
+              </div>
+            </div>
+          </div>
+          <div class="col reviewcontent">
+            <div class="row inputcommentbox">
+              <label for="comment_content"><h3>댓글 남기기 : </h3></label>
+              <input type="text" id="comment_content" placeholder="댓글을 입력해주세요" v-model="commentContent" @keyup.enter="saveComment" />
+              <button class="ableToClick commentcomfirmbutton" style="width: 55px;" @click="saveComment">입력</button>
+            </div>
+            <div class="col">
+              <div v-if="is_comment_find">
+                <div v-for="comment in comments" :key="comment.id" class="commentbox">
+                  <div v-if="isCommentupdate">
+                    <div>
+                      <p>{{comment.content}}</p>
+                    </div>
+                    <div>
+                      <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span>
+                    </div>
+                    <div @click="getCommentLike(comment)" class="row commentlikebutton">
+                      <div class="col commentbutton">
+                        <p>Like : {{like_comments.length}}</p>
+                        <div v-if="comment_like_state">
+                          <font-awesome-icon class="ableToClick likeheart" v-if="comment_dislike_state" @click="likeComment(comment)" size="2xl" :icon="['far', 'heart']" style="color: #ff0000;" />
+                          <font-awesome-icon class="ableToClick likeheart" v-else @click="likeComment(comment)" size="2xl" :icon="['fas', 'heart']" style="color: #ff0000;" />
+                        </div>
+                      </div>
+                      <div class="col commentbutton">
+                        <p>Unlike : {{dislike_comments.length}}</p>
+                        <div v-if="comment_dislike_state">
+                          <font-awesome-icon class="ableToClick unlikex" v-if="comment_like_state" @click="dislikeComment(comment)" :icon="['far', 'circle-xmark']" size="2xl" style="color: #001df5;" />
+                          <font-awesome-icon class="ableToClick unlikex" v-else @click="dislikeComment(comment)" :icon="['fas', 'circle-xmark']" size="2xl" style="color: #001df5;" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row commentupdate">
+                      <div v-if="is_comment_user(comment)" class="row updatebutton">
+                        <span>
+                          <input class="ableToClick reviewupdatebutton" type="button" @click="changeupdate_comment_state(comment)" value="댓글 수정하기" />
+                        </span>
+                        <span style="margin-right: 25px;">
+                          <input class="ableToClick reviewdeletebutton" type="button" @click="deleteComment(comment)" value="삭제" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col commentupdatebox" v-else>
+                    <div class="row">
+                      <label for="commentupdate_content"><h3>comment : </h3></label>
+                      <input type="text" id="commentupdate_content" v-model="updatecomment" />
+                    </div>
+                    <div style="justify-content: center; margin: 30px auto; width: 100%;">
+                      <input type="button" class="ableToClick commentupdate_button" @click="updateComment(comment)" value="댓글 수정" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <p>아직 달린 댓글이 없어요</p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div v-else>
+        <div class="col inputupdatebox" v-else>
           <div class="row">
-            <label for="review">review title 수정하기 : </label>
-            <input type="text" id="review" v-model="updatereviewtitle">
+            <label for="reviewupdate_title"><h3>review title : </h3></label>
+            <input type="text" id="reviewupdate_title" v-model="updatereviewtitle" />
           </div>
           <div class="row">
-            <label for="review">review content 수정하기 : </label>
-            <input type="text" id="review" v-model="updatereviewcontent">
+            <label for="reviewupdate_content"><h3>review content : </h3></label>
+            <input type="text" id="reviewupdate_content" v-model="updatereviewcontent" />
           </div>
-          <button @click="updateReview">리뷰 수정</button>
-        </div>
-
-        <div class="row likebutton">
-          <div class="col reviewlikebutton">
-            <p>좋아요 : {{like_reviews.length}}</p>
-            <button v-if="like_state" @click="likeReview">
-              <p v-if="dislike_state">좋아요</p>
-              <p v-else>좋아요 취소</p>
-            </button>
-          </div>
-          <div class="col reviewlikebutton">
-            <p>싫어요 : {{dislike_reviews.length}}</p>
-            <button v-if="dislike_state" @click="dislikeReview">
-              <p v-if="like_state">싫어요</p>
-              <p v-else>싫어요 취소</p>
-            </button>
+          <div style="justify-content: center; margin: 30px auto; width: 100%;">
+            <input type="button" class="ableToClick updatecompletebutton" @click="updateReview" value="리뷰 수정" />
           </div>
         </div>
-
       </div>
     </div>
-    <div class="col reviewcontent contain">
-      <div>
-        <label for="comment">댓글 남기기 : </label>
-        <input type="text" id="comment" v-model="commentContent" @keyup.enter="saveComment">
-        <button @click="saveComment">입력</button>
-      </div>
-      <div class="col">
-        <div v-for="comment in comments" :key="comment.id" class="commentbox">
-          <div v-if="isCommentupdate">
-            <div>
-              <p>{{comment.content}}</p>
-            </div>
-            <div>
-              <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span>
-            </div>
-            <div @click="getCommentLike(comment)" class="row commentlikebutton">
-              <div class="col commentbutton">
-                <p>좋아요 : {{like_comments.length}}</p>
-                <button v-if="comment_like_state" @click="likeComment(comment)">
-                  <p v-if="comment_dislike_state">좋아요</p>
-                  <p v-else>좋아요 취소</p>
-                </button>
-              </div>
-              <div class="col commentbutton">
-                <p>싫어요 : {{dislike_comments.length}}</p>
-                <button v-if="comment_dislike_state" @click="dislikeComment(comment)">
-                  <p v-if="comment_like_state">싫어요</p>
-                  <p v-else>싫어요 취소</p>
-                </button>
-              </div>
-            </div>
-            <div class="row commentupdate">
-              <div v-if="is_comment_user(comment)" class="row updatebutton">
-                <span>
-                  <button @click="changeupdate_comment_state(comment)">댓글 수정 하기</button>
-                </span>
-                <span>
-                  <button @click="deleteComment(comment)">삭제</button>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div v-else>
-            <label for="comment">comment 수정하기 : </label>
-            <input type="text" id="comment" v-model="updatecomment">
-            <button @click="updateComment(comment)">댓글 수정</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -128,6 +137,7 @@ export default {
 
       is_review_user: false,
 
+      is_comment_find: false,
       like_state: true,
       dislike_state: true,
       isReviewupdate: true,
@@ -144,7 +154,7 @@ export default {
   mounted() {
     this.queryData = JSON.parse(this.$route.query.data)
     this.getReviewLike()
-    this.comments = this.getComment()
+    this.getComment()
     this.confirmUser()
   },
   created() {
@@ -246,8 +256,7 @@ export default {
     getComment() {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
-      // console.log(this.queryData.reviews)
-      // const user_name = this.queryData.user.username
+
       axios({
         method: 'get',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
@@ -255,8 +264,11 @@ export default {
       })
       .then((res) => {
         this.comments = res.data
-        // console.log(res)
-
+        if (this.comments.length) {
+          this.is_comment_find = true
+        } else {
+          this.is_comment_find = false
+        }
       })
       .catch(err => console.log(err))
     },
@@ -420,6 +432,7 @@ export default {
       })
       .catch((err) => console.log(err))
     },
+
     getCommentLike(comment) {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
@@ -470,13 +483,45 @@ export default {
 }
 
 .updatebutton {
-  width: 200px;
+  width: 280px;
   height: 70px;
-  justify-content: space-evenly;
+  justify-content: space-between;
+}
+
+.reviewupdatebutton {
+  text-align: center;
+  align-content: center;
+  border-radius: 7px;
+  width: 120px;
+  height: 50px;
+  font-size: 15px;
+  text-align: center;
+}
+
+.reviewupdatebutton:hover {
+  background-color: #2d43ed;
+  transition: all 0.2s linear;
+  transform: scale(1.2);
+}
+
+.reviewdeletebutton {
+  text-align: center;
+  align-content: center;
+  border-radius: 7px;
+  width: 120px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.reviewdeletebutton:hover {
+  background-color: #e81c0e;
+  transition: all 0.2s linear;
+  transform: scale(1.2);
 }
 
 .commentbox {
-  width: 80%;
+  width: 92%;
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
@@ -485,7 +530,9 @@ export default {
 }
 
 .reviewupdate {
+  margin-top: 50px;
   margin-left: auto;
+  margin-right: 50px;
 }
 
 .commentupdate {
@@ -493,18 +540,25 @@ export default {
 }
 
 .likebutton {
+  justify-content: center;
   margin: 0 auto;
 }
 
 .commentlikebutton {
+  text-align: center;
+  align-content: center;
   justify-content: center;
 }
 
 .commentbutton {
+  text-align: center;
+  align-content: center;
   margin: 10px 10px auto;
 }
 
 .reviewlikebutton {
+  text-align: center;
+  align-content: center;
   margin: 10px 10px auto;
 }
 
@@ -527,5 +581,122 @@ export default {
   min-height: 300px;
   border: solid 2px white;
   border-radius: 7px;
+  letter-spacing: 1.5px;
+  white-space: normal;
+}
+
+.likeheart:hover {
+  transition: all 0.3s linear;
+  transform: scale(1.5);
+}
+
+.unlikex:hover {
+  transition: all 0.3s linear;
+  transform: scale(1.5);
+}
+
+.inputupdatebox {
+  margin-bottom: 20px;
+}
+
+#reviewupdate_title {
+  margin-left: 30px;
+  width: 70%;
+  height: 40px;
+  border: none;
+  border-bottom: dashed 2px orange;
+  background-color: black;
+  color: white;
+  font-size: 15px;
+  letter-spacing: 3px;
+}
+
+#reviewupdate_content {
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 40px;
+  width: 70%;
+  height: 40px;
+  border: none;
+  border-bottom: dashed 2px orange;
+  background-color: black;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+
+.updatecompletebutton {
+  text-align: center;
+  align-content: center;
+  border-radius: 7px;
+  width: 35%;
+  height: 70px;
+  font-size: 30px;
+}
+
+.updatecompletebutton:hover {
+  background-color: #05e31e;
+  transition: all 0.2s linear;
+  transform: scale(1.2);
+}
+
+#comment_content {
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 40px;
+  width: 65%;
+  height: 40px;
+  border: none;
+  border-bottom: dashed 2px orange;
+  background-color: black;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+
+.inputcommentbox {
+  justify-content: center;
+}
+
+.commentcomfirmbutton:hover {
+  background-color: #05e31e;
+  transition: all 0.2s linear;
+  transform: scale(1.2);
+}
+
+.commentupdatebox {
+  height: 180px;
+  padding: 10px 30px;
+  align-content: center;
+  text-align: center;
+}
+
+#commentupdate_content {
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 40px;
+  width: 70%;
+  height: 40px;
+  border: none;
+  border-bottom: dashed 2px orange;
+  background-color: black;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+
+.commentupdate_button {
+  text-align: center;
+  align-content: center;
+  border-radius: 7px;
+  width: 35%;
+  height: 70px;
+  font-size: 30px;
+}
+
+.commentupdate_button:hover {
+  background-color: #05e31e;
+  transition: all 0.2s linear;
+  transform: scale(1.2);
 }
 </style>

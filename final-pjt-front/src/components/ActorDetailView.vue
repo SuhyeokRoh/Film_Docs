@@ -1,25 +1,29 @@
 <template>
-  <div v-if="actor" class="inner row contain">
+  <div v-if="actor" class="inner row">
     <div class="col actorMainImage">
-      <img :src="actor.profile_path">
+      <img class="actormainposter" :src="actor.profile_path">
     </div>
     <div class="col actorcontent">
       <div>
-        <p class="actorname">{{actor.name}}</p>
+        <h1 class="actorname">{{actor.name}}</h1>
       </div>
-      <div class="row">
-        <span>
-          {{actor.gender}}
-        </span>
-        <span>
-          {{birthday}}
-        </span>
-        <span v-if="actor.deathday">
-          {{actor.deathday}}
-        </span>
+      <div class="row conup">
+        <div class="col texbox">
+          <h1 style="color: #ed8b13;">Gender</h1>
+          <p>{{actor.gender}}</p>
+        </div>
+        <div class="col texbox">
+          <h1 style="color: #ed8b13;">Birthday</h1>
+          <p>{{birthday}}</p>
+        </div>
+        <div class="col texbox">
+          <h1 style="color: #ed8b13;">Deathday</h1>
+          <p v-if="actor.deathday">{{actor.deathday}}</p>
+          <p v-else>Still Alive</p>
+        </div>
       </div>
       <div class="col elect">
-        <p class="electitle">Biography</p>
+        <h1 class="electitle">Biography</h1>
         <div class="biography">
           <div v-if="actor.biography">
             <p>{{actor.biography}}</p>
@@ -29,9 +33,9 @@
           </div>
         </div>
       </div>
-      <div class="col">
-        <p class="comingmovie">출연작</p>
-        <div class="row comeposterlist">
+      <div class="col elect">
+        <h1 class="electitle">출연작</h1>
+        <!-- <div class="row">
           <span class="comebox" v-for="movie in movies" :key="movie.id">
             <div class="ThreePoster">
               <div class="comecard ableToClick" @click="gotoDetail(movie)">
@@ -40,6 +44,25 @@
               </div>
             </div>
           </span>
+        </div> -->
+        <div class="comebox">
+          <vueper-slides
+            class="no-shadow"
+            :visible-slides="3"
+            :slide-ratio="1 / 4"
+            :dragging-distance="70"
+            fixed-height="320px">
+            <vueper-slide v-for="movie in movies" :key="movie.id">
+              <template #content>
+                <div class="ThreePoster">
+                  <div class="comecard ableToClick" @click="gotoDetail(movie)">
+                    <div class="frontcome"><img class="comeposterimg" :src="movie.poster_path_original"></div>
+                    <div class="backcome">{{movie.title}}</div>
+                  </div>
+                </div>
+              </template>
+            </vueper-slide>
+          </vueper-slides>
         </div>
       </div>
     </div>
@@ -48,6 +71,8 @@
 
 <script>
 import axios from 'axios'
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 
 const URL = "http://127.0.0.1:8000"
 export default {
@@ -58,6 +83,10 @@ export default {
       birthday: null,
       movies: null,
     }
+  },
+  components: {
+    VueperSlides,
+    VueperSlide 
   },
   mounted() {
     this.actor = JSON.parse(this.$route.query.data).actor
@@ -87,24 +116,51 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+
 .actorname{
   font: bolder;
-  font-size: 35px;
+  font-size: 45px;
 }
+
 .actorMainImage {
   width: 25%;
   margin: 10px auto;
+  border-radius: 7px;
 }
+
+.actormainposter{
+  position: absolute;
+  width: 325px;
+  border-radius: 7px;
+  top: 180px;
+}
+
+.conup {
+  justify-content: space-between;
+  align-content: center;
+}
+
+.texbox {
+  width: 100%;
+  text-align: center;
+  padding-left: 20px;
+  align-items: left;
+  align-content: center;
+}
+
 .actorcontent {
   width: 70%;
   margin: 10px auto;
 }
 .elect{
   text-align: left;
+  padding-left: 20px;
 }
 .electitle{
-  padding-left: 20px;
+  font-size: 32px;
+  color: #ed8b13;
 }
 .biography{
   widows: 80%;
@@ -120,14 +176,16 @@ export default {
   padding-left: 20px;
   text-align: left;
 }
+
 .ThreePoster {
   position: relative;
   width: 200px;
   height: 300px;
+  margin: auto;
 }
 
 .comebox {
-  margin: 5px 20px;
+  height: 400px;
 }
 
 .comecard {

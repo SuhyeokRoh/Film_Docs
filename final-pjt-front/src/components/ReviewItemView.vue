@@ -1,9 +1,18 @@
 <template>
   <div class="ableToClick" id="reviewbox" @click="gotoDetailReview">
-    <div>
-      <h3>{{review.title}}</h3>
-      <p>작성자 : {{nickname}}</p>
-      <p>좋아요 : {{like_reviews}}</p>
+    <div class="col paddingon">
+      <h2 class="reviewtitlebox">{{review.title}}</h2>
+      <div class="col textleft">
+        <p>작성자 : {{nickname}}</p>
+        <div class="row center textleft">
+          <font-awesome-icon size="2xl" :icon="['fas', 'heart']" style="color: #ff0000;" />
+          <p class="nomargin">  {{like_reviews}}</p>
+        </div>
+        <div class="row center textleft">
+          <font-awesome-icon :icon="['fas', 'circle-xmark']" size="2xl" style="color: #001df5;" />
+          <p class="nomarginx">  {{dislike_reviews}}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +32,7 @@ export default {
       nickname: null,
       username: null,
       like_reviews: null,
+      dislike_reviews: null,
     }
   },
   created() {
@@ -30,6 +40,7 @@ export default {
   },
   mounted() {
     this.like_reviews = this.review.like_users.length
+    this.dislike_reviews = this.review.dislike_users.length
   },
   methods: {
     setToken: function() {
@@ -76,5 +87,35 @@ export default {
   border: solid 1px white;
   border-radius: 7px;
   margin: 10px auto;
+  padding: 10px auto;
+}
+
+.paddingon {
+  padding: 10px 10px;
+}
+
+.reviewtitlebox {
+  text-align: center;
+  margin-bottom: 5px;
+  font-size: 30px;
+}
+
+.center {
+  align-content: center;
+  color: white;
+}
+
+.nomargin {
+  margin: 6px 0px 0px 10px;
+}
+
+.nomarginx {
+  margin: 7px 0px 0px 10px;
+}
+
+.textleft {
+  justify-content: right;
+  text-align: right;
+  padding-right: 10px;
 }
 </style>

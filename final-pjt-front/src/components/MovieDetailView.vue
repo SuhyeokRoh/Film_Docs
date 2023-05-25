@@ -48,7 +48,7 @@
         <div class="col textboxtitle">
           <h1 style="color: #ed8b13;">배급사</h1>
           <div class="row pro_box">
-            <div v-for="production in queryData.movie.production_companies" :key="production.id">
+            <div class="companyname" v-for="production in queryData.movie.production_companies" :key="production.id">
               <p>{{production.name}}</p>
             </div>
           </div>
@@ -76,14 +76,14 @@
               <font-awesome-icon class="ableToClick likeheart" v-if="dislike_state" @click="likeMovie" size="2xl" :icon="['far', 'heart']" style="color: #ff0000;" />
               <font-awesome-icon class="ableToClick likeheart" v-else @click="likeMovie" size="2xl" :icon="['fas', 'heart']" style="color: #ff0000;" />
             </div>
-            <p>like : {{like_user.length}}</p>
+            <p>Like : {{like_user.length}}</p>
           </div>
           <div style="padding-right: 250px;">
             <div v-if="dislike_state">
               <font-awesome-icon class="ableToClick unlikex" v-if="like_state" @click="dislikeMovie" :icon="['far', 'circle-xmark']" size="2xl" style="color: #001df5;" />
               <font-awesome-icon class="ableToClick unlikex" v-else @click="dislikeMovie" :icon="['fas', 'circle-xmark']" size="2xl" style="color: #001df5;" />
             </div>
-            <p>unlike : {{dislike_user.length}}</p>
+            <p>Unlike : {{dislike_user.length}}</p>
           </div>
         </div>
         <div class="col textboxtitle">
@@ -221,6 +221,8 @@ export default {
         this.Reviews = res.data
         if (this.Reviews.length) {
           this.is_review_find = true
+        } else {
+          this.is_review_find = false
         }
       })
       .catch(err => console.log(err))
@@ -458,7 +460,8 @@ export default {
 .pro_box {
   height: 100px;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  overflow: auto;
 }
 
 
@@ -504,23 +507,30 @@ export default {
   background-color: black;
   color: white;
   font-size: 15px;
+  letter-spacing: 3px;
 }
 
 
 #review_content {
   margin-top: 10px;
   margin-left: 30px;
-  margin-right: 10px;
-  width: 70%;
+  margin-right: 40px;
+  width: 65%;
   height: 40px;
   border: none;
   border-bottom: dashed 2px orange;
   background-color: black;
   color: white;
   font-size: 18px;
+  letter-spacing: 3px;
 }
 
 .inputbox {
   margin-bottom: 20px;
+}
+
+.companyname {
+  white-space: nowrap;
+  margin: 0px 10px auto;
 }
 </style>
