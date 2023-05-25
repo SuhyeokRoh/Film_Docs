@@ -1,7 +1,7 @@
 <template>
   <div class="OnePoster ableToClick">
     <div class="card" @click="gotoDetail">
-      <div class="front"><img class="posterlist" :src="movie.poster_path_original" ></div>
+      <div class="front"><img class="posteritemimage" :src="movie.poster_path_original" ></div>
       <div class="back">{{movie.title}}</div>
     </div>
   </div>
@@ -40,7 +40,7 @@ export default {
   height: 345px;
 }
 
-.posterlist {
+.posteritemimage {
   width: 100%;
   height: 100%;
 }
