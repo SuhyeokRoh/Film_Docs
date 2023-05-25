@@ -72,7 +72,7 @@
             <div>
               <span class="ableToClick" @click="gotoProfile">작성자 : {{comment.user.nickname}}</span>
             </div>
-            <div class="row commentlikebutton">
+            <div @click="getCommentLike(comment)" class="row commentlikebutton">
               <div class="col commentbutton">
                 <p>좋아요 : {{like_comments.length}}</p>
                 <button v-if="comment_like_state" @click="likeComment(comment)">
@@ -399,6 +399,7 @@ export default {
         console.log(res)
         this.like_comments = res.data.like_comment_users
         this.comment_dislike_state = !this.comment_dislike_state
+        this.getCommentLike(comment)
       })
       .catch((err) => console.log(err))
      },
@@ -415,6 +416,44 @@ export default {
       .then((res) => {
         this.dislike_comments = res.data.dislike_comment_users
         this.comment_like_state = !this.comment_like_state
+        this.getCommentLike(comment)
+      })
+      .catch((err) => console.log(err))
+    },
+    getCommentLike(comment) {
+      const movieid = this.queryData.reviews.movie.id
+      const reviewid = this.queryData.reviews.id
+      const user_name = this.queryData.user.username
+
+      axios({
+        method: 'get',
+        url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/${comment.id}`,
+        headers: this.setToken()
+      })
+      .then((res) => {
+        this.like_comments = res.data.like_comment_users
+        this.dislike_comments = res.data.dislike_comment_users
+        const like_comments = this.like_comments
+        const dislike_comments = this.dislike_comments
+
+        const like = like_comments.find(element => {
+            if (element.username === user_name) {
+              return true;
+            }
+          })
+
+        const dislike = dislike_comments.find(element => {
+          if (element.username === user_name) {
+            return true;
+          }
+        })
+
+        if (like) {
+          this.comment_dislike_state = false
+        }
+        if (dislike) {
+          this.comment_like_state = false
+        }
       })
       .catch((err) => console.log(err))
     },

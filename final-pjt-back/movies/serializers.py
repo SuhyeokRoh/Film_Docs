@@ -136,6 +136,22 @@ class CommentCreateSerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     # review_set = ReviewListSerializer(many=True)
+    # like_comment_users = CommentListSerializer(many=True)
+    
+    class CommentLikeSerializer(serializers.ModelSerializer):
+    
+        class MovieAllSerializer(serializers.ModelSerializer):
+            class Meta:
+                model = Movie
+                fields = '__all__'
+
+        movie = MovieAllSerializer(read_only=True)
+        review = ReviewSerializer(read_only=True)
+        class Meta:
+            model = Comment
+            fields = ('movie', 'review', 'user_id',)
+
+    like_comment_users = CommentLikeSerializer(many=True)
     class Meta:
         model = Comment
         fields = "__all__"
