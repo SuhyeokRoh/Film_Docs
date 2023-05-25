@@ -76,14 +76,14 @@
               <font-awesome-icon class="ableToClick likeheart" v-if="dislike_state" @click="likeMovie" size="2xl" :icon="['far', 'heart']" style="color: #ff0000;" />
               <font-awesome-icon class="ableToClick likeheart" v-else @click="likeMovie" size="2xl" :icon="['fas', 'heart']" style="color: #ff0000;" />
             </div>
-            <p>like : {{like_user.length}}</p>
+            <p>Like : {{like_user.length}}</p>
           </div>
           <div style="padding-right: 250px;">
             <div v-if="dislike_state">
               <font-awesome-icon class="ableToClick unlikex" v-if="like_state" @click="dislikeMovie" :icon="['far', 'circle-xmark']" size="2xl" style="color: #001df5;" />
               <font-awesome-icon class="ableToClick unlikex" v-else @click="dislikeMovie" :icon="['fas', 'circle-xmark']" size="2xl" style="color: #001df5;" />
             </div>
-            <p>unlike : {{dislike_user.length}}</p>
+            <p>Unlike : {{dislike_user.length}}</p>
           </div>
         </div>
         <div class="col textboxtitle">
@@ -221,6 +221,8 @@ export default {
         this.Reviews = res.data
         if (this.Reviews.length) {
           this.is_review_find = true
+        } else {
+          this.is_review_find = false
         }
       })
       .catch(err => console.log(err))
@@ -505,6 +507,7 @@ export default {
   background-color: black;
   color: white;
   font-size: 15px;
+  letter-spacing: 3px;
 }
 
 
@@ -519,6 +522,7 @@ export default {
   background-color: black;
   color: white;
   font-size: 18px;
+  letter-spacing: 3px;
 }
 
 .inputbox {
