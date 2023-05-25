@@ -1,129 +1,171 @@
 <template>
-  <v-container class="worldcup">
-    <div v-if="!finishFlag">
-      <h1>더 좋아하는 영화를 선택해 주세요</h1>
-      <hr>
-      <div v-if="!left">
-        <v-btn @click="next">{{ roundNum }}강 시작하기</v-btn>
+  <div>
+    <h1>Movie World Cup!</h1>
+    <div>
+      <button @click="call_WorldCup_data">처음부터 시작</button>
+      <div>
+        <button @click="pickworldcup">그냥ㅋ</button>
+        <div class="OnePoster ableToClick">
+          <div class="card" @click="clickLeft">
+            <div class="front"><img class="posterlist" :src="this.random_movies[0].poster_path_original" ></div>
+          <div class="back">{{this.random_movies[0].title}}</div>
+          </div>
+        </div>
+        <div class="OnePoster ableToClick">
+          <div class="card" @click="clickRight">
+            <div class="front"><img class="posterlist" :src="this.random_movies[1].poster_path_original" ></div>
+          <div class="back">{{this.random_movies[1].title}}</div>
+          </div>
+        </div>
       </div>
-      <v-row align="center" justify="center">
-        <v-col cols="6" align="center">
-          <worldcup-choice id="left" :movie="left" @choiceEvent="leftChoice" />
-        </v-col>
-        <v-col cols="6" align="center">
-          <worldcup-choice id="right" :movie="right" @choiceEvent="rightChoice" />
-        </v-col>
-      </v-row>
     </div>
-
-    <div v-if="finishFlag">
-      <h1>우승!</h1>
-      <hr>
-      <v-row align="center" justify="center">
-        <v-col cols="6">
-          <worldcup-choice id="winner" :movie="left" />
-        </v-col>
-      </v-row>
-    </div>
-  </v-container>
+  </div>
 </template>
 
-<script>
-import axios from 'axios';
-import WorldcupChoice from '@/components/WorldcupChoice.vue';
 
-const URL = 'http://127.0.0.1:8000';
+<script>
+// import _ from 'lodash'
+import axios from 'axios'
+const URL = "http://127.0.0.1:8000"
+
 
 export default {
-  data() {
+  name: 'MovieWorldcupView',
+  data: function() {
     return {
+      worldcup_arr : [],
+      worldcup_movie: null,
       current_round: [],
       next_round: [],
-      roundNum: 8,
+      roundNum: 16,
       left: null,
       right: null,
       finishFlag: false,
-    };
+      random_movies: [],
+    }
   },
-
-  components: {
-    WorldcupChoice,
-  },
-
   methods: {
-    setToken() {
-      const token = this.$store.state.access_token;
+    setToken: function() {
+      const token = this.$store.state.access_token
       const config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      return config;
+        Authorization: `Bearer ${token}`
+      }
+      return config
     },
-    randomMovieCall() {
-      axios
-        .get(`${URL}/movies/worldcup/`, this.setToken())
+    ConfirmLogin() {
+      const user = this.$store.state.username
+      if (!user) {
+        alert("로그인이 필요합니다.")
+        this.$router.push({name: 'Login'})
+      }
+    },
+    call_WorldCup_data() {
+      axios({
+            method: 'get',
+            url: `${URL}/movies/worldcup/`,
+            headers: this.setToken(),
+        })
         .then((res) => {
-          res.data.movies.forEach((code) => {
-            axios
-              .get(`${URL}/movies/worldcup/${code}`, this.setToken())
-              .then((res) => {
-                this.current_round.push(res.data);
-              });
-          });
-        });
+            console.log(res.data)
+            this.random_movies = res.data
+        })
+        .catch((err) => {
+            console.log(err)
+        })
     },
-
-    leftChoice() {
-      this.next_round.push(this.left);
-      this.left = null;
-      this.right = null;
-      this.next();
+    pickworldcup() {
+      const rdMovies = this.random_movies
+      // console.log(rdMovies)
+      const worldcup = []
+      worldcup.push(rdMovies[0])
+      worldcup.push(rdMovies[1])
+      // console.log(worldcup)
+      // console.log(randomMovies)
+      this.random_movies = worldcup
+      console.log(this.random_movies)
     },
+    worldcupres() {
+      if (this.random_movies.length === 1) {
+        alert('수고하셨습니다!')
+        const movie = this.random_movies[0]
+        this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})
+      }
 
-    rightChoice() {
-      this.next_round.push(this.right);
-      this.left = null;
-      this.right = null;
-      this.next();
     },
-
+    clickLeft() {
+      const index = 1
+      this.random_movies.splice(index,1)
+      this.worldcup_arr.push(this.random_movies[0])
+      console.log(this.worldcup_arr)
+      this.worldcupres()
+    },
+    clickRight() {
+      const index = 0
+      this.random_movies.splice(index,1)
+      this.worldcup_arr.push(this.random_movies[1])
+      console.log(this.worldcup_arr)
+      this.worldcupres()
+    },
     next() {
-      this.left = this.current_round.pop();
-      this.right = this.current_round.pop();
+      this.left = this.current_round.pop()
+      this.right = this.current_round.pop()
     },
   },
-
-  watch: {
-    // 라운드 종료 판별
-    left() {
-      if (this.current_round.length === 0 && !this.left) {
-        this.current_round = this.next_round;
-        this.next_round = [];
-        this.roundNum = this.current_round.length;
-      }
-    },
-
-    // 우승자 판별
-    right() {
-      if (
-        this.next_round.length === 0 &&
-        this.current_round.length === 1 &&
-        !this.left &&
-        !this.right
-      ) {
-        this.left = this.current_round.pop();
-        this.finishFlag = true;
-      }
-      console.log(this.left);
-    },
-  },
-
   created() {
-    this.randomMovieCall();
+    this.call_WorldCup_data()
   },
-};
+  mounted() {
+    this.ConfirmLogin()
+  },
+}
 </script>
 
 <style>
+.worldcup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.OnePoster {
+  margin: 10px;
+  width: 230px;
+  height: 345px;
+  position: relative;
+}
+
+.posterlist {
+  width: 100%;
+  height: 100%;
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  transition: 1s;
+  transform-style: preserve-3d;
+}
+
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.OnePoster:hover .card {
+  transform: rotateY(180deg);
+}
+
+.back {
+  background-color: black;
+  color: white;
+  border-radius: 7px;
+  line-height: 350px;
+  font-size: 20px;
+  transform: rotateY(180deg);
+}
 </style>
+
