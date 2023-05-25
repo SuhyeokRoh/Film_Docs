@@ -22,7 +22,7 @@
               <h1 class="mainmovietitle">{{movie.title}}</h1>
               <div class="mainmovieoverview">{{movie.overview}}</div>
             </div>
-            <div class="mainmoviedetail ableToClick" @click="gotoDetail(movie)"><p>바로 가기</p></div>
+            <div class="mainmoviedetail" @click="gotoDetail(movie)"><p>바로 가기</p></div>
           </template>
         </vueper-slide>
       </vueper-slides>
@@ -44,7 +44,7 @@
           @click="$refs.vueperslides2 && $refs.vueperslides2.goToSlide(i + 1)">
           <template #content>
             <div class="backdropFlexList">
-              <img @click="gotoDetail(movie)" class="ableToClick vueperslide__content-wrapper backdrop" :src="movie.backdrop_path_original">
+              <img @click="gotoDetail(movie)" class="vueperslide__content-wrapper backdrop" :src="movie.backdrop_path_original">
             </div>
           </template>
         </vueper-slide>
@@ -99,7 +99,9 @@ export default {
   margin: auto;
 }
 
-
+.vueperslides__track-inner{
+  cursor: default;
+}
 
 .vueperslides__arrow {
   size: 30px;
@@ -126,6 +128,7 @@ export default {
   border-radius: 7px;
   width: 350px;
   height: 200px;
+  cursor: pointer;
 }
 
 .backdrop:hover {
@@ -171,6 +174,7 @@ export default {
   bottom: 150px;
   right: 50px;
   text-shadow: -1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000;
+  cursor: pointer;
 }
 
 </style>
