@@ -7,7 +7,7 @@
       <div class="col" id="left">
         <img id="poster" :src="queryData.movie.poster_path_original" >
         <div>
-          <h1>예고편</h1>
+          <h1 class="trailertitle">예고편</h1>
           <iframe id="trailer" :src="queryData.movie.trailerUrl" width="500" height="255" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen></iframe>
         </div>
@@ -15,63 +15,70 @@
       <div class="col" id="right">
         <p id="title">{{ queryData.movie.title }}</p>
         <div style="border-bottom: solid 1px white; height: 3px; width:100%; margin-bottom: 10px;"></div>
-        <div class="row container">
-          <div class="row textbox">
-            <h2>개봉일 : </h2>
+        <div class="row container_update">
+          <div class="col textbox">
+            <h1 style="color: #ed8b13;">개봉일</h1>
             <p> {{ queryData.movie.release_date }}</p>
           </div>
-          <div class="row textbox">
-            <h2>인기도 : </h2>
+          <div class="col textbox">
+            <h1 style="color: #ed8b13;">인기도</h1>
             <p>{{ queryData.movie.popularity }}</p>
           </div>
-        </div>
-        <div class="row container">
-          <div class="row textbox">
-            <h2>투표수 : </h2>
+          <div class="col textbox">
+            <h1 style="color: #ed8b13;">투표수</h1>
             <p>{{ queryData.movie.vote_count }}</p>
           </div>
-          <div class="row textbox">
-            <h2>투표 평점 : </h2>
+          <div class="col textbox">
+            <h1 style="color: #ed8b13;">투표 평점</h1>
             <p>{{ queryData.movie.vote_average }}</p>
           </div>
         </div>
         <div class="col textboxtitle">
-          <h1 style="color: #0c05f5;">줄거리</h1>
+          <h1 style="color: #ed8b13;">줄거리</h1>
           <p class="overviewtextbox">{{ queryData.movie.overview }}</p>
         </div>
-        <div class="row textbox">
-          <h2>장르 : </h2>
+        <div class="col textboxtitle">
+          <h1 style="color: #ed8b13;">장르</h1>
           <div class="row genrebox">
             <div v-for="(genre,index) in getGenreData" :key="index">
               <p> {{ genre.name }} </p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <h1>출연 배우</h1>
-          <div class="row a_box">
-            <div class="actorbox" v-for="actor in queryData.movie.actor" :key="actor.id">
-              <div class="actorimagebox"><img @click="gotoActorPage(actor)" class="ableToClick actorprofile" :src="actor.profile_path"></div>
+        <div class="col textboxtitle">
+          <h1 style="color: #ed8b13;">배급사</h1>
+          <div class="row pro_box">
+            <div v-for="production in queryData.movie.production_companies" :key="production.id">
+              <p>{{production.name}}</p>
             </div>
           </div>
         </div>
-        <div class="col">
-          <h1>배급사</h1>
-          <div class="row pro_box">
-            <div class="probox" v-for="production in queryData.movie.production_companies" :key="production.id">
-              <div class="ableToClick proimagebox"><img class="production" :src="production.logo_path"></div>
-            </div>
-          </div>
+        <div class="col textboxtitle">
+          <h1 style="color: #ed8b13;">출연 배우</h1>
+          <vueper-slides
+            class="no-shadow"
+            :visible-slides="3"
+            :slide-ratio="1 / 4"
+            :dragging-distance="70"
+            fixed-height="300px">
+            <vueper-slide v-for="actor in queryData.movie.actor" :key="actor.id">
+              <template #content>
+                <div class="actorimagebox">
+                  <img @click="gotoActorPage(actor)" class="vueperslide__content-wrapper ableToClick actorprofile" :src="actor.profile_path">
+                </div>
+              </template>
+            </vueper-slide>
+          </vueper-slides>
         </div>
         <div class="row container">
-          <div>
+          <div style="padding-left: 265px;">
             <div v-if="like_state">
               <font-awesome-icon class="ableToClick likeheart" v-if="dislike_state" @click="likeMovie" size="2xl" :icon="['far', 'heart']" style="color: #ff0000;" />
               <font-awesome-icon class="ableToClick likeheart" v-else @click="likeMovie" size="2xl" :icon="['fas', 'heart']" style="color: #ff0000;" />
             </div>
             <p>like : {{like_user.length}}</p>
           </div>
-          <div>
+          <div style="padding-right: 250px;">
             <div v-if="dislike_state">
               <font-awesome-icon class="ableToClick unlikex" v-if="like_state" @click="dislikeMovie" :icon="['far', 'circle-xmark']" size="2xl" style="color: #001df5;" />
               <font-awesome-icon class="ableToClick unlikex" v-else @click="dislikeMovie" :icon="['fas', 'circle-xmark']" size="2xl" style="color: #001df5;" />
@@ -79,16 +86,30 @@
             <p>unlike : {{dislike_user.length}}</p>
           </div>
         </div>
-        <div class="col">
-          <label for="review_title">제목 </label>
-          <input type="text" id="review_title" v-model="NewReviewTitle"><br>
-          <label for="review_content">리뷰 내용</label>
-          <textarea id="review_content" cols="30" rows="5" v-model="NewReviewContent" @keyup.enter="createReview"></textarea><br>
-          <button @click="createReview">리뷰 등록</button>
+        <div class="col textboxtitle">
+          <h1 style="color: #ed8b13;">사용자 영화 리뷰</h1>
+          <div class="col inputbox">
+            <h2>리뷰 작성란</h2>
+            <div class="row">
+              <label for="review_title"><h3>제목 : </h3></label>
+              <input type="text" id="review_title" v-model="NewReviewTitle" placeholder="제목을 입력해주세요"><br>
+            </div>
+            <div class="row">
+              <label for="review_content"><h3>리뷰 내용 : </h3></label>
+              <textarea id="review_content" cols="30" rows="5" v-model="NewReviewContent" @keyup.enter="createReview" placeholder="내용을 입력해주세요"></textarea><br>
+              <button @click="createReview">리뷰 등록</button>
+            </div>
+          </div>
           <div>
-            <ReviewItemView 
-            v-for="review in Reviews" :key="review.id"
-            :review="review" />
+            <h1>달린 리뷰</h1>
+            <div v-if="is_review_find">
+              <ReviewItemView
+              v-for="review in Reviews" :key="review.id"
+              :review="review" />
+            </div>
+            <div v-else>
+              <p>아직 달린 리뷰가 없어요</p>
+            </div>
           </div>
         </div>
       </div>
@@ -99,6 +120,8 @@
 <script>
 import ReviewItemView from './ReviewItemView.vue'
 import axios from 'axios'
+import { VueperSlides, VueperSlide } from 'vueperslides'
+import 'vueperslides/dist/vueperslides.css'
 
 // const key = 'e66fa81c4a87396b24dd94a15cc7a8b1'
 const URL = "http://127.0.0.1:8000"
@@ -111,6 +134,7 @@ export default {
       NewReviewContent: '',
       Genre: null,
       Reviews: null,
+      is_review_find: false,
 
       like_state: true,
       dislike_state: true,
@@ -126,6 +150,8 @@ export default {
   },
   components: {
     ReviewItemView,
+    VueperSlides,
+    VueperSlide 
   },
   computed: {
     getGenreData() {
@@ -157,7 +183,7 @@ export default {
         url: `${URL}/movies/${movieid}/`,
       })  
       .then(res => {
-        console.log(res.data)
+        // console.log(res.data)
         this.like_user = res.data.movie_like_users
         this.dislike_user = res.data.movie_dislike_users
         const like_user = this.like_user
@@ -193,6 +219,9 @@ export default {
       })  
       .then(res => {
         this.Reviews = res.data
+        if (this.Reviews.length) {
+          this.is_review_find = true
+        }
       })
       .catch(err => console.log(err))
     },
@@ -239,7 +268,6 @@ export default {
       axios({
         method: "get",
         url: `${URL}/movies/${movieid}/`,
-        // headers: this.setToken()
       })
       .then((res) => {
         this.Genre = res.data.genres
@@ -294,11 +322,16 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 #backimage{
   width: 1280px;
   height: 700px;
+}
+
+.container_update {
+  justify-content: space-between;
+  align-content: center;
 }
 
 .ableToClick {
@@ -314,7 +347,7 @@ export default {
   flex-direction: column;
 }
 .container {
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .lowerbox {
@@ -325,7 +358,6 @@ export default {
 .textbox {
   width: 100%;
   text-align: left;
-  padding-left: 20px;
   align-items: center;
 }
 
@@ -349,12 +381,12 @@ export default {
   width: 28%
 }
 
-/* #right {
+#right {
   position: relative;
-  top: -450px;
-  padding: 20px;
-  width: 70%
-} */
+  top: -10px;
+  padding: px;
+  width: 68%
+}
 
 #trailer{
   position: relative;
@@ -362,6 +394,12 @@ export default {
   height: 300px;
   left: -30px;
   top: -50px;
+}
+
+.trailertitle {
+  position: absolute;
+  top: 350px;
+  left: 140px;
 }
 
 #poster {
@@ -385,38 +423,44 @@ export default {
   overflow-y: hidden;
 }
 
+.vueperslides {
+  justify-content: center;
+  align-content: center;
+}
+
 .actorbox {
-  width: 220px;
-  height: 220px;
+  width: 80%;
+  height: 250px;
   margin: 10px auto;
 }
 
 .actorimagebox {
   width: 220px;
   height: 220px;
-  margin: 0 auto;
+  margin: 10px 10px auto;
   justify-content: center;
   align-content: center;
 }
 
 .actorprofile {
-  width: 90%;
-  height: 90%;
+  width: 220px;
+  height: 220px;
   border-radius: 70%;
   object-fit: cover;
+  cursor: pointer;
+}
+
+.actorprofile:hover {
+  transition: all 0.3s linear;
+  transform: scale(1.1);
 }
 
 .pro_box {
-  height: 350px;
+  height: 100px;
   align-items: center;
-  overflow: auto;
-  overflow-y: hidden;
+  justify-content: space-evenly;
 }
 
-.probox {
-  width: 300px;
-  height: 300px;
-}
 
 .proimagebox {
   width: 300px;
@@ -444,8 +488,39 @@ export default {
 }
 
 .genrebox {
-  width: 90%;
-  justify-content: space-around;
+  justify-content: space-evenly;
+}
 
+.vueperslides__track-inner{
+  cursor: default;
+}
+
+#review_title {
+  margin-left: 30px;
+  width: 70%;
+  height: 40px;
+  border: none;
+  border-bottom: dashed 2px orange;
+  background-color: black;
+  color: white;
+  font-size: 15px;
+}
+
+
+#review_content {
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-right: 10px;
+  width: 70%;
+  height: 40px;
+  border: none;
+  border-bottom: dashed 2px orange;
+  background-color: black;
+  color: white;
+  font-size: 18px;
+}
+
+.inputbox {
+  margin-bottom: 20px;
 }
 </style>
