@@ -1,21 +1,22 @@
 <template>
   <div>
-    <h1>Movie World Cup!</h1>
+    <h1 class="cup-h1">Movie Cup!</h1>
     <div>
-      <button @click="call_WorldCup_data">처음부터 시작</button>
+      <button id="rebtn" @click="call_WorldCup_data">처음부터 시작</button>
       <div>
-        <button @click="pickworldcup">누르지 마세요</button>
+        <div @click="pickworldcup"></div>
         <div class="worldcup-container">
-          <div class="OnePoster ableToClick">
-            <div class="card" @click="clickLeft">
-              <div class="front"><img class="posterlist" :src="this.random_movies[0].poster_path_original" ></div>
-              <div class="back">{{this.random_movies[0].title}}</div>
+          <div class="cup-OnePoster ableToClick">
+            <div class="cup-card" @click="clickLeft">
+              <div class="cup-front"><img class="cup-posterlist" :src="this.random_movies[0].poster_path_original" ></div>
+              <div class="cup-back">{{this.random_movies[0].title}}</div>
             </div>
           </div>
-          <div class="OnePoster ableToClick">
-            <div class="card" @click="clickRight">
-              <div class="front"><img class="posterlist" :src="this.random_movies[1].poster_path_original" ></div>
-              <div class="back">{{this.random_movies[1].title}}</div>
+          <h1>VS</h1>
+          <div class="cup-OnePoster ableToClick">
+            <div class="cup-card" @click="clickRight">
+              <div class="cup-front"><img class="cup-posterlist" :src="this.random_movies[1].poster_path_original" ></div>
+              <div class="cup-back">{{this.random_movies[1].title}}</div>
             </div>
           </div>
         </div>
@@ -88,8 +89,9 @@ export default {
     },
     worldcupres() {
       if (this.random_movies.length === 1) {
-        alert('수고하셨습니다!')
+        
         const movie = this.random_movies[0]
+        alert(`선택한 영화는 ${movie.title} 입니다. ${movie.title}의 상세페이지로 이동합니다!`)
         this.$router.push({name: 'moviedetail', query : {data: JSON.stringify({movie: movie, })}})
       }
 
@@ -123,27 +125,70 @@ export default {
 </script>
 
 <style>
+
+#rebtn {
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+#rebtn:hover{
+  background:#fff;
+  color:#1AAB8A;
+}
+#rebtn:before,#rebtn:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #1AAB8A;
+  transition:400ms ease all;
+}
+#rebtn:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+#rebtn:hover:before,#rebtn:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+.cup-h1 {
+  font-weight: bold;
+  font-size: 70px;
+}
 .worldcup-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  margin-top: 40px;
 }
 
-.OnePoster {
+.cup-OnePoster {
   margin: 10px;
-  width: 230px;
-  height: 345px;
+  width: 600px;
+  height: 500px;
   position: relative;
 }
 
-.posterlist {
+.cup-posterlist {
   width: 100%;
   height: 100%;
 }
 
-.card {
+.cup-card {
   height: 100%;
   width: 100%;
   position: relative;
@@ -151,19 +196,19 @@ export default {
   transform-style: preserve-3d;
 }
 
-.front,
-.back {
+.cup-front,
+.cup-back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
 }
 
-.OnePoster:hover .card {
+.cup-OnePoster:hover .cup-card {
   transform: rotateY(180deg);
 }
 
-.back {
+.cup-back {
   background-color: white;
   color: black;
   border-radius: 7px;

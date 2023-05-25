@@ -5,31 +5,31 @@
     <h1 class="sign_up">SignUp</h1>
     <div id="id">
       <label for="username">ID </label>
-      <input type="text" id="username" v-model="userdata.username" placeholder="    ID를 입력해주세요!"/>
+      <input type="text" id="username" v-model="userdata.username" placeholder="    ID를 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
     <div id="lastname">
       <label for="last_name">성 </label>
-      <input type="text" id="last_name" v-model="userdata.last_name" placeholder="    성을 입력해주세요!"/>
+      <input type="text" id="last_name" v-model="userdata.last_name" placeholder="    성을 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
     <div id="firstname">
       <label for="first_name">이름 </label>
-      <input type="text" id="first_name" v-model="userdata.first_name" placeholder="    이름을 입력해주세요!"/>
+      <input type="text" id="first_name" v-model="userdata.first_name" placeholder="    이름을 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
     <div id="nickname">
       <label for="nickname">닉네임 </label>
-      <input type="text" id="nickname" v-model="userdata.nickname" placeholder="    닉네임을 입력해주세요!"/>
+      <input type="text" id="nickname" v-model="userdata.nickname" placeholder="    닉네임을 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
     <div id="email">
       <label for="email">e-mail </label>
-      <input type="text" id="email" v-model="userdata.email" placeholder="    email을 입력해주세요!"/>
+      <input type="text" id="email" v-model="userdata.email" placeholder="    email을 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
     <div id="pw">
       <label for="password">PW </label>
-      <input type="password" id="password" v-model="userdata.password" placeholder="    비밀번호를 입력해주세요!"/>
+      <input type="password" id="password" v-model="userdata.password" placeholder="    비밀번호를 입력해주세요!" style="padding:0px 0px 0px 20px;"/>
     </div>
     <div id="pwcf">
       <label for="passwordConfirm">PW 확인 </label>
-      <input type="password" id="passwordConfirm" v-model="userdata.passwordConfirm" @keyup.enter="signup" placeholder="    비밀번호와 같아야돼요!"/>
+      <input type="password" id="passwordConfirm" v-model="userdata.passwordConfirm" @keyup.enter="signup" placeholder="    비밀번호와 같아야돼요!" style="padding:0px 0px 0px 20px;" />
     </div>
     <button class="btn-5" @click="signup">회원 가입</button>
     </div>
