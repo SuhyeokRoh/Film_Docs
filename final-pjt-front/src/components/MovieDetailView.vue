@@ -393,7 +393,7 @@ export default {
   width: 400px;
   height: 300px;
   left: -30px;
-  top: -50px;
+  top: 0px;
 }
 
 .trailertitle {
