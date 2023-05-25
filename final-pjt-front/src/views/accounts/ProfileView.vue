@@ -8,7 +8,6 @@
         <p>User First Name : {{User.first_name}}</p>
         <p>User Last Name : {{User.last_name}}</p>
         <p>User Nick Name : {{User.nickname}}</p>
-        <button>회원정보 수정</button>
         <button v-if="is_my_profile" @click="withdrawalChange">회원 탈퇴</button>
         <div class="black-bg" v-if="this.drawalVal == true">
           <div class="white-bg col">
@@ -31,7 +30,7 @@
           </div>
           <div v-if="is_my_profile"></div>
           <div v-else>
-            <button @click="followPerson">
+            <button class="f-button" @click="followPerson">
             <p v-if="isfollowed">취소</p>
             <p v-else>follow</p>
           </button>
@@ -338,8 +337,47 @@ export default {
 
 .deletebutton {
   width: 100px;
-  height: 50px;
+  height: 60px;
   margin: 0 10px auto;
   align-items: center;
 }
+
+.f-button{
+  background:#3ba9e4;
+  color:#fff;
+  border:none;
+  border-radius: 5px;
+  position:relative;
+  height:50px;
+  font-size:1.6em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+}
+.f-button:hover{
+  background:#fff;
+  color:#3ba9e4;
+}
+.f-button:before,f-button:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #3ba9e4;
+  transition:400ms ease all;
+}
+.f-button:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.f-button:hover:before,f-button:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
 </style>
