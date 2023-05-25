@@ -12,7 +12,7 @@
           <router-link :to="{ name: 'search' }">Search</router-link>
         </span>
         <span>
-          <router-link :to="{ name: 'worldcup' }">worldcup</router-link>
+          <router-link :to="{ name: 'worldcup' }">Worldcup</router-link>
         </span>
       </div>
       <div class="LogoCenter">
@@ -127,6 +127,10 @@ p{
   margin: 0 auto;
 }
 
+.ableToClick {
+  cursor: pointer;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -188,10 +192,6 @@ p{
   position: absolute;
   top: 40px;
   left: 810px;
-}
-
-.ableToClick {
-  cursor: pointer;
 }
 
 .row {
