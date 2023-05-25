@@ -246,6 +246,8 @@ export default {
     getComment() {
       const movieid = this.queryData.reviews.movie.id
       const reviewid = this.queryData.reviews.id
+      // console.log(this.queryData.reviews)
+      // const user_name = this.queryData.user.username
       axios({
         method: 'get',
         url: `${URL}/movies/${movieid}/reviews/${reviewid}/comment/`,
@@ -253,6 +255,8 @@ export default {
       })
       .then((res) => {
         this.comments = res.data
+        // console.log(res)
+
       })
       .catch(err => console.log(err))
     },
@@ -340,7 +344,7 @@ export default {
         })
         .catch(err => {
           console.log(err)
-          alert('본인 댓글만 수정 가능합니다.')
+          alert('본인 리뷰만 수정 가능합니다.')
           this.isReviewupdate = true
         })
     },
@@ -392,6 +396,7 @@ export default {
         headers: this.setToken()
       })
       .then((res) => {
+        console.log(res)
         this.like_comments = res.data.like_comment_users
         this.comment_dislike_state = !this.comment_dislike_state
       })
