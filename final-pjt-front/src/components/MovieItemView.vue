@@ -1,5 +1,5 @@
 <template>
-  <div class="OnePoster ableToClick">
+  <div class="OnePoster">
     <div class="card" @click="gotoDetail">
       <div class="front"><img class="posteritemimage" :src="movie.poster_path_original" ></div>
       <div class="back">{{movie.title}}</div>
@@ -43,6 +43,7 @@ export default {
 .posteritemimage {
   width: 100%;
   height: 100%;
+  border-radius: 7px;
 }
 
 .card {
@@ -51,6 +52,7 @@ export default {
   position: relative;
   transition: 1s ;
   transform-style: preserve-3d;
+  cursor: pointer;
 }
 
 
