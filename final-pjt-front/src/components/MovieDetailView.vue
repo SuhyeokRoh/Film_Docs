@@ -48,7 +48,7 @@
         <div class="col textboxtitle">
           <h1 style="color: #ed8b13;">배급사</h1>
           <div class="row pro_box">
-            <div v-for="production in queryData.movie.production_companies" :key="production.id">
+            <div class="companyname" v-for="production in queryData.movie.production_companies" :key="production.id">
               <p>{{production.name}}</p>
             </div>
           </div>
@@ -458,7 +458,8 @@ export default {
 .pro_box {
   height: 100px;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  overflow: auto;
 }
 
 
@@ -522,5 +523,10 @@ export default {
 
 .inputbox {
   margin-bottom: 20px;
+}
+
+.companyname {
+  white-space: nowrap;
+  margin: 0px 10px auto;
 }
 </style>
