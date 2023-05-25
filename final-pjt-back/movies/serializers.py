@@ -155,11 +155,6 @@ class CommentUpdateSerializer(serializers.ModelSerializer):
         fields = ('content', 'movie', 'review', 'user_id',)
         
         
-class WorldcupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Movie
-        fields = "__all__"
-
 
 class ActorAllSerializer(serializers.ModelSerializer):
             
@@ -167,10 +162,4 @@ class ActorAllSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Actor
-        fields = '__all__'
-
-class WorldcupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Worldcup
-        # fields = ('id', 'movies')
         fields = '__all__'
