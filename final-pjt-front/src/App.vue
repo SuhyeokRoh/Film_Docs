@@ -1,10 +1,7 @@
 <template>
   <div id="app">
-    <div id="nav" v-if="isLogin">
+    <div id="nav">
       <div id=AboutMovie>
-        <span>
-          <router-link :to="{ name: 'home' }"><img id="logo" src="./assets/Logo_new.png"></router-link>
-        </span>
         <span>
           <router-link :to="{ name: 'movie' }">Movie</router-link>
         </span>
@@ -18,39 +15,22 @@
           <router-link :to="{ name: 'worldcup' }">worldcup</router-link>
         </span>
       </div>
-      <div id="AboutAccount">
-        <span>
-          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">Hi, {{$store.state.username}}님</router-link>
-        </span>
-        <span>
-          <router-link to="#" @click.native="logout">Logout</router-link>
-        </span>
-      </div>
-    </div>
-
-    <div id="nav" v-else>
-      <div id=AboutMovie>
+      <div class="LogoCenter">
         <span>
           <router-link :to="{ name: 'home' }"><img id="logo" src="./assets/Logo_new.png"></router-link>
         </span>
-        <span>
-          <router-link :to="{ name: 'movie' }">Movie</router-link>
-        </span>
-        <span>
-          <router-link :to="{ name: 'recommend' }">Recommend</router-link>
-        </span>
-        <span>
-          <router-link :to="{ name: 'search' }">Search</router-link>
-        </span>
-        <span>
-          <router-link :to="{ name: 'worldcup' }">worldcup</router-link>
-        </span>
       </div>
       <div id="AboutAccount">
-        <span>
+        <span v-if="isLogin">
+          <router-link :to="{ name: 'Profile', query : {user: this.$store.state.username} }">Profile</router-link>
+        </span>
+        <span v-else>
           <router-link :to="{ name: 'Signup' }">Signup</router-link>
         </span>
-        <span>
+        <span v-if="isLogin">
+          <router-link to="#" @click.native="logout">Logout</router-link>
+        </span>
+        <span v-else>
           <router-link :to="{ name: 'Login' }">Login</router-link> 
         </span>
       </div>
@@ -92,15 +72,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+@font-face {
+    font-family: 'KOTRA_BOLD-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.1/KOTRA_BOLD-Bold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 
+* {
+	font-family: 'KOTRA_BOLD-Bold';
+}
 
 html, body {
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
 	vertical-align: baseline;
 }
 a {
@@ -136,7 +124,7 @@ img{
   border-radius: 7px;
 }
 p{
-  font-size: 20px;
+  margin: 0 auto;
 }
 
 #app {
@@ -150,16 +138,14 @@ p{
 }
 
 #logo {
-  width: 200px;
-  /* height: 30px; */
+  width: 300px;
 }
 
 #nav {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-content: center;
-  padding: 30px 20px;
+  padding: 50px 20px;
 }
 
 #nav a {
@@ -181,18 +167,27 @@ p{
 }
 
 #AboutAccount {
+  position: absolute;
   display: flex;
-  width: 400px;
+  width: 250px;
   justify-content: space-between;
   align-content: center;
   margin-right: 100px;
+  left: 1480px;
 }
 
 #AboutMovie {
+  position: absolute;
   display: flex;
-  width: 800px;
+  width: 600px;
   justify-content: space-between;
-  margin-left: 50px;
+  margin-left: 100px;
+}
+
+.LogoCenter {
+  position: absolute;
+  top: 40px;
+  left: 810px;
 }
 
 .ableToClick {
