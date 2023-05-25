@@ -105,7 +105,7 @@ export default {
 
 .vueperslides__arrow {
   size: 30px;
-  color: black;
+  color: white;
 }
 
 #video_slider {

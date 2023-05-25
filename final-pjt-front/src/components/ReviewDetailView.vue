@@ -436,7 +436,7 @@ export default {
   margin: auto;
   margin-top: 10px;
   margin-bottom: 10px;
-  border: solid 1px black;
+  border: solid 1px white;
   border-radius: 7px;
 }
 
@@ -481,7 +481,7 @@ export default {
   margin: 10px 50px;
   font-size: 15px;
   min-height: 300px;
-  border: solid 2px black;
+  border: solid 2px white;
   border-radius: 7px;
 }
 </style>

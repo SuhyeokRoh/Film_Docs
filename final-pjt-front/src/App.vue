@@ -72,7 +72,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 @font-face {
     font-family: 'KOTRA_BOLD-Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10-21@1.1/KOTRA_BOLD-Bold.woff') format('woff');
@@ -90,6 +90,7 @@ html, body {
 	border: 0;
 	font-size: 100%;
 	vertical-align: baseline;
+  background-color: black;
 }
 a {
   text-decoration-line: none;
@@ -97,34 +98,6 @@ a {
 }
 body {
 	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-span {
-  margin: auto;
-  padding: auto;
-  display: block; 
-  /* justify-content: center; */
-  text-align: center;
-}
-img{
-  border-radius: 7px;
-}
-p{
-  margin: 0 auto;
 }
 
 .ableToClick {
@@ -136,7 +109,7 @@ p{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: white;
   margin: 0 auto;
   padding: 0 auto;
 }
@@ -154,7 +127,7 @@ p{
 
 #nav a {
   font-weight: bold;
-  color: black; 
+  color: white; 
 }
 
 #nav a.router-link-exact-active {
@@ -174,6 +147,7 @@ p{
   position: absolute;
   display: flex;
   width: 250px;
+  top: 65px;
   justify-content: space-between;
   align-content: center;
   margin-right: 100px;
@@ -184,6 +158,7 @@ p{
   position: absolute;
   display: flex;
   width: 600px;
+  top: 65px;
   justify-content: space-between;
   margin-left: 100px;
 }
@@ -205,7 +180,7 @@ p{
 }
 
 .contain {
-  border: solid 1px black;
+  border: solid 1px white;
   border-radius: 7px;
   margin: 20px auto;
 }

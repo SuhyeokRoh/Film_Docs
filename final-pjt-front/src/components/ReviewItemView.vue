@@ -73,7 +73,7 @@ export default {
 
 <style>
 #reviewbox {
-  border: solid 1px black;
+  border: solid 1px white;
   border-radius: 7px;
   margin: 10px auto;
 }

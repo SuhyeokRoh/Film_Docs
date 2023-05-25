@@ -83,10 +83,10 @@
           </div>
         </div><br>
         <div>
-          <div class="clearfilter" @click="filterReset">Reset</div>
+          <div class="clearfilter" @click="filterReset"><p class="choicetext">Reset</p></div>
         </div>
         <div style="margin: 20px 10px auto;">
-          <div class="completechoice" @click="getchoiceMovies">Choose</div>
+          <div class="completechoice" @click="getchoiceMovies"><p class="choicetext">Choose</p></div>
         </div>
       </div>
       <div class="col" id="movielists">
@@ -176,16 +176,17 @@ export default {
 
 #optionbox {
   position: absolute;
-  border: 3px solid black;
+  border: 3px solid white;
   border-radius: 7px;
   width: 370px;
+  top: 190px;
   left: 170px;
-  height: 650px;
+  height: 680px;
 }
 
 #check {
   display: flex;
-  margin: 0px 5px auto;
+  margin: 10px 0px 0px 23px;
   padding: 0 auto;
   justify-content: space-evenly;
   font-size: 20px;
@@ -195,9 +196,7 @@ export default {
   position: absolute;
   width: 60%;
   left: 570px;
-  border: solid 1px lightgray;
   border-radius: 7px;
-  background-color: lightgray;
 }
 
 .wrappling {
@@ -214,6 +213,7 @@ export default {
 
 .optionspan {
   width: 170px;
+  height: 33px;
   text-align: left;
 }
 
@@ -226,10 +226,15 @@ export default {
   border-radius: 7px;
   margin-left: auto;
   margin-right: 10px;
-  text-align: center;
   align-content: center;
   font-size: 23px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  /* 이거 가운데 정렬 말한거지? */
+  padding-top: 15px;
+  padding-bottom: auto;
 }
 
 .clearfilter:hover {
@@ -244,15 +249,22 @@ export default {
   background-color: grey;
   color: white;
   border-radius: 7px;
-  text-align: center;
   align-content: center;
   font-size: 35px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+  padding-bottom: auto;
 }
 
 .completechoice:hover {
   transition: all 0.2s linear;
   transform: scale(1.05);
   background-color: rgb(26, 187, 53);
+}
+
+.choicetext {
+  margin: 0px 0px auto;
 }
 </style>
