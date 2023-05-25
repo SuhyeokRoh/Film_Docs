@@ -5,11 +5,11 @@
     <br>
     <div class="form-group">
       <label for="username"></label>
-      <input type="text" id="username" v-model="userdata.username" class="input-field" placeholder="ID를 입력해주세요!"/>
+      <input type="text" id="username" v-model="userdata.username" class="input-field" placeholder="    ID를 입력해주세요!"/>
     </div>
     <div class="form-group">
       <label for="password"></label>
-      <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" class="input-field" placeholder="비밀번호를 입력해주세요!"/>
+      <input type="password" id="password" v-model="userdata.password" @keyup.enter="login" class="input-field" placeholder="    비밀번호를 입력해주세요!"/>
     </div>
     <br>
     <div>
@@ -60,6 +60,7 @@ export default {
 </script>
 
 <style>
+
  #LoginBox {
   height: 750px;
   display: flex;
@@ -69,7 +70,7 @@ export default {
 
  #Login {
   border-radius: 3px;
-  box-shadow: 5px 5px 5px 5px #0f023b;
+  box-shadow: 5px 5px 5px 5px #f1eff6;
   width: 500px;
   height: 60%;
   justify-content: center;
@@ -132,7 +133,9 @@ background: linear-gradient(0deg, rgb(228, 215, 39) 0%, rgb(236, 230, 135) 100%)
 }
 
 .input-field {
-  width: 200px;
+  width: 300px;
+  height: 40px;
+  border-radius: 4px;
 }
 
 </style>
