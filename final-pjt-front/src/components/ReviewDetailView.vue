@@ -298,7 +298,7 @@ export default {
 
     gotoProfile() {
       const username = this.queryData.user.username
-      this.$router.push({name: 'Profile', query : {user: username}})
+      this.$router.push({name: 'Profile', query : {user: username,}})
     },
 
     deleteReview: function () {
