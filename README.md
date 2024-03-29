@@ -5,17 +5,19 @@
 <div align='center'>
 <br>
 <h1 style='text-decoration: none;'><b>필독(Flim Docs)</b></h1><br>
-영화와 관련된 모든 내용을 제공받을 수 있는 사이트<br>
-삼성 청년 SW 아카데미<br>
-2023.05.15 - 2023.05.26<br>
-<br>
-<br>
+<div align='left'>
+  <li>2023.05.15 - 2023.05.26 (2주) 진행</li>
+  <li>삼성 청년 SW 아카데미</li>
+  <li>영화와 관련된 모든 내용을 제공받을 수 있는 사이트</li>
 </div>
-
-## ERD 구조
-
-<div align='center'>
-<image src="/image/ERD_first_1.png" width="80%"><br>
+<h3>프로젝트 구성원</h3>
+  
+|구분|노수혁|주영인|
+|:---:|:---:|:---:|
+|프론트엔드|메인, 전체 영화, 영화 정보, 영화 배우 정보, 댓글 및 대댓글, 영화 추천, 프로필 화면 디자인 및 기능 구현 <br> 회원 팔로우, 영화/댓글/대댓글 좋아요, 싫어요, 영화 추천 목록 기능 구현|영화 검색, 영화 월드컵, 로그인, 회원가입 화면 디자인 및 기능 구현 <br> 회원 팔로우, 댓글 좋아요, 싫어요, 영화 추천 목록 기능 구현|
+|백엔드|api를 통한 영화 데이터 일정 주기 호출, cors 기능 구현|게시판, 사용자 계정 관리 기능 구현|
+<br>
+<br>
 </div>
 
 ## 화면 구성 및 기능
@@ -96,42 +98,11 @@
 - 영화 상세 페이지 버튼 클릭 시, 해당 영화의 상세 페이지로 이동
 
 
-# 역할 분담
+## ERD 구조
 
-### 주영인
-- backend 폴더와 frontend 폴더 생성
-  - Backend: django-admin startproject, Frontend: vue create, 
-- 게시판(리뷰, reviews) 기능 구현
-  - 게시판 생성: python manage.py startapp reviews, model 및 serializers 생성
-- 사용자 계정 관리(accounts) 기능 구현
-  - 게시판 생성: python manage.py startapp accounts, Vue로 회원가입 기능 구현 및 로그인 템플릿 생성
-- 영화 검색
-  - 단어를 입력시 해당 영화가 나오도록 검색 기능구현
-- 영화 게임
-  - 영화 목록 중 16개를 뽑아와 릴레이로 데스매치를 진행하여 최종영화 선택 및 상세페이지로 이동
-- 팔로우 기능 구현
-- 댓글 좋아요, 싫어요 기능 구현
-- 영화 추천 목록 제공 기능 구현
-- 로그인, 회원가입, 검색, 게임페이지 디자인
-
-
-
-### 노수혁
-- tmdb api로 전체 영화 리스트 가져오기 
-  - Postman으로 영화 리스트 불러오기 : params에 key : api_key,  Value : TMDB API key 를 넣고 get 방식으로 실행
-- Movie(movies) 출력 기능 구현 
-  - movies 내에 fixtures 폴더 생성, TMDB에 API_KEY를 활용해 영화 리스트를 불러오고 이를 JSON 형식으로 저장
-  - movie에서 180개의 데이터를 저장하고, 해당 영화의 출연 배우 데이터를 불러와 저장하고 model에 맞게 데이터 처리 후 DB에 저장
-- Django와 Vue CORS policy를 위해 사이트 허용 부분 추가
-- Django활용하여 DB에 일정 주기로 API에서 데이터를 받아와 저장
-- main page, comminity 기능 구현 및 web 디자인
-- 영화 좋아요, 싫어요 구현
-- 리뷰 좋아요, 싫어요 기능 구현, 댓글 좋아요, 싫어요 기능 구현
-- 영화 추천 목록 제공 기능 구현
-
-사용 프로그램 : 노션(하루에 진행할 내용 정리 및 하루가 끝날 때 마지막 점검 및 내일 일정 확인),
-trello(당일에 진행할 내용을 todo에, 자신이 진행중인 부분을 doing에, commit까지 끝나면 done에 올리기),
-github(기능 구현 시 commit 후 push), gitlab(결과물 upload)
+<div align='center'>
+<image src="/image/ERD_first_1.png" width="80%"><br>
+</div>
 
 
 ## 느낀점 및 소감
